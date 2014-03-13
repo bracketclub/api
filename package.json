@@ -1,0 +1,40 @@
+{
+  "name": "bracket-data-live",
+  "description": "The live data.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Luke Karrys",
+    "email": "luke@lukekarrys.com",
+    "url": "http://lukekarrys.com"
+  },
+  "bugs": {
+    "url": "https://github.com/tweetyourbracket/bracket-data-live/issues"
+  },
+  "dependencies": {
+    "async": "^0.2.10",
+    "bracket-data": "^2.0.5",
+    "cron": "^1.0.4",
+    "json-update": "^1.1.1",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "mocha": "^1.17.1",
+    "precommit-hook": "^0.3.10"
+  },
+  "homepage": "https://github.com/tweetyourbracket/bracket-data-live",
+  "keywords": [
+    "ncaa",
+    "tweetyourbracket",
+    "bracket"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tweetyourbracket/bracket-data-live.git"
+  },
+  "scripts": {
+    "cron": "node lib/cron",
+    "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 5000 test/test.js"
+  }
+}
