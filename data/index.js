@@ -2,7 +2,7 @@ var data = {};
 var path = require('path');
 var _ = require('lodash');
 var walkdir = require('walkdir');
-var dataPaths = walkdir.sync('./data');
+var dataPaths = walkdir.sync(__dirname);
 
 var dataFiles = _.chain(dataPaths).filter(function (dataPath) {
     return path.extname(dataPath) === '.json' && path.basename(dataPath, '.json') !== 'defaults';
