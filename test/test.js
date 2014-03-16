@@ -10,9 +10,19 @@ describe('Tweet watcher', function () {
         assert.equal(64, data.masters.length);
     });
 
+    it('Has masters', function () {
+        var data = liveData({year: '2012', sport: 'ncaa-mens-basketball'});
+        assert.equal(64, data.masters.length);
+    });
+
     it('Has entries', function () {
         var data = liveData({year: '2013', sport: 'ncaa-mens-basketball'});
         assert.equal(27, data.entries.length);
+    });
+
+    it('Has entries', function () {
+        var data = liveData({year: '2012', sport: 'ncaa-mens-basketball'});
+        assert.equal(15, data.entries.length);
     });
 
     it('should throw an error if year+sport is non-existant', function () {
