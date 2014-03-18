@@ -13,6 +13,7 @@
   "dependencies": {
     "async": "^0.2.10",
     "bracket-data": "^2.0.5",
+    "bucker": "^1.0.9",
     "cron": "^1.0.4",
     "json-update": "^1.1.1",
     "lodash": "^2.4.1",
