@@ -2,15 +2,6 @@
   "masters": [],
   "entries": [
     {
-      "created": "Sun Mar 16 23:01:47 +0000 2014",
-      "user_id": "332423991",
-      "data_id": "445334141215584256",
-      "username": "lukekarryz",
-      "name": "Other Account",
-      "profile_pic": "http://abs.twimg.com/sticky/default_profile_images/default_profile_4_normal.png",
-      "bracket": "S1851361471585615566E168541114721651471677W1812136371511367171MW1685136141021613610131013FFSWW"
-    },
-    {
       "created": "Sun Mar 16 23:28:52 +0000 2014",
       "user_id": "472555482",
       "data_id": "445340956821164032",
@@ -56,13 +47,13 @@
       "bracket": "S195463721532122E1812463721462424W19124631021432121MW18541131021432433FFEWE"
     },
     {
-      "created": "Mon Mar 17 00:33:28 +0000 2014",
+      "created": "Thu Mar 20 04:38:14 +0000 2014",
       "user_id": "23918006",
-      "data_id": "445357213083656192",
+      "data_id": "446505974346444800",
       "username": "lukekarrys",
       "name": "Luke Karrys",
       "profile_pic": "http://pbs.twimg.com/profile_images/3310194461/3caaee2149bcbcc0db17a8456510880f_normal.jpeg",
-      "bracket": "S1912411310211232121E1812463721432434W1954113721532522MW1854631021432434FFSWS"
+      "bracket": "S195463721437171E1812463721432424W19124637211237131MW181241131021432133FFSWS"
     },
     {
       "created": "Mon Mar 17 02:22:53 +0000 2014",
@@ -270,6 +261,114 @@
       "name": "Tessa",
       "profile_pic": "http://pbs.twimg.com/profile_images/3093558890/252cbc2c89514fed36a07356b3dc0bcb_normal.jpeg",
       "bracket": "S1954631021562161E19541131021432133W185463721532131MW1954631021462424FFEWW"
+    },
+    {
+      "created": "Wed Mar 19 19:30:19 +0000 2014",
+      "user_id": "9305042",
+      "data_id": "446368084794683393",
+      "username": "jjwright",
+      "name": "J.J. Wright",
+      "profile_pic": "http://pbs.twimg.com/profile_images/445690559131160576/Pi08hOuj_normal.jpeg",
+      "bracket": "S195463721432122E185463721432434W195463721432122MW18124113721432133FFSMWS"
+    },
+    {
+      "created": "Wed Mar 19 20:59:54 +0000 2014",
+      "user_id": "86988751",
+      "data_id": "446390628650201088",
+      "username": "aCook_MGz",
+      "name": "Alex Cook",
+      "profile_pic": "http://pbs.twimg.com/profile_images/504842943/meNinja_normal.jpg",
+      "bracket": "S185463721532121E195463721432434W185463721432422MW185463721432121FFEMWE"
+    },
+    {
+      "created": "Wed Mar 19 21:13:06 +0000 2014",
+      "user_id": "26007452",
+      "data_id": "446393951730147328",
+      "username": "msrivette",
+      "name": "Michael S Rivette",
+      "profile_pic": "http://pbs.twimg.com/profile_images/419293263573831680/2oFIeqRu_normal.jpeg",
+      "bracket": "S185463721467161E1912463721432424W19124637211232121MW18541131021432424FFSWW"
+    },
+    {
+      "created": "Wed Mar 19 23:49:02 +0000 2014",
+      "user_id": "1102065282",
+      "data_id": "446433193139253248",
+      "username": "JazonAndes",
+      "name": "Jazon ︻デ═一",
+      "profile_pic": "http://abs.twimg.com/sticky/default_profile_images/default_profile_3_normal.png",
+      "bracket": "S1951311310215310131E1854614721467464W1954631021562522MW1912463102912310933FFSMWS"
+    },
+    {
+      "created": "Thu Mar 20 00:59:02 +0000 2014",
+      "user_id": "58579846",
+      "data_id": "446450811409690624",
+      "username": "radford333",
+      "name": "marion",
+      "profile_pic": "http://abs.twimg.com/sticky/default_profile_images/default_profile_3_normal.png",
+      "bracket": "S1954631021432121E185463721432433W185463721432121MW18124113721432424FFSMWS"
+    },
+    {
+      "created": "Thu Mar 20 00:59:17 +0000 2014",
+      "user_id": "115967911",
+      "data_id": "446450872180940800",
+      "username": "TigerRensch",
+      "name": "Tiger  Rensch",
+      "profile_pic": "http://pbs.twimg.com/profile_images/378800000749260684/17cd819885660b798c4c5da7f09b7239_normal.jpeg",
+      "bracket": "S1954631021462121E185463721432131W185463721467464MW1854631021432133FFSMWMW"
+    },
+    {
+      "created": "Thu Mar 20 01:18:28 +0000 2014",
+      "user_id": "744143191",
+      "data_id": "446455700084903936",
+      "username": "MJPennywark",
+      "name": "Michael Pennywark",
+      "profile_pic": "http://pbs.twimg.com/profile_images/2848743585/c3a039d48f2c0165fb0e470175977de5_normal.png",
+      "bracket": "S195463721432121E185463721467474W1954113721432131MW181241131021432424FFSMWMW"
+    },
+    {
+      "created": "Thu Mar 20 01:35:52 +0000 2014",
+      "user_id": "992468190",
+      "data_id": "446460080611786752",
+      "username": "ErickValenciano",
+      "name": "Erick Valenciano",
+      "profile_pic": "http://pbs.twimg.com/profile_images/429514249300226048/F42jOscI_normal.jpeg",
+      "bracket": "S195463721432131E1854631021432424W185463721432121MW185463721432122FFSWW"
+    },
+    {
+      "created": "Thu Mar 20 01:51:27 +0000 2014",
+      "user_id": "541371363",
+      "data_id": "446464000159535104",
+      "username": "JuliaMakes",
+      "name": "JuliaRensch",
+      "profile_pic": "http://abs.twimg.com/sticky/default_profile_images/default_profile_1_normal.png",
+      "bracket": "S19124614721462424E18124113721432424W1685463728532522MW18124631021432433FFEWW"
+    },
+    {
+      "created": "Thu Mar 20 03:24:31 +0000 2014",
+      "user_id": "82286618",
+      "data_id": "446487422834995200",
+      "username": "Have_You_Heard",
+      "name": "John Williams",
+      "profile_pic": "http://abs.twimg.com/sticky/default_profile_images/default_profile_1_normal.png",
+      "bracket": "S18541131021432121E1812463721432434W195463721437131MW1954631021432434FFSMWS"
+    },
+    {
+      "created": "Thu Mar 20 04:53:21 +0000 2014",
+      "user_id": "31201092",
+      "data_id": "446509780052344832",
+      "username": "kathykarrys",
+      "name": "Kathy Karrys",
+      "profile_pic": "http://abs.twimg.com/sticky/default_profile_images/default_profile_6_normal.png",
+      "bracket": "S19124631021462161E1954631021462424W1954631021462121MW18541131021432434FFSMWMW"
+    },
+    {
+      "created": "Thu Mar 20 05:06:45 +0000 2014",
+      "user_id": "1110516548",
+      "data_id": "446513151962402816",
+      "username": "theskilledwolf",
+      "name": "Brian Wolfskill",
+      "profile_pic": "http://pbs.twimg.com/profile_images/378800000593610715/838a44c50ff85c1f73906334c5d1d9f0_normal.png",
+      "bracket": "S1912463721437131E1812463721432133W1951363721562161MW18124113721432434FFSWS"
     }
   ]
 }
