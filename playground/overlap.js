@@ -5,13 +5,7 @@ var log = function (obj) {
     console.log(JSON.stringify(obj, null, 2));
 };
 
-var confident = [
-    'tessatweettrain',
-    'lynnandtonic',
-    'kathykarrys',
-    'msrivette',
-    'juliamakes'
-];
+var confident = [];
 
 var current = data({sport: sport, year: new Date().getFullYear() + ''});
 var previous = data({sport: sport, year: (new Date().getFullYear() - 1) + ''});
