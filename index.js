@@ -1,6 +1,7 @@
 var BracketData = require('bracket-data');
 var liveData = require('./data/index');
 
+
 module.exports = function (options) {
     var year = options.year;
     var sport = options.sport;
