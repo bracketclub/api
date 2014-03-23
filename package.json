@@ -35,7 +35,6 @@
     "url": "git://github.com/tweetyourbracket/bracket-data-live.git"
   },
   "scripts": {
-    "start": "node lib/cron",
     "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 5000 test/test.js"
   }
 }
