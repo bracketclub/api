@@ -38,7 +38,7 @@ var Save = require('../lib/save');
 describe('Save entry', function () {
 
     it('It should save an entry', function (done) {
-        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball'});
+        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball', pushWait: 0});
 
         save.entry({user_id: 1, bracket: 1}, function (err, obj, jsonPath) {
             var data = JSON.parse(fs.readFileSync(jsonPath));
@@ -51,7 +51,7 @@ describe('Save entry', function () {
     });
 
     it('It should overwrite an entry', function (done) {
-        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball'});
+        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball', pushWait: 0});
 
         save.entry({user_id: 1, bracket: 1}, function (err, obj, jsonPath) {
             var data = JSON.parse(fs.readFileSync(jsonPath));
@@ -73,7 +73,7 @@ describe('Save entry', function () {
 describe('Save master', function () {
 
     it('It should save a master', function (done) {
-        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball'});
+        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball', pushWait: 0});
 
         save.master('abc', function (err, obj, jsonPath) {
             var data = JSON.parse(fs.readFileSync(jsonPath));
@@ -85,7 +85,7 @@ describe('Save master', function () {
     });
 
     it('It should not save the same master twice', function (done) {
-        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball'});
+        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball', pushWait: 0});
 
         save.master('abc', function (err, obj, jsonPath) {
             var data = JSON.parse(fs.readFileSync(jsonPath));
@@ -102,7 +102,7 @@ describe('Save master', function () {
     });
 
     it('It should append the next master', function (done) {
-        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball'});
+        var save = new Save({year: '1996', sport: 'ncaa-mens-basketball', pushWait: 0});
 
         save.master('abc', function (err, obj, jsonPath) {
             var data = JSON.parse(fs.readFileSync(jsonPath));
