@@ -1,4 +1,6 @@
-var liveData = require('../index');
+var liveData = function (options) {
+    return require('../data/' + options.sport + '/' + options.year + '.json');
+};
 var assert = require('assert');
 var fs = require('fs');
 
@@ -16,12 +18,12 @@ describe('Tweet watcher', function () {
 
     it('Has entries', function () {
         var data = liveData({year: '2013', sport: 'ncaa-mens-basketball'});
-        assert.equal(27, data.entries.length);
+        assert.equal(27, Object.keys(data.entries).length);
     });
 
     it('Has entries', function () {
         var data = liveData({year: '2012', sport: 'ncaa-mens-basketball'});
-        assert.equal(15, data.entries.length);
+        assert.equal(15, Object.keys(data.entries).length);
     });
 
     it('should throw an error if year+sport is non-existant', function () {
