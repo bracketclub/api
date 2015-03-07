@@ -27,7 +27,7 @@ exports.register = function (server, config, next) {
                  cb(err);
             } else {
                 server.log(['debug'], 'Created entry: ' + created.toString());
-                cb(null, created.toJSON());
+                cb(null, created);
             }
         });
     };
@@ -39,7 +39,7 @@ exports.register = function (server, config, next) {
                 cb(err);
             } else {
                 server.log(['debug'], 'Updated entry: ' + updated.toString());
-                cb(updated.toJSON());
+                cb(null, updated);
             }
         });
     };
@@ -53,13 +53,13 @@ exports.register = function (server, config, next) {
     };
 
     options.onSave = function (data) {
-        Entry.findByIndex('user_id', data.user_id, filterByYear, function (err, found) {
+        Entry.getByIndex('user_id', data.user_id, _.extend({limit: 1}, filterByYear), function (err, found) {
             if (err) {
                 server.log(['error'], 'Error finding entry by index:' + err);
             } else {
-                updateOrCreate(data, found, function (err, entry) {
+                updateOrCreate(data, found[0], function (err, entry) {
                     if (!err && entry) {
-                        server.log(['debug'], 'SSE' + entry.toString());
+                        // SSE
                     }
                 });
             }
