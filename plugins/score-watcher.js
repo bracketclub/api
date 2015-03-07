@@ -1,8 +1,8 @@
 var ScoreWatcher = require('score-watcher');
 var path = require('path');
 var _ = require('lodash');
+var Stream = require('stream');
 var BracketData = require('bracket-data');
-
 
 
 exports.register = function (server, config, next) {
@@ -17,6 +17,7 @@ exports.register = function (server, config, next) {
     var year = config.year;
     var empty = new BracketData({props: ['constants'], sport: sport, year: year}).constants.EMPTY;
     var Master = server.plugins.db.Master;
+    var channel = new Stream.PassThrough();
 
     var updateBracket = function (master, found, cb) {
         var data = found.toJSON();
@@ -66,13 +67,26 @@ exports.register = function (server, config, next) {
             } else {
                 updateOrCreate(master, found, function (err, master) {
                     if (!err && master) {
-                        // SSE
+                        channel.write("event: masters\n");
+                        channel.write("data: " + master +  "\n\n");
                     }
                     cb(err);
                 });
             }
         });
     };
+
+    server.route({
+        method: "GET",
+        path: "/masters/events",
+        handler: function (request, reply) {
+            reply(channel).code(200)
+            .type("text/event-stream")
+            .header("Connection", "keep-alive")
+            .header("Cache-Control", "no-cache")
+            .header("Content-Encoding", "identity");
+        }
+    });
 
     var startWatcher = function (err, master) {
         options.master = master;
