@@ -1,6 +1,7 @@
 var EntryWatcher = require('entry-watcher');
 var path = require('path');
 var _ = require('lodash');
+var Stream = require('stream');
 
 
 exports.register = function (server, config, next) {
@@ -12,6 +13,7 @@ exports.register = function (server, config, next) {
 
     var year = config.year;
     var Entry = server.plugins.db.Entry;
+    var channel = new Stream.PassThrough();
 
     var filterByYear = {
         filter: function (model) {
@@ -59,12 +61,25 @@ exports.register = function (server, config, next) {
             } else {
                 updateOrCreate(data, found[0], function (err, entry) {
                     if (!err && entry) {
-                        // SSE
+                        channel.write("event: entries\n");
+                        channel.write("data: " + entry.toString() +  "\n\n");
                     }
                 });
             }
         });
     };
+
+    server.route({
+        method: "GET",
+        path: "/masters/events",
+        handler: function (request, reply) {
+            reply(channel).code(200)
+            .type("text/event-stream")
+            .header("Connection", "keep-alive")
+            .header("Cache-Control", "no-cache")
+            .header("Content-Encoding", "identity");
+        }
+    });
 
     new EntryWatcher(options).start();
     next();
