@@ -12,35 +12,48 @@ exports.register = function (server, config, next) {
 
     var year = config.year;
     var Entry = server.plugins.db.Entry;
-    options.onSave = function (data) {
-        Entry.findByIndex('user_id', data.user_id, {
-            filter: function (model) {
-                return year ? model.year === year : true;
+
+    var filterByYear = {
+        filter: function (model) {
+            return year ? model.year === year : true;
+        }
+    };
+
+    var createEntry = function (data) {
+        var created = Entry.create(data);
+        created.save(function (err) {
+            if (err) {
+                 server.log(['error'], 'Error creating entry:' + err);
+            } else {
+                server.log(['log'], 'Created entry: ' + created.toJSON());
             }
-        }, function (err, found) {
+        });
+    };
+
+    var updateEntry = function (data, model) {
+        Entry.update(model.key, data, function (err, updated) {
+            if (err) {
+                server.log(['error'], 'Error updating entry:' + err);
+            } else {
+                server.log(['log'], 'Updated entry: ' + updated.toJSON());
+            }
+        });
+    };
+
+    var updateOrCreate = function (data, model) {
+        if (model) {
+            updateEntry(data, model);
+        } else {
+            createEntry(data);
+        }
+    };
+
+    options.onSave = function (data) {
+        Entry.findByIndex('user_id', data.user_id, filterByYear, function (err, found) {
             if (err) {
                 server.log(['error'], 'Error finding entry by index:' + err);
-            }
-            else {
-                if (found) {
-                    Entry.update(found.key, data, function (err, updated) {
-                        if (err) {
-                            server.log(['error'], 'Error updating entry:' + err);
-                        } else {
-                            server.log(['log'], 'Updated entry: ' + updated.toJSON());
-                        }
-                    });
-                }
-                else {
-                    var created = Entry.create(data);
-                    created.save(function (err) {
-                        if (err) {
-                             server.log(['error'], 'Error creating entry:' + err);
-                        } else {
-                            server.log(['log'], 'Created entry: ' + created.toJSON());
-                        }
-                    });
-                }
+            } else {
+                updateOrCreate(data, found);
             }
         });
     };
