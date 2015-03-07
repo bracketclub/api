@@ -66,7 +66,7 @@ exports.register = function (server, config, next) {
             } else {
                 updateOrCreate(master, found, function (err, master) {
                     if (!err && master) {
-                        server.log(['debug'], 'SSE:' + master);
+                        // SSE
                     }
                     cb(err);
                 });
