@@ -1,7 +1,7 @@
 {
-  "name": "bracket-data-live",
-  "description": "The live data.",
-  "version": "0.1.0",
+  "name": "tweetyourbracket-api",
+  "description": "The master and entries API for tweetyourbracket.com.",
+  "version": "1.0.0",
   "author": {
     "name": "Luke Karrys",
     "email": "luke@lukekarrys.com",
