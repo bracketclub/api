@@ -19,32 +19,36 @@ exports.register = function (server, config, next) {
         }
     };
 
-    var createEntry = function (data) {
+    var createEntry = function (data, cb) {
         var created = Entry.create(data);
         created.save(function (err) {
             if (err) {
                  server.log(['error'], 'Error creating entry:' + err);
+                 cb(err);
             } else {
-                server.log(['log'], 'Created entry: ' + created.toJSON());
+                server.log(['debug'], 'Created entry: ' + created.toString());
+                cb(null, created.toJSON());
             }
         });
     };
 
-    var updateEntry = function (data, model) {
+    var updateEntry = function (data, model, cb) {
         Entry.update(model.key, data, function (err, updated) {
             if (err) {
                 server.log(['error'], 'Error updating entry:' + err);
+                cb(err);
             } else {
-                server.log(['log'], 'Updated entry: ' + updated.toJSON());
+                server.log(['debug'], 'Updated entry: ' + updated.toString());
+                cb(updated.toJSON());
             }
         });
     };
 
-    var updateOrCreate = function (data, model) {
+    var updateOrCreate = function (data, model, cb) {
         if (model) {
-            updateEntry(data, model);
+            updateEntry(data, model, cb);
         } else {
-            createEntry(data);
+            createEntry(data, cb);
         }
     };
 
@@ -53,7 +57,11 @@ exports.register = function (server, config, next) {
             if (err) {
                 server.log(['error'], 'Error finding entry by index:' + err);
             } else {
-                updateOrCreate(data, found);
+                updateOrCreate(data, found, function (err, entry) {
+                    if (!err && entry) {
+                        server.log(['debug'], 'SSE' + entry.toString());
+                    }
+                });
             }
         });
     };

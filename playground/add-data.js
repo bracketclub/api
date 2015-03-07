@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var data = ['2012', '2013', '2014', '2015'].map(function (year) {
+var data = ['2012', '2013', '2014'].map(function (year) {
     var d = require('../data/ncaa-mens-basketball/' + year);
     d.year = year;
     return d;
