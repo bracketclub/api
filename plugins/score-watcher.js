@@ -23,7 +23,7 @@ exports.register = function (server, config, next) {
         data.brackets || (data.brackets = []);
         var last = _.last(data.brackets);
         if (last === master) {
-            server.log(['log'], 'Skipping master since it matches latest: ' + master);
+            server.log(['debug'], 'Skipping master since it matches latest: ' + master);
             cb(null, last);
         } else {
             data.brackets.push(master);
@@ -31,7 +31,7 @@ exports.register = function (server, config, next) {
                 if (err) {
                     server.log(['error'], 'Error updating master: ' + err);
                 } else {
-                    server.log(['log'], 'Updated master: ' + model.toJSON().brackets.length + ' to ' + master);
+                    server.log(['debug'], 'Updated master: ' + model.toJSON().brackets.length + ' to ' + master);
                 }
                 cb(err, master);
             });
@@ -44,7 +44,7 @@ exports.register = function (server, config, next) {
             if (err) {
                 server.log(['error'], 'Error creating master: ' + err);
             } else {
-                server.log(['log'], 'Created master: ' + model.toJSON());
+                server.log(['debug'], 'Created master: ' + model.toString());
             }
             cb(err, master);
         });
@@ -64,7 +64,12 @@ exports.register = function (server, config, next) {
                 server.log(['error'], 'Error finding master by index: ' + err);
                 cb(err);
             } else {
-                updateOrCreate(master, found, cb);
+                updateOrCreate(master, found, function (err, master) {
+                    if (!err && master) {
+                        server.log(['debug'], 'SSE:' + master);
+                    }
+                    cb(err);
+                });
             }
         });
     };

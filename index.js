@@ -14,7 +14,7 @@ server.register([
         options: {
             reporters: [{
                 reporter: require('good-console'),
-                args:[{log: '*', response: '*', error: '*'}]
+                args:[{request: '*', log: '*', response: '*', error: '*'}]
             }, {
                 reporter: require('good-file'),
                 args: ['./logs/server.log', {log: '*', error: '*'}]
@@ -35,6 +35,6 @@ server.register([
     }
 ], function () {
     server.start(function () {
-        console.log('Server running at:', server.info.uri);
+        server.log(['debug'], 'Server running at:' + server.info.uri);
     });
 });
