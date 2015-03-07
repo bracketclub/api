@@ -1,6 +1,8 @@
 var ScoreWatcher = require('score-watcher');
 var path = require('path');
 var _ = require('lodash');
+var BracketData = require('bracket-data');
+
 
 
 exports.register = function (server, config, next) {
@@ -11,53 +13,80 @@ exports.register = function (server, config, next) {
         }
     }, config);
 
+    var sport = config.sport;
     var year = config.year;
+    var empty = new BracketData({props: ['constants'], sport: sport, year: year}).constants.EMPTY;
     var Master = server.plugins.db.Master;
+
+    var updateBracket = function (master, found, cb) {
+        var data = found.toJSON();
+        data.brackets || (data.brackets = []);
+        var last = _.last(data.brackets);
+        if (last === master) {
+            server.log(['log'], 'Skipping master since it matches latest: ' + master);
+            cb(null, last);
+        } else {
+            data.brackets.push(master);
+            Master.update(found.key, data, function (err, model) {
+                if (err) {
+                    server.log(['error'], 'Error updating master: ' + err);
+                } else {
+                    server.log(['log'], 'Updated master: ' + model.toJSON().brackets.length + ' to ' + master);
+                }
+                cb(err, master);
+            });
+        }
+    };
+
+    var createMaster = function (master, cb) {
+        var model = Master.create({year: year, brackets: [master]});
+        model.save(function (err) {
+            if (err) {
+                server.log(['error'], 'Error creating master: ' + err);
+            } else {
+                server.log(['log'], 'Created master: ' + model.toJSON());
+            }
+            cb(err, master);
+        });
+    };
+
+    var updateOrCreate = function (master, found, cb) {
+        if (found) {
+            updateBracket(master, found, cb);
+        } else {
+            createMaster(master, cb);
+        }
+    };
+
     options.onSave = function (master, cb) {
         Master.findByIndex('year', year, function (err, found) {
             if (err) {
                 server.log(['error'], 'Error finding master by index: ' + err);
-                cb();
+                cb(err);
             } else {
-                if (found) {
-                    var data = found.toJSON();
-                    var last = _.last(data.brackets);
-                    if (last === master) {
-                        server.log(['log'], 'Skipping master since it matches latest: ' + master);
-                        cb();
-                    } else {
-                        data.brackets.push(master);
-                        Master.update(found.key, data, function (err, model) {
-                            if (err) {
-                                server.log(['error'], 'Error updating master: ' + err);
-                            } else {
-                                server.log(['log'], 'Updated master: ' + model.toJSON().brackets.length + ' to ' + master);
-                            }
-                            cb();
-                        });
-                    }
-                }
-                else {
-                    var model = Master.create({year: year, brackets: [master]});
-                    model.save(function (err) {
-                        if (err) {
-                            server.log(['error'], 'Error creating master: ' + err);
-                        } else {
-                            server.log(['log'], 'Created master: ' + model.toJSON());
-                        }
-                        cb();
-                    });
-                }
+                updateOrCreate(master, found, cb);
             }
         });
     };
 
+    var startWatcher = function (err, master) {
+        options.master = master;
+        new ScoreWatcher(options).start();
+        next(err);
+    };
+
+    // To start the score watcher we need to make sure the db contains
+    // a master model for this year and that it starts with an empty bracket
     Master.findByIndex('year', year, function (err, model) {
-        var last = _.last(model.brackets);
-        if (last) {
-            options.master = last;
-            new ScoreWatcher(options).start();
+        if (err) {
+            server.log(['error'], 'Error finding master by index: ' + err);
             next(err);
+        } else if (!model) {
+            createMaster(empty, startWatcher);
+        } else if (!model.brackets || model.brackets.length === 0) {
+            updateBracket(empty, model, startWatcher);
+        } else {
+            startWatcher(null, _.last(model.brackets));
         }
     });
 };

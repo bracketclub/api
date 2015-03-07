@@ -1,8 +1,9 @@
 var Hapi = require('hapi');
 var _ = require('lodash');
+var path = require('path');
+
+
 var config = require('./config');
-
-
 var server = new Hapi.Server();
 server.connection({port: process.env.PORT || 3001});
 
@@ -22,6 +23,7 @@ server.register([
     }, {
         register: require('./plugins/db'),
         options: {
+            path: path.resolve(__dirname, 'db'),
             'import': process.argv.slice(2).indexOf('--import')
         }
     }, {

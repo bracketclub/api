@@ -1,8 +1,8 @@
 var dulcimer = require('dulcimer');
 var moment = require('moment');
 var _ = require('lodash');
+var async = require('async');
 var addData = require('../playground/add-data');
-var path = require('path');
 
 
 var filterByYear = function (req) {
@@ -14,7 +14,7 @@ var filterByYear = function (req) {
 
 var formatReply = function (reply, err, resp) {
     reply({
-        error: err ? err.toString() : null,
+        error: err ? {message: err.message, stack: err.stack} : null,
         response: err ? null : _.invoke(resp, 'toJSON')
     })
     .code(err ? 500 : 200);
@@ -22,7 +22,7 @@ var formatReply = function (reply, err, resp) {
 
 
 exports.register = function (server, options, next) {
-    dulcimer.connect(path.resolve(__dirname, '..', 'db'));
+    dulcimer.connect(options.path);
 
     var Entry = new dulcimer.Model({
         created: {type: 'string', required: true},
@@ -88,13 +88,20 @@ exports.register = function (server, options, next) {
 
     if (options.import) {
         server.log(['log'], 'Importing new data to db...');
-        Entry.importData(addData.entries, function () {
-            server.log(['log'], 'Entries imported');
-        });
-        Master.importData(addData.masters, function () {
-            server.log(['log'], 'Masters imported');
-            next();
-        });
+        async.parallel([
+            function (cb) {
+                Entry.importData(addData.entries, function (err) {
+                    server.log(['log'], 'Entries imported');
+                    cb(err);
+                });
+            },
+            function (cb) {
+                Master.importData(addData.masters, function (err) {
+                    server.log(['log'], 'Masters imported');
+                    cb(err);
+                });
+            }
+        ], next);
     } else {
         next();
     }
