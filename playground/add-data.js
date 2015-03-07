@@ -1,11 +1,14 @@
-var level = require('level');
-var db = level('../db', {
-    valueEncoding: 'json'
+var _ = require('lodash');
+var data = ['2012', '2013', '2014', '2015'].map(function (year) {
+    var d = require('../data/ncaa-mens-basketball/' + year);
+    d.year = year;
+    return d;
 });
 
-var sport = 'ncaa-mens-basketball';
-['2012', '2013', '2014', '2015'].forEach(function (year) {
-    var data = {};
-    data[sport] = require('../data/' + sport + '/' + year);
-    db.put(sport, data);
+module.exports.entries = _.flatten(_.map(data, function (value) {
+    return _.values(value.entries);
+}));
+
+module.exports.masters =_.map(data, function (d) {
+    return {brackets: d.masters, year: d.year};
 });
