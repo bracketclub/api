@@ -2,7 +2,6 @@ var ScoreWatcher = require('score-watcher');
 var path = require('path');
 var _ = require('lodash');
 var Stream = require('stream');
-var BracketData = require('bracket-data');
 
 
 exports.register = function (server, config, next) {
@@ -13,15 +12,12 @@ exports.register = function (server, config, next) {
         }
     }, config);
 
-    var sport = config.sport;
     var year = config.year;
-    var empty = new BracketData({props: ['constants'], sport: sport, year: year}).constants.EMPTY;
     var Master = server.plugins.db.Master;
     var channel = new Stream.PassThrough();
 
     var updateBracket = function (master, found, cb) {
         var data = found.toJSON();
-        data.brackets || (data.brackets = []);
         var last = _.last(data.brackets);
         if (last === master) {
             server.log(['debug'], 'Skipping master since it matches latest: ' + master);
@@ -40,7 +36,7 @@ exports.register = function (server, config, next) {
     };
 
     var createMaster = function (master, cb) {
-        var model = Master.create({year: year, brackets: [master]});
+        var model = Master.create({year: year, brackets: master ? [master] : []});
         model.save(function (err) {
             if (err) {
                 server.log(['error'], 'Error creating master: ' + err);
@@ -101,9 +97,7 @@ exports.register = function (server, config, next) {
             server.log(['error'], 'Error finding master by index: ' + err);
             next(err);
         } else if (!model) {
-            createMaster(empty, startWatcher);
-        } else if (!model.brackets || model.brackets.length === 0) {
-            updateBracket(empty, model, startWatcher);
+            createMaster(null, startWatcher);
         } else {
             startWatcher(null, _.last(model.brackets));
         }
