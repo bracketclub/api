@@ -24,7 +24,7 @@ server.register([
         register: require('./plugins/db'),
         options: {
             path: path.resolve(__dirname, 'db'),
-            'import': process.argv.slice(2).indexOf('--import')
+            'import': process.argv.slice(2).indexOf('--import') > -1
         }
     }, {
         register: require('./plugins/entry-watcher'),
