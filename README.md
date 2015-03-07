@@ -1,4 +1,14 @@
-bracket-data-live
+tweetyourbracket-api
 =================
 
-The live data.
+### Routes
+
+**Entries**
+`/entries`
+`/entries/:id`
+`/:year/entries`
+`/:year/entries/:id`
+
+**Masters**
+`/masters`
+`/:year/masters`
