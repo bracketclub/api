@@ -71,7 +71,7 @@ exports.register = function (server, config, next) {
 
     server.route({
         method: "GET",
-        path: "/masters/events",
+        path: "/entries/events",
         handler: function (request, reply) {
             reply(channel).code(200)
             .type("text/event-stream")
