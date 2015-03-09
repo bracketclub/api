@@ -61,8 +61,8 @@ exports.register = function (server, config, next) {
             } else {
                 updateOrCreate(data, found[0], function (err, entry) {
                     if (!err && entry) {
-                        channel.write("event: entries\n");
-                        channel.write("data: " + entry.toString() +  "\n\n");
+                        channel.write('event: entries\n');
+                        channel.write('data: ' + entry.toString() +  '\n\n');
                     }
                 });
             }
@@ -70,18 +70,21 @@ exports.register = function (server, config, next) {
     };
 
     server.route({
-        method: "GET",
-        path: "/entries/events",
+        method: 'GET',
+        path: '/entries/events',
         handler: function (request, reply) {
             reply(channel).code(200)
-            .type("text/event-stream")
-            .header("Connection", "keep-alive")
-            .header("Cache-Control", "no-cache")
-            .header("Content-Encoding", "identity");
+            .type('text/event-stream')
+            .header('Connection', 'keep-alive')
+            .header('Cache-Control', 'no-cache')
+            .header('Content-Encoding', 'identity');
         }
     });
 
-    new EntryWatcher(options).start();
+    if (options.start) {
+        new EntryWatcher(options).start();
+    }
+
     next();
 };
 

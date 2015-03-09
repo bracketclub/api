@@ -63,8 +63,8 @@ exports.register = function (server, config, next) {
             } else {
                 updateOrCreate(master, found, function (err, master) {
                     if (!err && master) {
-                        channel.write("event: masters\n");
-                        channel.write("data: " + master +  "\n\n");
+                        channel.write('event: masters\n');
+                        channel.write('data: ' + master +  '\n\n');
                     }
                     cb(err);
                 });
@@ -73,20 +73,22 @@ exports.register = function (server, config, next) {
     };
 
     server.route({
-        method: "GET",
-        path: "/masters/events",
+        method: 'GET',
+        path: '/masters/events',
         handler: function (request, reply) {
             reply(channel).code(200)
-            .type("text/event-stream")
-            .header("Connection", "keep-alive")
-            .header("Cache-Control", "no-cache")
-            .header("Content-Encoding", "identity");
+            .type('text/event-stream')
+            .header('Connection', 'keep-alive')
+            .header('Cache-Control', 'no-cache')
+            .header('Content-Encoding', 'identity');
         }
     });
 
     var startWatcher = function (err, master) {
         options.master = master;
-        new ScoreWatcher(options).start();
+        if (options.start) {
+            new ScoreWatcher(options).start();
+        }
         next(err);
     };
 
