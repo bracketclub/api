@@ -5,7 +5,10 @@ var path = require('path');
 
 var config = require('./config');
 var server = new Hapi.Server();
-server.connection({port: process.env.PORT || 3001});
+server.connection({
+    port: process.env.PORT || 3001,
+    routes: { cors: true }
+});
 
 
 server.register([
