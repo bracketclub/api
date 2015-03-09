@@ -4,8 +4,10 @@ var path = require('path');
 
 
 var config = require('./config');
+var startWatchers = process.argv.slice(2).indexOf('--watchers') > -1;
 var server = new Hapi.Server();
 server.connection({
+    address: '0.0.0.0',
     port: process.env.PORT || 3001,
     routes: { cors: true }
 });
@@ -31,10 +33,14 @@ server.register([
         }
     }, {
         register: require('./plugins/entry-watcher'),
-        options: _.pick(config, 'twitter', 'domain', 'tags', 'year', 'sport')
+        options: _.extend(_.pick(config, 'twitter', 'domain', 'tags', 'year', 'sport'), {
+            start: startWatchers
+        })
     }, {
         register: require('./plugins/score-watcher'),
-        options: _.pick(config, 'sport', 'year')
+        options: _.extend(_.pick(config, 'sport', 'year'), {
+            start: startWatchers
+        })
     }
 ], function () {
     server.start(function () {

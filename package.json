@@ -42,6 +42,7 @@
   },
   "scripts": {
     "start": "node index",
+    "start-watchers": "node index --watchers",
     "clean": "rm -rf ./db && node index --import",
     "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 5000 test/*.js"
   }
