@@ -41,9 +41,11 @@
     "url": "git://github.com/tweetyourbracket/bracket-data-live.git"
   },
   "scripts": {
+    "clean": "rm -rf ./db && node index --import",
     "start": "node index",
     "start-watchers": "node index --watchers",
-    "clean": "rm -rf ./db && node index --import",
-    "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 5000 test/*.js"
+    "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 5000 test/*.js",
+    "tmux-start": "tmux new -s tyb-api -n api -d && tmux send-keys -t tyb-api \"cd $HOME/projects/tweetyourbracket/api && npm start\" C-m",
+    "tmux-stop": "tmux kill-session -t tyb-api"
   }
 }
