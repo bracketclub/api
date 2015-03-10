@@ -49,6 +49,5 @@ cd api/
 npm install
 touch config.json
 nano config.json # Add the values needed
-npm run clean # First time only to add old db data
-npm start # or `npm run start-watchers`
+npm run tmux-start # or `npm run start-watchers`
 ```
