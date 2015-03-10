@@ -14,14 +14,14 @@
     "async": "^0.9.0",
     "bracket-data": "^2.1.1",
     "dulcimer": "^2.8.3",
-    "entry-watcher": "git+ssh://git@github.com:tweetyourbracket/entry-watcher.git",
+    "entry-watcher": "git+https://github.com/tweetyourbracket/entry-watcher.git",
     "good": "^5.1.2",
     "good-console": "^4.1.0",
     "good-file": "^4.0.2",
     "hapi": "^8.2.0",
     "lodash": "^3.3.1",
     "moment": "^2.9.0",
-    "score-watcher": "git+ssh://git@github.com:tweetyourbracket/score-watcher.git"
+    "score-watcher": "git+https://github.com/tweetyourbracket/score-watcher.git"
   },
   "devDependencies": {
     "jshint": "^2.6.0",
