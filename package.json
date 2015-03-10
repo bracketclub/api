@@ -49,7 +49,7 @@
     "start": "node index",
     "start-watchers": "node index --watchers",
     "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 5000 test/*.js",
-    "tmux-start": "tmux new -s tyb-api -n api -d && tmux send-keys -t tyb-api \"cd $HOME/projects/tweetyourbracket/api && npm start\" C-m",
+    "tmux-start": "tmux new -s tyb-api -n api -d && tmux send-keys -t tyb-api \"cd $HOME/api && npm start\" C-m",
     "tmux-stop": "tmux kill-session -t tyb-api"
   }
 }
