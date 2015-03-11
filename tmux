@@ -2,8 +2,6 @@
 
 SESSIONNAME="tyb-api"
 
-DEFAULT_ACTION="start"
-
 DEFAULT_CMD="start"
 NPM_CMD=${2:-$DEFAULT_CMD}
 
