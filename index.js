@@ -1,6 +1,5 @@
 var Hapi = require('hapi');
 var _ = require('lodash');
-var path = require('path');
 
 
 var config = require('./config');
@@ -26,11 +25,7 @@ server.register([
             }]
         }
     }, {
-        register: require('./plugins/db'),
-        options: {
-            path: path.resolve(__dirname, 'db'),
-            'import': process.argv.slice(2).indexOf('--import') > -1
-        }
+        register: require('./plugins/db')
     }, {
         register: require('./plugins/entry-watcher'),
         options: _.extend(_.pick(config, 'twitter', 'domain', 'tags', 'year', 'sport'), {

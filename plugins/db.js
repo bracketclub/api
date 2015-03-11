@@ -1,8 +1,5 @@
-var dulcimer = require('dulcimer');
-var moment = require('moment');
+var models = require('../models');
 var _ = require('lodash');
-var async = require('async');
-var addData = require('../playground/add-data');
 
 
 var filterByYear = function (req) {
@@ -22,28 +19,8 @@ var formatReply = function (reply, err, resp) {
 
 
 exports.register = function (server, options, next) {
-    dulcimer.connect(options.path);
-
-    var Entry = new dulcimer.Model({
-        created: {type: 'string', required: true},
-        user_id: {type: 'string', required: true, index: true},
-        data_id: {type: 'string', required: true},
-        username: {type: 'string', required: true},
-        name: {type: 'string', required: true},
-        profile_pic: {type: 'string', required: true},
-        bracket: {type: 'string', required: true},
-        year: {
-            index: true,
-            derive: function () {
-                return moment(this.created, 'ddd MMM DD HH:mm:ss ZZ YYYY').format('YYYY');
-            }
-        }
-    }, {name: 'entry'});
-
-    var Master = new dulcimer.Model({
-        year: {type: 'string', required: true, index: true},
-        brackets: {}
-    }, {name: 'master'});
+    var Entry = models.Entry;
+    var Master = models.Master;
 
     server.route([{
         method: 'GET',
@@ -86,25 +63,7 @@ exports.register = function (server, options, next) {
     server.expose('Master', Master);
     server.expose('Entry', Entry);
 
-    if (options.import) {
-        server.log(['log'], 'Importing new data to db...');
-        async.parallel([
-            function (cb) {
-                Entry.importData(addData.entries, function (err) {
-                    server.log(['log'], 'Entries imported');
-                    cb(err);
-                });
-            },
-            function (cb) {
-                Master.importData(addData.masters, function (err) {
-                    server.log(['log'], 'Masters imported');
-                    cb(err);
-                });
-            }
-        ], next);
-    } else {
-        next();
-    }
+    next();
 };
 
 exports.register.attributes = {
