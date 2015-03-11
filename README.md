@@ -49,5 +49,7 @@ cd api/
 npm install
 touch config.json
 nano config.json # Add the values needed
-npm run tmux-start # or `npm run start-watchers`
+npm run clean
+./tmux start start-watchers
+./tmux stop
 ```
