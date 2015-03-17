@@ -44,7 +44,7 @@
     "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
-    "clean": "rm -rf ./db && node index --import",
+    "clean": "rm -rf ./db && node lib/import && node index",
     "start": "node index",
     "start-watchers": "node index --watchers",
     "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 5000 test/*.js"
