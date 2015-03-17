@@ -8,30 +8,30 @@
     "url": "http://lukekarrys.com"
   },
   "bugs": {
-    "url": "https://github.com/tweetyourbracket/bracket-data-live/issues"
+    "url": "https://github.com/tweetyourbracket/api/issues"
   },
   "dependencies": {
     "async": "^0.9.0",
-    "dulcimer": "^2.8.3",
+    "dulcimer": "^2.8.4",
     "entry-watcher": "git+https://github.com/tweetyourbracket/entry-watcher.git",
     "good": "^5.1.2",
     "good-console": "^4.1.0",
     "good-file": "^4.0.2",
-    "hapi": "^8.2.0",
-    "lodash": "^3.3.1",
+    "hapi": "^8.4.0",
+    "lodash": "^3.5.0",
     "moment": "^2.9.0",
     "score-watcher": "git+https://github.com/tweetyourbracket/score-watcher.git"
   },
   "devDependencies": {
-    "jshint": "^2.6.0",
-    "mocha": "^2.1.0",
+    "jshint": "^2.6.3",
+    "mocha": "^2.2.1",
     "precommit-hook": "^1.0.7"
   },
   "engines": {
     "node": "^0.10.35",
     "npm": "^2.7.0"
   },
-  "homepage": "https://github.com/tweetyourbracket/bracket-data-live",
+  "homepage": "https://github.com/tweetyourbracket/api",
   "keywords": [
     "bracket",
     "ncaa",
@@ -41,7 +41,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/tweetyourbracket/bracket-data-live.git"
+    "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
     "clean": "rm -rf ./db && node index --import",
