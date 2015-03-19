@@ -3,7 +3,8 @@ var _ = require('lodash');
 
 
 var config = require('./config');
-var startWatchers = process.argv.slice(2).indexOf('--watchers') > -1;
+var startEntries = process.argv.slice(2).indexOf('--watch-entries') > -1;
+var startScores = process.argv.slice(2).indexOf('--watch-scores') > -1;
 var server = new Hapi.Server();
 server.connection({
     address: '0.0.0.0',
@@ -29,12 +30,12 @@ server.register([
     }, {
         register: require('./plugins/entry-watcher'),
         options: _.extend(_.pick(config, 'twitter', 'domain', 'tags', 'year', 'sport'), {
-            start: startWatchers
+            start: startEntries
         })
     }, {
         register: require('./plugins/score-watcher'),
         options: _.extend(_.pick(config, 'sport', 'year'), {
-            start: startWatchers
+            start: startScores
         })
     }
 ], function () {
