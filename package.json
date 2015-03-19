@@ -44,7 +44,7 @@
     "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
-    "clean": "rm -rf ./db && node lib/import && node index",
+    "clean": "rm -rf ./db && node lib/import",
     "start": "node index",
     "start-watchers": "node index --watch-entries --watch-scores",
     "start-entries": "node index --watch-entries",
