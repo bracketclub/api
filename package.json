@@ -46,7 +46,9 @@
   "scripts": {
     "clean": "rm -rf ./db && node lib/import && node index",
     "start": "node index",
-    "start-watchers": "node index --watchers",
+    "start-watchers": "node index --watch-entries --watch-scores",
+    "start-entries": "node index --watch-entries",
+    "start-scores": "node index --watch-scores",
     "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 5000 test/*.js"
   }
 }
