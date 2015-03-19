@@ -1,7 +1,8 @@
 var ScoreWatcher = require('score-watcher');
 var path = require('path');
 var _ = require('lodash');
-var Stream = require('stream');
+var Channels = require('../lib/channels');
+var sseHandler = require('../lib/sseHandler');
 
 
 exports.register = function (server, config, next) {
@@ -14,7 +15,7 @@ exports.register = function (server, config, next) {
 
     var year = config.year;
     var Master = server.plugins.db.Master;
-    var channel = new Stream.PassThrough();
+    var channels = new Channels();
 
     var updateBracket = function (master, found, cb) {
         var data = found.toJSON();
@@ -63,8 +64,7 @@ exports.register = function (server, config, next) {
             } else {
                 updateOrCreate(master, found, function (err, master) {
                     if (!err && master) {
-                        channel.write('event: masters\n');
-                        channel.write('data: ' + master +  '\n\n');
+                        channels.write({event: 'masters', data: {master: master}});
                     }
                     cb(err);
                 });
@@ -75,13 +75,7 @@ exports.register = function (server, config, next) {
     server.route({
         method: 'GET',
         path: '/masters/events',
-        handler: function (request, reply) {
-            reply(channel).code(200)
-            .type('text/event-stream')
-            .header('Connection', 'keep-alive')
-            .header('Cache-Control', 'no-cache')
-            .header('Content-Encoding', 'identity');
-        }
+        handler: sseHandler(channels)
     });
 
     var startWatcher = function (err, master) {

@@ -1,7 +1,8 @@
 var EntryWatcher = require('entry-watcher');
 var path = require('path');
 var _ = require('lodash');
-var Stream = require('stream');
+var Channels = require('../lib/channels');
+var sseHandler = require('../lib/sseHandler');
 
 
 exports.register = function (server, config, next) {
@@ -13,7 +14,7 @@ exports.register = function (server, config, next) {
 
     var year = config.year;
     var Entry = server.plugins.db.Entry;
-    var channel = new Stream.PassThrough();
+    var channels = new Channels();
 
     var filterByYear = {
         filter: function (model) {
@@ -61,8 +62,7 @@ exports.register = function (server, config, next) {
             } else {
                 updateOrCreate(data, found[0], function (err, entry) {
                     if (!err && entry) {
-                        channel.write('event: entries\n');
-                        channel.write('data: ' + entry.toString() +  '\n\n');
+                        channels.write({event: 'entries', data: entry.toJSON()});
                     }
                 });
             }
@@ -72,13 +72,7 @@ exports.register = function (server, config, next) {
     server.route({
         method: 'GET',
         path: '/entries/events',
-        handler: function (request, reply) {
-            reply(channel).code(200)
-            .type('text/event-stream')
-            .header('Connection', 'keep-alive')
-            .header('Cache-Control', 'no-cache')
-            .header('Content-Encoding', 'identity');
-        }
+        handler: sseHandler(channels)
     });
 
     if (options.start) {
