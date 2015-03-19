@@ -9,7 +9,10 @@ var server = new Hapi.Server();
 server.connection({
     address: '0.0.0.0',
     port: process.env.PORT || 3001,
-    routes: { cors: true }
+    routes: {
+        cors: true,
+        timeout: {socket: false}
+    }
 });
 
 
