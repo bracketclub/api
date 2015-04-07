@@ -50,6 +50,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./db && node lib/import",
+    "export": "node lib/export",
     "forever": "forever",
     "lint": "jshint .",
     "local": "PORT=3001 node index",
