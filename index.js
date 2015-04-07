@@ -1,14 +1,15 @@
 var Hapi = require('hapi');
 var _ = require('lodash');
 
-
 var config = require('./config');
-var startEntries = process.argv.slice(2).indexOf('--watch-entries') > -1;
-var startScores = process.argv.slice(2).indexOf('--watch-scores') > -1;
+var argv = function (arg) { return process.argv.slice(2).indexOf(arg) > -1; };
+var startEntries = argv('--tweets');
+var startScores = argv('--scores');
+
 var server = new Hapi.Server();
 server.connection({
     address: '0.0.0.0',
-    port: process.env.PORT || 3001,
+    port: process.env.PORT || (process.env.NODE_ENV === 'production' ? 80 : 3001),
     routes: {
         cors: true,
         timeout: {socket: false}
