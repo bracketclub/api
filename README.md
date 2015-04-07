@@ -50,6 +50,6 @@ npm install
 touch config.json
 nano config.json # Add the values needed
 npm run clean
-./tmux start start-watchers
-./tmux stop
+npm run start
+# npm run start -- --tweets --scores
 ```

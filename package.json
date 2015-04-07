@@ -18,14 +18,15 @@
     "good-console": "^4.1.0",
     "good-file": "^4.0.2",
     "hapi": "^8.4.0",
-    "lodash": "^3.5.0",
+    "lodash": "^3.6.0",
     "moment": "^2.9.0",
     "score-watcher": "git+https://github.com/tweetyourbracket/score-watcher.git"
   },
   "devDependencies": {
+    "forever": "^0.14.1",
     "jshint": "^2.6.3",
     "mocha": "^2.2.1",
-    "precommit-hook": "^1.0.7"
+    "precommit-hook": "^2.0.1"
   },
   "engines": {
     "node": "^0.10.35",
@@ -39,16 +40,21 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
     "clean": "rm -rf ./db && node lib/import",
-    "start": "node index",
-    "start-watchers": "node index --watch-entries --watch-scores",
-    "start-entries": "node index --watch-entries",
-    "start-scores": "node index --watch-scores",
-    "test": "./node_modules/.bin/mocha -c -u bdd -R spec --timeout 5000 test/*.js"
+    "forever": "forever",
+    "lint": "jshint .",
+    "local": "PORT=3001 node index",
+    "start": "NODE_ENV=production forever start index.js",
+    "stop": "forever stop index.js",
+    "test": "mocha -c -u bdd -R spec --timeout 5000 test/*.js"
   }
 }
