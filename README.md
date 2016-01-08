@@ -29,7 +29,7 @@ npm run local
 **API Droplet**
 ```sh
 sudo apt-get update
-sudo apt-get install git
+sudo apt-get install git postgresql postgresql-contrib
 
 # Install node
 cd ~
@@ -50,32 +50,40 @@ sudo chown -R root: /opt/node
 sudo ln -s /opt/node/bin/node /usr/local/bin/node
 sudo ln -s /opt/node/bin/npm /usr/local/bin/npm
 
+# Create user account
+sudo useradd -d /home/tweetyourbracket -m tweetyourbracket
+sudo adduser tweetyourbracket sudo
+sudo passwd tweetyourbracket
+
+# Create postgres user/db
+sudo su - postgres
+createuser tweetyourbracket
+createdb tweetyourbracket
+psql
+ALTER USER tweetyourbracket WITH PASSWORD 'ENTER_THE_PASSWORD'; # User passwd for postgres connection
+exit
+
 # Install api
+sudo su - tweetyourbracket
 git clone https://github.com/tweetyourbracket/api.git
 cd api/
 npm install
-mkdir config
-touch config/production.json
 
-
-# Install postgres
-cd ~
-
-sudo useradd -d /home/tweetyourbracket -m tweetyourbracket
-sudo passwd tweetyourbracket
-
-sudo apt-get install postgresql postgresql-contrib
-sudo su - postgres
-
-
-createdb tweetyourbracket
-psql -d tweetyourbracket -f api/sql/tweetyourbracket.sql
-
-# Get private IP
+# Get private IP for config host
 curl -w "\n" http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address
-nano config/production.json # Add the values needed
+
+# Create config
+mkdir config && nano config/production.json
+
+# Seed postgres
+exit
+sudo su - postgres
+psql -d tweetyourbracket -f /home/tweetyourbracket/api/sql/tweetyourbracket.sql
+exit
 
 # Setup pm2 and start
+sudo su - tweetyourbracket
+cd api
 npm run pm2:ubuntu # Run command from output
 npm run pm2:start
 # npm run pm2:start -- --tweets --scores
