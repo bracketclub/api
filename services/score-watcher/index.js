@@ -6,8 +6,8 @@ const _ = require('lodash');
 const pg = require('pg');
 
 const packageInfo = require('../../package');
-const Channels = require('../lib/channels');
-const sseHandler = require('../lib/sseHandler');
+const Channels = require('../../lib/channels');
+const sseHandler = require('../../lib/sseHandler');
 
 exports.register = (plugin, config, next) => {
   if (!config.start) {
