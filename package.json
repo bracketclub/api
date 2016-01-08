@@ -58,9 +58,6 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "pm2": "pm2",
-    "pm2:start": "NODE_ENV=production pm2 start index.js",
-    "pm2:ubuntu": "pm2 startup ubuntu",
     "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1",
     "validate": "npm ls"
