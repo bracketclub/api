@@ -8,7 +8,7 @@ const _ = require('lodash');
 const argv = (arg) => process.argv.slice(2).indexOf(arg) > -1;
 const startEntries = argv('--tweets');
 const force = argv('--force');
-// const startScores = argv('--scores');
+const startScores = argv('--scores');
 
 const server = new Hapi.Server(config.hapi.options);
 
@@ -44,13 +44,13 @@ const plugins = [
       start: startEntries,
       force
     })
+  },
+  {
+    register: require('./services/score-watcher'),
+    options: _.extend(_.pick(config, 'tweetyourbracket', 'postgres'), {
+      start: startScores
+    })
   }
-  // {
-  //   register: require('./services/score-watcher'),
-  //   options: _.extend(_.pick(config.tweetyourbracket, 'sport', 'year'), {
-  //     start: startScores
-  //   })
-  // }
 ];
 
 server.connection({

@@ -1,6 +1,7 @@
 'use strict';
 
 const Controllers = require('./controllers');
+const packageInfo = require('../../package');
 
 exports.register = (plugin, options, done) => {
   plugin.bind({config: options.config});
@@ -17,6 +18,6 @@ exports.register = (plugin, options, done) => {
 };
 
 exports.register.attributes = {
-  name: 'x-api-tybrkt',
-  version: '1.0.0'
+  name: `x-${packageInfo.name}-api`,
+  version: packageInfo.version
 };
