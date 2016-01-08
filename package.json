@@ -13,7 +13,7 @@
   "dependencies": {
     "async": "^1.5.1",
     "boom": "^3.0.0",
-    "entry-watcher": "git://github.com/tweetyourbracket/entry-watcher.git",
+    "entry-watcher": "github:tweetyourbracket/entry-watcher",
     "getconfig": "^2.2.0",
     "good": "^6.4.0",
     "good-console": "^5.2.0",

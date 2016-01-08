@@ -3,10 +3,11 @@
 const Hapi = require('hapi');
 const Hoek = require('hoek');
 const config = require('getconfig');
-// const _ = require('lodash');
+const _ = require('lodash');
 
-// const argv = (arg) => process.argv.slice(2).indexOf(arg) > -1;
-// const startEntries = argv('--tweets');
+const argv = (arg) => process.argv.slice(2).indexOf(arg) > -1;
+const startEntries = argv('--tweets');
+const force = argv('--force');
 // const startScores = argv('--scores');
 
 const server = new Hapi.Server(config.hapi.options);
@@ -36,13 +37,14 @@ const plugins = [
   {
     register: require('./services/api'),
     options: {config: config.api}
+  },
+  {
+    register: require('./services/entry-watcher'),
+    options: _.extend(_.pick(config, 'twitter', 'tweetyourbracket', 'postgres'), {
+      start: startEntries,
+      force
+    })
   }
-  // {
-  //   register: require('./services/entry-watcher'),
-  //   options: _.extend(_.pick(config, 'twitter', 'tweetyourbracket'), {
-  //     start: startEntries
-  //   })
-  // },
   // {
   //   register: require('./services/score-watcher'),
   //   options: _.extend(_.pick(config.tweetyourbracket, 'sport', 'year'), {
