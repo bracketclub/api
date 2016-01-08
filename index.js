@@ -1,49 +1,73 @@
-var Hapi = require('hapi');
-var _ = require('lodash');
+'use strict';
 
-var config = require('./config');
-var argv = function (arg) { return process.argv.slice(2).indexOf(arg) > -1; };
-var startEntries = argv('--tweets');
-var startScores = argv('--scores');
+const Hapi = require('hapi');
+const Hoek = require('hoek');
+const config = require('getconfig');
+// const _ = require('lodash');
 
-var server = new Hapi.Server();
-server.connection({
-    address: '0.0.0.0',
-    port: process.env.PORT || (process.env.NODE_ENV === 'production' ? 80 : 3001),
-    routes: {
-        cors: true,
-        timeout: {socket: false}
-    }
-});
+// const argv = (arg) => process.argv.slice(2).indexOf(arg) > -1;
+// const startEntries = argv('--tweets');
+// const startScores = argv('--scores');
 
+const server = new Hapi.Server(config.hapi.options);
 
-server.register([
-    {
-        register: require('good'),
-        options: {
-            reporters: [{
-                reporter: require('good-console'),
-                args:[{request: '*', log: '*', response: '*', error: '*'}]
-            }, {
-                reporter: require('good-file'),
-                args: ['./logs/server.log', {log: '*', error: '*'}]
-            }]
+const plugins = [
+  {
+    register: require('good'),
+    options: {
+      reporters: [
+        {
+          reporter: require('good-console'),
+          events: config.hapi.logEvents
         }
-    }, {
-        register: require('./plugins/db')
-    }, {
-        register: require('./plugins/entry-watcher'),
-        options: _.extend(_.pick(config, 'twitter', 'domain', 'tags', 'year', 'sport'), {
-            start: startEntries
-        })
-    }, {
-        register: require('./plugins/score-watcher'),
-        options: _.extend(_.pick(config, 'sport', 'year'), {
-            start: startScores
-        })
+      ]
     }
-], function () {
-    server.start(function () {
-        server.log(['debug'], 'Server running at:' + server.info.uri);
-    });
+  },
+  {
+    register: require('pgboom'),
+    options: {
+      getNull404: true
+    }
+  },
+  {
+    register: require('hapi-node-postgres'),
+    options: config.postgres
+  },
+  {
+    register: require('./services/api'),
+    options: {config: config.api}
+  }
+  // {
+  //   register: require('./services/entry-watcher'),
+  //   options: _.extend(_.pick(config, 'twitter', 'tweetyourbracket'), {
+  //     start: startEntries
+  //   })
+  // },
+  // {
+  //   register: require('./services/score-watcher'),
+  //   options: _.extend(_.pick(config.tweetyourbracket, 'sport', 'year'), {
+  //     start: startScores
+  //   })
+  // }
+];
+
+server.connection({
+  routes: {
+    cors: config.hapi.cors
+  },
+  host: config.hapi.host,
+  port: config.hapi.port
 });
+
+server.register(plugins, (err) => {
+  Hoek.assert(!err, `Failed loading plugins: ${err}`);
+
+  server.start((startErr) => {
+    Hoek.assert(!startErr, `Failed starting service: ${startErr}`);
+    server.log(['info', 'startup'], `Service is running at ${server.info.uri}`);
+  });
+});
+
+server.on('stop', () => server.log(['info', 'shutdown'], 'Service has stopped'));
+
+exports.getServer = () => server;
