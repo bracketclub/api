@@ -14,14 +14,14 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -30,7 +30,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 --
--- Name: to_yyyy_char(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: lukekarrys
+-- Name: to_yyyy_char(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: tweetyourbracket
 --
 
 CREATE FUNCTION to_yyyy_char(some_time timestamp with time zone) RETURNS text
@@ -40,14 +40,14 @@ CREATE FUNCTION to_yyyy_char(some_time timestamp with time zone) RETURNS text
 $_$;
 
 
-ALTER FUNCTION public.to_yyyy_char(some_time timestamp with time zone) OWNER TO lukekarrys;
+ALTER FUNCTION public.to_yyyy_char(some_time timestamp with time zone) OWNER TO tweetyourbracket;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: entries; Type: TABLE; Schema: public; Owner: lukekarrys
+-- Name: entries; Type: TABLE; Schema: public; Owner: tweetyourbracket
 --
 
 CREATE TABLE entries (
@@ -58,10 +58,10 @@ CREATE TABLE entries (
 );
 
 
-ALTER TABLE entries OWNER TO lukekarrys;
+ALTER TABLE entries OWNER TO tweetyourbracket;
 
 --
--- Name: masters; Type: TABLE; Schema: public; Owner: lukekarrys
+-- Name: masters; Type: TABLE; Schema: public; Owner: tweetyourbracket
 --
 
 CREATE TABLE masters (
@@ -71,10 +71,10 @@ CREATE TABLE masters (
 );
 
 
-ALTER TABLE masters OWNER TO lukekarrys;
+ALTER TABLE masters OWNER TO tweetyourbracket;
 
 --
--- Name: masters_id_seq; Type: SEQUENCE; Schema: public; Owner: lukekarrys
+-- Name: masters_id_seq; Type: SEQUENCE; Schema: public; Owner: tweetyourbracket
 --
 
 CREATE SEQUENCE masters_id_seq
@@ -85,17 +85,17 @@ CREATE SEQUENCE masters_id_seq
     CACHE 1;
 
 
-ALTER TABLE masters_id_seq OWNER TO lukekarrys;
+ALTER TABLE masters_id_seq OWNER TO tweetyourbracket;
 
 --
--- Name: masters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: lukekarrys
+-- Name: masters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tweetyourbracket
 --
 
 ALTER SEQUENCE masters_id_seq OWNED BY masters.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: lukekarrys
+-- Name: users; Type: TABLE; Schema: public; Owner: tweetyourbracket
 --
 
 CREATE TABLE users (
@@ -106,17 +106,17 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE users OWNER TO lukekarrys;
+ALTER TABLE users OWNER TO tweetyourbracket;
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: lukekarrys
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tweetyourbracket
 --
 
 ALTER TABLE ONLY masters ALTER COLUMN id SET DEFAULT nextval('masters_id_seq'::regclass);
 
 
 --
--- Data for Name: entries; Type: TABLE DATA; Schema: public; Owner: lukekarrys
+-- Data for Name: entries; Type: TABLE DATA; Schema: public; Owner: tweetyourbracket
 --
 
 COPY entries (data_id, bracket, user_id, created) FROM stdin;
@@ -255,7 +255,7 @@ COPY entries (data_id, bracket, user_id, created) FROM stdin;
 
 
 --
--- Data for Name: masters; Type: TABLE DATA; Schema: public; Owner: lukekarrys
+-- Data for Name: masters; Type: TABLE DATA; Schema: public; Owner: tweetyourbracket
 --
 
 COPY masters (id, created, bracket) FROM stdin;
@@ -515,14 +515,14 @@ COPY masters (id, created, bracket) FROM stdin;
 
 
 --
--- Name: masters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: lukekarrys
+-- Name: masters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweetyourbracket
 --
 
 SELECT pg_catalog.setval('masters_id_seq', 252, true);
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: lukekarrys
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: tweetyourbracket
 --
 
 COPY users (user_id, username, name, profile_pic) FROM stdin;
@@ -597,7 +597,7 @@ COPY users (user_id, username, name, profile_pic) FROM stdin;
 
 
 --
--- Name: entries_pkey; Type: CONSTRAINT; Schema: public; Owner: lukekarrys
+-- Name: entries_pkey; Type: CONSTRAINT; Schema: public; Owner: tweetyourbracket
 --
 
 ALTER TABLE ONLY entries
@@ -605,7 +605,7 @@ ALTER TABLE ONLY entries
 
 
 --
--- Name: masters_pkey; Type: CONSTRAINT; Schema: public; Owner: lukekarrys
+-- Name: masters_pkey; Type: CONSTRAINT; Schema: public; Owner: tweetyourbracket
 --
 
 ALTER TABLE ONLY masters
@@ -613,7 +613,7 @@ ALTER TABLE ONLY masters
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: lukekarrys
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: tweetyourbracket
 --
 
 ALTER TABLE ONLY users
@@ -621,21 +621,21 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: entries_bracket_to_yyyy_char_idx; Type: INDEX; Schema: public; Owner: lukekarrys
+-- Name: entries_bracket_to_yyyy_char_idx; Type: INDEX; Schema: public; Owner: tweetyourbracket
 --
 
 CREATE UNIQUE INDEX entries_bracket_to_yyyy_char_idx ON entries USING btree (bracket, to_yyyy_char(created));
 
 
 --
--- Name: masters_bracket_to_yyyy_char_idx; Type: INDEX; Schema: public; Owner: lukekarrys
+-- Name: masters_bracket_to_yyyy_char_idx; Type: INDEX; Schema: public; Owner: tweetyourbracket
 --
 
 CREATE UNIQUE INDEX masters_bracket_to_yyyy_char_idx ON masters USING btree (bracket, to_yyyy_char(created));
 
 
 --
--- Name: entries_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: lukekarrys
+-- Name: entries_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tweetyourbracket
 --
 
 ALTER TABLE ONLY entries
