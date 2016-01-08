@@ -29,6 +29,19 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 SET search_path = public, pg_catalog;
 
+--
+-- Name: to_yyyy_char(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: lukekarrys
+--
+
+CREATE FUNCTION to_yyyy_char(some_time timestamp with time zone) RETURNS text
+    LANGUAGE sql IMMUTABLE
+    AS $_$
+    select to_char($1, 'yyyy');
+$_$;
+
+
+ALTER FUNCTION public.to_yyyy_char(some_time timestamp with time zone) OWNER TO lukekarrys;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -605,6 +618,20 @@ ALTER TABLE ONLY masters
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: entries_bracket_to_yyyy_char_idx; Type: INDEX; Schema: public; Owner: lukekarrys
+--
+
+CREATE UNIQUE INDEX entries_bracket_to_yyyy_char_idx ON entries USING btree (bracket, to_yyyy_char(created));
+
+
+--
+-- Name: masters_bracket_to_yyyy_char_idx; Type: INDEX; Schema: public; Owner: lukekarrys
+--
+
+CREATE UNIQUE INDEX masters_bracket_to_yyyy_char_idx ON masters USING btree (bracket, to_yyyy_char(created));
 
 
 --

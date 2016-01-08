@@ -11,9 +11,9 @@
     "url": "https://github.com/tweetyourbracket/api/issues"
   },
   "dependencies": {
+    "@lukekarrys/entry-watcher": "^4.0.1",
     "async": "^1.5.1",
     "boom": "^3.0.0",
-    "entry-watcher": "github:tweetyourbracket/entry-watcher",
     "getconfig": "^2.2.0",
     "good": "^6.4.0",
     "good-console": "^5.2.0",
@@ -32,8 +32,8 @@
     "eslint": "^1.10.3",
     "eslint-plugin-classes": "^0.1.1",
     "eslint-plugin-react": "^3.14.0",
-    "forever": "^0.15.1",
     "git-validate": "^2.1.0",
+    "pm2": "^1.0.0",
     "precommit-hook": "^3.0.0"
   },
   "engines": {
@@ -58,11 +58,11 @@
     "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
-    "forever": "forever",
     "lint": "eslint .",
-    "local": "node index",
-    "start": "NODE_ENV=production forever start index.js",
-    "stop": "forever stop index.js",
+    "pm2": "pm2",
+    "pm2:start": "NODE_ENV=production pm2 start index.js",
+    "pm2:ubuntu": "pm2 startup ubuntu",
+    "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1",
     "validate": "npm ls"
   }
