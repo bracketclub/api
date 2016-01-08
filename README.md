@@ -81,12 +81,12 @@ sudo su - postgres
 psql -d tweetyourbracket -f /home/tweetyourbracket/api/sql/tweetyourbracket.sql
 exit
 
-# Setup pm2 and start
+# Setup pm2
 sudo su - tweetyourbracket
-cd api
-npm run pm2:ubuntu # Run command from output
-npm run pm2:start
-# npm run pm2:start -- --tweets --scores
+sudo npm install -g pm2
+pm2 statup ubuntu
+NODE_ENV=production pm2 start index.js -i 0 --name "api"
+# NODE_ENV=production pm2 start index.js --tweets --scores
 ```
 
 **Web Droplet**
