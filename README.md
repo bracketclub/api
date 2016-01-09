@@ -86,7 +86,8 @@ sudo su - tweetyourbracket
 sudo npm install -g pm2
 pm2 statup ubuntu
 NODE_ENV=production pm2 start index.js -i 0 --name "api"
-# NODE_ENV=production pm2 start index.js --tweets --scores
+# NODE_ENV=production pm2 start lib/entry.js -i 0 --name "entries"
+# NODE_ENV=production pm2 start lib/scores.js -i 0 --name "scores"
 ```
 
 **Web Droplet**
