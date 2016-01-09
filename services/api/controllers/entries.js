@@ -3,6 +3,7 @@
 const Joi = require('joi');
 const _ = require('lodash');
 
+const sseHandler = require('../lib/sseHandler');
 const utils = require('../lib/reply');
 const where = require('../lib/where');
 
@@ -55,5 +56,12 @@ module.exports = {
         id: Joi.string().regex(/^[\d]+$/)
       }
     }
+  },
+  events(channel) {
+    return {
+      description: 'Subscribe to SSE channel for entries',
+      tags: ['api', 'sse', 'entries'],
+      handler: sseHandler(channel)
+    };
   }
 };
