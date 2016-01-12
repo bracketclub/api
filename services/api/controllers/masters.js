@@ -1,32 +1,30 @@
 'use strict';
 
 const Joi = require('joi');
-const _ = require('lodash');
 
 const sseHandler = require('../lib/sseHandler');
 const utils = require('../lib/reply');
-const where = require('../lib/where');
+
+const mastersQuery = (where) => `SELECT
+  bracket, created
+  FROM masters
+  ${where ? `WHERE ${where}` : ''}
+  ORDER BY created`;
 
 module.exports = {
   all: {
     description: 'All masters',
     tags: ['api', 'masters'],
     handler: (request, reply) => {
-      const clauses = [];
+      const year = request.query.year;
+      const response = (err, res) => reply(err, utils.all(res));
 
-      if (!_.isEmpty(request.query)) {
-        const year = request.query.year;
-
-        if (year) {
-          clauses.push({
-            text: 'extract(YEAR from created) = $',
-            value: year
-          });
-        }
+      if (year) {
+        request.pg.client.query(mastersQuery('extract(YEAR from created) = $1'), [year], response);
       }
-
-      const query = where(clauses);
-      request.pg.client.query(`SELECT bracket, created FROM masters ${query.text} ORDER BY created;`, query.values, (err, res) => reply(err, utils.all(res)));
+      else {
+        request.pg.client.query(mastersQuery(), response);
+      }
     },
     validate: {
       query: {

@@ -8,7 +8,7 @@ tweetyourbracket-api
 - `/users/:id`
 
 **Entries**
-- `/entries?year&user`
+- `/entries?year`
 - `/entries/:id`
 
 **Masters**
