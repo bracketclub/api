@@ -1,0 +1,46 @@
+{
+  "isDev": true,
+
+  "hapi": {
+    "host": "0.0.0.0",
+    "port": 3001,
+    "options": {},
+    "cors": {
+      "credentials": true
+    },
+    "logEvents": {
+      "log": "*",
+      "response": "*",
+      "error": "*",
+      "request": "*"
+    }
+  },
+
+  "watchers": {
+    "rpc_port": 3002,
+    "logOptions": {
+      "format": ":level :time :data",
+      "timestamp": "HH:mm:ss",
+      "accessFormat": ":time :level :method :status :url"
+    }
+  },
+
+  "postgres": {
+    "connectionString": "postgres://lukekarrys@localhost/tweetyourbracket"
+  },
+
+  "twitter": {
+    "consumer_key": "",
+    "consumer_secret": "",
+    "access_token": "",
+    "access_token_secret": ""
+  },
+
+  "tweetyourbracket": {
+    "domain": "tweetyourbracket.com",
+    "tags": ["tybrkt"],
+    "year": "2016",
+    "sport": "ncaa-mens-basketball"
+  }
+}
+
