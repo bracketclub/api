@@ -6,29 +6,32 @@ const sseHandler = require('../lib/sseHandler');
 const utils = require('../lib/reply');
 
 const mastersQuery = (where) => `SELECT
-  bracket, created
+  json_agg((SELECT x FROM (SELECT bracket, created) x) ORDER BY created) as brackets,
+  extract(YEAR from created) as year
   FROM masters
   ${where ? `WHERE ${where}` : ''}
-  ORDER BY created`;
+  GROUP BY year
+  ORDER BY year DESC`;
 
 module.exports = {
   all: {
     description: 'All masters',
     tags: ['api', 'masters'],
     handler: (request, reply) => {
-      const year = request.query.year;
-      const response = (err, res) => reply(err, utils.all(res));
-
-      if (year) {
-        request.pg.client.query(mastersQuery('extract(YEAR from created) = $1'), [year], response);
-      }
-      else {
-        request.pg.client.query(mastersQuery(), response);
-      }
+      request.pg.client.query(mastersQuery(), (err, res) => reply(err, utils.all(res)));
+    }
+  },
+  get: {
+    description: 'Get masters by year',
+    tags: ['api', 'masters'],
+    handler: (request, reply) => {
+      request.pg.client.query(mastersQuery('extract(YEAR from created) = $1'), [request.params.id], (err, res) => {
+        reply(err, utils.all(res));
+      });
     },
     validate: {
-      query: {
-        year: Joi.string().regex(/^20\d\d$/)
+      params: {
+        id: Joi.string().regex(/^20\d\d$/)
       }
     }
   },

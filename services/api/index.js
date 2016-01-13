@@ -27,6 +27,7 @@ exports.register = (plugin, options, done) => {
 
   // Masters
   plugin.route({method: 'GET', path: '/masters', config: Controllers.masters.all});
+  plugin.route({method: 'GET', path: '/masters/{id}', config: Controllers.masters.get});
 
   const masterChannel = new Channels();
   plugin.route({method: 'GET', path: '/masters/events', config: Controllers.masters.events(masterChannel)});
