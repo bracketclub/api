@@ -3,7 +3,7 @@
 const ScoreWatcher = require('score-watcher');
 const _ = require('lodash');
 const config = require('getconfig');
-const BracketData = require('bracket-data');
+const bracketData = require('bracket-data');
 
 const pgConnect = require('./lib/pgConnect');
 const createLogger = require('./lib/logger');
@@ -11,10 +11,9 @@ const rpcClient = require('./lib/rpcClient');
 
 const logger = createLogger('scores');
 
-const emptyBracket = new BracketData({
+const emptyBracket = bracketData({
   sport: config.tweetyourbracket.sport,
-  year: config.tweetyourbracket.year,
-  props: ['constants']
+  year: config.tweetyourbracket.year
 }).constants.EMPTY;
 
 const onSave = (master, cb) => pgConnect(logger, (client, done) => {
