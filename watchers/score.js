@@ -1,6 +1,6 @@
 'use strict';
 
-const ScoreWatcher = require('score-watcher');
+const ScoreWatcher = require('@lukekarrys/score-watcher');
 const _ = require('lodash');
 const config = require('getconfig');
 const bracketData = require('bracket-data');
@@ -55,7 +55,7 @@ pgConnect(logger, (client, done) => {
 
       // The empty bracket already exists in the DB for this year, so we should
       // start the watcher with the latest bracket
-      if (insertErr.message.startsWith('duplicate key value violates unique constraint')) {
+      if (insertErr && insertErr.message.startsWith('duplicate key value violates unique constraint')) {
         return client.query(
           `SELECT bracket FROM masters
           WHERE extract(YEAR from created) = $1

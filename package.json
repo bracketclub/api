@@ -62,8 +62,8 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node index",
-    "start:entries": "node lib/entry",
-    "start:scores": "node lib/scores",
+    "start:entries": "node watchers/entry",
+    "start:scores": "node watchers/score",
     "validate": "npm ls"
   }
 }

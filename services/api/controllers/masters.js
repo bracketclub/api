@@ -26,7 +26,7 @@ module.exports = {
     tags: ['api', 'masters'],
     handler: (request, reply) => {
       request.pg.client.query(mastersQuery('extract(YEAR from created) = $1'), [request.params.id], (err, res) => {
-        reply(err, utils.all(res));
+        reply(err, utils.get(res));
       });
     },
     validate: {
