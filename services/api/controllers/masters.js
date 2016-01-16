@@ -7,31 +7,27 @@ const utils = require('../lib/reply');
 
 const mastersQuery = (where) => `SELECT
   json_agg((SELECT x FROM (SELECT bracket, created) x) ORDER BY created) as brackets,
-  extract(YEAR from created) as year
+  (sport || '-' || extract(YEAR from created)) as id
   FROM masters
   ${where ? `WHERE ${where}` : ''}
-  GROUP BY year
-  ORDER BY year DESC`;
+  GROUP BY extract(YEAR from created), sport`;
 
 module.exports = {
-  all: {
-    description: 'All masters',
-    tags: ['api', 'masters'],
-    handler: (request, reply) => {
-      request.pg.client.query(mastersQuery(), (err, res) => reply(err, utils.all(res)));
-    }
-  },
   get: {
     description: 'Get masters by year',
     tags: ['api', 'masters'],
     handler: (request, reply) => {
-      request.pg.client.query(mastersQuery('extract(YEAR from created) = $1'), [request.params.id], (err, res) => {
+      const year = request.params.year;
+      const sport = request.params.sport;
+
+      request.pg.client.query(mastersQuery('extract(YEAR from created) = $1 AND sport = $2'), [year, sport], (err, res) => {
         reply(err, utils.get(res));
       });
     },
     validate: {
       params: {
-        id: Joi.string().regex(/^20\d\d$/)
+        year: Joi.string().regex(/^20\d\d$/),
+        sport: Joi.string()
       }
     }
   },

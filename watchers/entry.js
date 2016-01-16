@@ -9,7 +9,9 @@ const pgConnect = require('./lib/pgConnect');
 const createLogger = require('./lib/logger');
 const rpcClient = require('./lib/rpcClient');
 
-const logger = createLogger('entries');
+const SPORT = process.env.TYB_SPORT;
+const YEAR = process.env.TYB_YEAR;
+const logger = createLogger(`entries:${SPORT}-${YEAR}`);
 
 const onSave = (data) => pgConnect(logger, (client, done) => {
   const queryCb = (type, cb) => (err, res) => {
@@ -34,9 +36,9 @@ const onSave = (data) => pgConnect(logger, (client, done) => {
     ),
     (cb) => client.query(
       `INSERT INTO entries
-      (data_id, bracket, user_id, created)
+      (data_id, bracket, user_id, created, sport)
       VALUES ($1, $2, $3, $4)`,
-      [data.data_id, data.bracket, data.user_id, data.created],
+      [data.data_id, data.bracket, data.user_id, data.created, data.sport],
       queryCb('entry', cb)
     )
   ], () => {
@@ -50,5 +52,7 @@ new EntryWatcher(_.extend({
   onSave,
   type: 'tweet',
   auth: config.twitter,
-  _forceOpen: true
+  _forceOpen: true,
+  sport: SPORT,
+  year: YEAR
 }, config.tweetyourbracket)).start();

@@ -6,7 +6,7 @@ const sseHandler = require('../lib/sseHandler');
 const utils = require('../lib/reply');
 
 const entriesQuery = (where) => `SELECT
-  e.bracket, e.data_id, e.created,
+  e.bracket, e.data_id, e.created, e.sport,
   row_to_json(u) as user
   FROM entries e, users u
   WHERE ${where ? `${where} AND` : ''} e.user_id = u.user_id
@@ -17,19 +17,16 @@ module.exports = {
     description: 'All entries',
     tags: ['api', 'entries'],
     handler: (request, reply) => {
-      const year = request.query.year;
+      const year = request.params.year;
+      const sport = request.params.sport;
       const response = (err, res) => reply(err, utils.all(res));
 
-      if (year) {
-        request.pg.client.query(entriesQuery('extract(YEAR from created) = $1'), [year], response);
-      }
-      else {
-        request.pg.client.query(entriesQuery(), response);
-      }
+      request.pg.client.query(entriesQuery('extract(YEAR from created) = $1 AND sport = $2'), [year, sport], response);
     },
     validate: {
-      query: {
-        year: Joi.string().regex(/^20\d\d$/)
+      params: {
+        year: Joi.string().regex(/^20\d\d$/),
+        sport: Joi.string()
       }
     }
   },
