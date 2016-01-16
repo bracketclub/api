@@ -7,6 +7,8 @@ const utils = require('../lib/reply');
 
 const mastersQuery = (where) => `SELECT
   json_agg((SELECT x FROM (SELECT bracket, created) x) ORDER BY created) as brackets,
+  sport,
+  extract(YEAR from created) as year,
   (sport || '-' || extract(YEAR from created)) as id
   FROM masters
   ${where ? `WHERE ${where}` : ''}
