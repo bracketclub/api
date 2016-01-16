@@ -11,6 +11,11 @@ const rpcClient = require('./lib/rpcClient');
 
 const SPORT = process.env.TYB_SPORT;
 const YEAR = process.env.TYB_YEAR;
+
+if (!SPORT || !YEAR) {
+  throw new Error(`TYB_SPORT and TYB_YEAR env variables are required`);
+}
+
 const logger = createLogger(`scores:${SPORT}-${YEAR}`);
 
 const emptyBracket = bracketData({
@@ -22,7 +27,7 @@ const onSave = (master, cb) => pgConnect(logger, (client, done) => {
   client.query(
     `INSERT INTO masters
     (bracket, created, sport)
-    VALUES ($1, $2);`,
+    VALUES ($1, $2, $3);`,
     [master, new Date().toJSON(), SPORT],
     (err) => {
       done();

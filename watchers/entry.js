@@ -11,6 +11,11 @@ const rpcClient = require('./lib/rpcClient');
 
 const SPORT = process.env.TYB_SPORT;
 const YEAR = process.env.TYB_YEAR;
+
+if (!SPORT || !YEAR) {
+  throw new Error(`TYB_SPORT and TYB_YEAR env variables are required`);
+}
+
 const logger = createLogger(`entries:${SPORT}-${YEAR}`);
 
 const onSave = (data) => pgConnect(logger, (client, done) => {
@@ -37,8 +42,8 @@ const onSave = (data) => pgConnect(logger, (client, done) => {
     (cb) => client.query(
       `INSERT INTO entries
       (data_id, bracket, user_id, created, sport)
-      VALUES ($1, $2, $3, $4)`,
-      [data.data_id, data.bracket, data.user_id, data.created, data.sport],
+      VALUES ($1, $2, $3, $4, $5)`,
+      [data.data_id, data.bracket, data.user_id, data.created, SPORT],
       queryCb('entry', cb)
     )
   ], () => {
