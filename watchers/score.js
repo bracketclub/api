@@ -9,19 +9,21 @@ const pgConnect = require('./lib/pgConnect');
 const createLogger = require('./lib/logger');
 const rpcClient = require('./lib/rpcClient');
 
-const logger = createLogger('scores');
+const SPORT = process.env.TYB_SPORT;
+const YEAR = process.env.TYB_YEAR;
+const logger = createLogger(`scores:${SPORT}-${YEAR}`);
 
 const emptyBracket = bracketData({
-  sport: config.tweetyourbracket.sport,
-  year: config.tweetyourbracket.year
+  sport: SPORT,
+  year: YEAR
 }).constants.EMPTY;
 
 const onSave = (master, cb) => pgConnect(logger, (client, done) => {
   client.query(
     `INSERT INTO masters
-    (bracket, created)
+    (bracket, created, sport)
     VALUES ($1, $2);`,
-    [master, new Date().toJSON()],
+    [master, new Date().toJSON(), SPORT],
     (err) => {
       done();
 
@@ -42,7 +44,9 @@ pgConnect(logger, (client, done) => {
       master,
       logger,
       onSave,
-      scores: {interval: 1}
+      scores: {interval: 1},
+      sport: SPORT,
+      year: YEAR
     }, config.tweetyourbracket)).start();
 
   client.query(
@@ -58,10 +62,10 @@ pgConnect(logger, (client, done) => {
       if (insertErr && insertErr.message.startsWith('duplicate key value violates unique constraint')) {
         return client.query(
           `SELECT bracket FROM masters
-          WHERE extract(YEAR from created) = $1
+          WHERE sport = $1 AND extract(YEAR from created) = $2
           ORDER BY created desc
           LIMIT 1;`,
-          [config.tweetyourbracket.year],
+          [SPORT, YEAR],
           (err, res) => {
             if (err) return logger.error(`Error selecting latest master: ${err}`);
             startWatcher(res.rows[0]);

@@ -15,7 +15,7 @@
     "@lukekarrys/score-watcher": "^3.0.1",
     "async": "^1.5.1",
     "boom": "^3.0.0",
-    "bracket-data": "^3.0.1",
+    "bracket-data": "^4.0.0",
     "bucker": "^1.1.1",
     "getconfig": "^2.2.0",
     "good": "^6.4.0",

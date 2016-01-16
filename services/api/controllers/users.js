@@ -13,15 +13,6 @@ const usersQuery = (where) => `SELECT
   GROUP BY u.user_id`;
 
 module.exports = {
-  all: {
-    description: 'All users',
-    tags: ['api', 'users'],
-    handler: (request, reply) => {
-      request.pg.client.query(usersQuery(), (err, res) => {
-        reply(err, utils.all(res));
-      });
-    }
-  },
   get: {
     description: 'Get user by id',
     tags: ['api', 'users'],
