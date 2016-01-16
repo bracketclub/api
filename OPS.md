@@ -70,15 +70,15 @@ sudo su - tweetyourbracket
 sudo npm install -g pm2
 pm2 statup ubuntu
 NODE_ENV=production pm2 start index.js -i 0 --name "api"
-# NODE_ENV=production TYB_SPORT=ncaam TYB_YEAR=2016 pm2 start lib/entry.js -i 0 --name "ncaam-entries"
-# NODE_ENV=production TYB_SPORT=ncaam TYB_YEAR=2016 pm2 start lib/scores.js -i 0 --name "ncaam-scores"
-# NODE_ENV=production TYB_SPORT=ncaaw TYB_YEAR=2016 pm2 start lib/entry.js -i 0 --name "ncaaw-entries"
-# NODE_ENV=production TYB_SPORT=ncaaw TYB_YEAR=2016 pm2 start lib/scores.js -i 0 --name "ncaaw-scores"
+# NODE_ENV=production TYB_SPORT=ncaam TYB_YEAR=2016 pm2 start watchers/entry.js -i 0 --name "ncaam-entries"
+# NODE_ENV=production TYB_SPORT=ncaam TYB_YEAR=2016 pm2 start watchers/score.js -i 0 --name "ncaam-scores"
+# NODE_ENV=production TYB_SPORT=ncaaw TYB_YEAR=2016 pm2 start watchers/entry.js -i 0 --name "ncaaw-entries"
+# NODE_ENV=production TYB_SPORT=ncaaw TYB_YEAR=2016 pm2 start watchers/score.js -i 0 --name "ncaaw-scores"
 
 # Later
 pm2 restart api
 pm2 logs api
-pm2 kill api
+pm2 stop api
 ```
 
 ### Web Droplet
