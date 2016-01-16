@@ -11,8 +11,8 @@
     "url": "https://github.com/tweetyourbracket/api/issues"
   },
   "dependencies": {
-    "@lukekarrys/entry-watcher": "^4.0.1",
-    "@lukekarrys/score-watcher": "^3.0.1",
+    "@lukekarrys/entry-watcher": "^5.0.0",
+    "@lukekarrys/score-watcher": "^4.0.0",
     "async": "^1.5.1",
     "boom": "^3.0.0",
     "bracket-data": "^4.0.0",
