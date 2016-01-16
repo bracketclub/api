@@ -57,7 +57,6 @@ new EntryWatcher(_.extend({
   onSave,
   type: 'tweet',
   auth: config.twitter,
-  _forceOpen: true,
   sport: SPORT,
   year: YEAR
 }, config.tweetyourbracket)).start();
