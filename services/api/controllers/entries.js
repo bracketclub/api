@@ -6,7 +6,8 @@ const sseHandler = require('../lib/sseHandler');
 const utils = require('../lib/reply');
 
 const entriesQuery = (where) => `SELECT
-  e.bracket, e.data_id, e.created, e.sport, extract(YEAR from e.created) as year,
+  e.bracket, e.data_id, e.created, e.sport,
+  (extract(YEAR from e.created) || '') as year,
   row_to_json(u) as user
   FROM entries e, users u
   WHERE ${where ? `${where} AND` : ''} e.user_id = u.user_id
