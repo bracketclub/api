@@ -6,7 +6,11 @@ const utils = require('../lib/reply');
 
 const usersQuery = (where) => `SELECT
   u.user_id, u.username, u.profile_pic,
-  json_agg((SELECT x FROM (SELECT e.bracket, e.created, e.data_id, e.sport, extract(YEAR from created) as year) x)) AS entries
+  json_agg(
+    (SELECT x FROM
+      (SELECT e.bracket, e.created, e.data_id, e.sport, (extract(YEAR from created) || '') as year)
+    x)
+  ) AS entries
   FROM users u
   LEFT JOIN entries e on e.user_id = u.user_id
   ${where ? `WHERE ${where}` : ''}
