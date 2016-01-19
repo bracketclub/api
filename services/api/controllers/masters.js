@@ -22,9 +22,11 @@ module.exports = {
       const year = request.params.year;
       const sport = request.params.sport;
 
-      request.pg.client.query(mastersQuery('extract(YEAR from created) = $1 AND sport = $2'), [year, sport], (err, res) => {
-        reply(err, utils.get(res));
-      });
+      request.pg.client.query(
+        mastersQuery('extract(YEAR from created) = $1 AND sport = $2'),
+        [year, sport],
+        (err, res) => reply(err, utils.get(res))
+      );
     },
     validate: {
       params: {
