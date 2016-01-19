@@ -21,9 +21,11 @@ module.exports = {
     description: 'Get user by id',
     tags: ['api', 'users'],
     handler: (request, reply) => {
-      request.pg.client.query(usersQuery('u.user_id = $1'), [request.params.id], (err, res) => {
-        reply(err, utils.get(res));
-      });
+      request.pg.client.query(
+        usersQuery('u.user_id = $1'),
+        [request.params.id],
+        (err, res) => reply(err, utils.get(res))
+      );
     },
     validate: {
       params: {

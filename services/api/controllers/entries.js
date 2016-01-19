@@ -20,9 +20,12 @@ module.exports = {
     handler: (request, reply) => {
       const year = request.params.year;
       const sport = request.params.sport;
-      const response = (err, res) => reply(err, utils.all(res));
 
-      request.pg.client.query(entriesQuery('extract(YEAR from created) = $1 AND sport = $2'), [year, sport], response);
+      request.pg.client.query(
+        entriesQuery('extract(YEAR from created) = $1 AND sport = $2'),
+        [year, sport],
+        (err, res) => reply(err, utils.all(res))
+      );
     },
     validate: {
       params: {
@@ -31,13 +34,37 @@ module.exports = {
       }
     }
   },
+  byUser: {
+    description: 'Entries by user',
+    tags: ['api', 'entries'],
+    handler: (request, reply) => {
+      const year = request.params.year;
+      const sport = request.params.sport;
+      const id = request.params.id;
+
+      request.pg.client.query(
+        entriesQuery('extract(YEAR from created) = $1 AND sport = $2 AND u.user_id = $3'),
+        [year, sport, id],
+        (err, res) => reply(err, utils.get(res))
+      );
+    },
+    validate: {
+      params: {
+        year: Joi.string().regex(/^20\d\d$/),
+        sport: Joi.string(),
+        id: Joi.string().regex(/\d+/)
+      }
+    }
+  },
   get: {
     description: 'Get entry by id',
     tags: ['api', 'entries'],
     handler: (request, reply) => {
-      request.pg.client.query(entriesQuery('data_id = $1'), [request.params.id], (err, res) => {
-        reply(err, utils.get(res));
-      });
+      request.pg.client.query(
+        entriesQuery('data_id = $1'),
+        [request.params.id],
+        (err, res) => reply(err, utils.get(res))
+      );
     },
     validate: {
       params: {
