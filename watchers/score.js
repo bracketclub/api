@@ -56,9 +56,9 @@ pgConnect(logger, (client, done) => {
 
   client.query(
     `INSERT INTO masters
-    (bracket, created)
-    VALUES ($1, $2);`,
-    [emptyBracket, new Date().toJSON()],
+    (bracket, created, sport)
+    VALUES ($1, $2, $3);`,
+    [emptyBracket, new Date().toJSON(), SPORT],
     (insertErr) => {
       done();
 
