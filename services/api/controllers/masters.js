@@ -31,7 +31,7 @@ module.exports = {
     validate: {
       params: {
         year: Joi.string().regex(/^20\d\d$/),
-        sport: Joi.string()
+        sport: Joi.string().regex(/^\w+$/)
       }
     }
   },
