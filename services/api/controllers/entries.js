@@ -30,29 +30,7 @@ module.exports = {
     validate: {
       params: {
         year: Joi.string().regex(/^20\d\d$/),
-        sport: Joi.string()
-      }
-    }
-  },
-  byUser: {
-    description: 'Entries by user',
-    tags: ['api', 'entries'],
-    handler: (request, reply) => {
-      const year = request.params.year;
-      const sport = request.params.sport;
-      const id = request.params.id;
-
-      request.pg.client.query(
-        entriesQuery('extract(YEAR from created) = $1 AND sport = $2 AND u.user_id = $3'),
-        [year, sport, id],
-        (err, res) => reply(err, utils.get(res))
-      );
-    },
-    validate: {
-      params: {
-        year: Joi.string().regex(/^20\d\d$/),
-        sport: Joi.string(),
-        id: Joi.string().regex(/\d+/)
+        sport: Joi.string().regex(/^\w+$/)
       }
     }
   },
@@ -68,7 +46,7 @@ module.exports = {
     },
     validate: {
       params: {
-        id: Joi.string().regex(/^[\d]+$/)
+        id: Joi.string().regex(/^\d+$/)
       }
     }
   },

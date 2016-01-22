@@ -15,10 +15,10 @@ exports.register = (plugin, options, done) => {
 
   // Users
   plugin.route({method: 'GET', path: '/users/{id}', config: users.get});
+  plugin.route({method: 'GET', path: '/users/{id}/{sport}-{year}', config: users.byEvent});
 
   // Entries
   plugin.route({method: 'GET', path: '/entries/{sport}-{year}', config: entries.all});
-  plugin.route({method: 'GET', path: '/entries/{sport}-{year}/users/{id}', config: entries.byUser});
   plugin.route({method: 'GET', path: '/entries/{id}', config: entries.get});
 
   const entryChannel = new Channels();
