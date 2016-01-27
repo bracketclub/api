@@ -4,15 +4,15 @@ tweetyourbracket-api
 ### Routes
 
 **Users**
-- `/users`
 - `/users/:id`
+- `/users/:id/:sport-:year`
 
 **Entries**
-- `/entries?year`
+- `/entries/:sport-:year`
 - `/entries/:id`
 
 **Masters**
-- `/masters?year`
+- `/masters/:sport-:year`
 
 
 ### Local Dev
