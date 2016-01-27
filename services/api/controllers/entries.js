@@ -5,14 +5,19 @@ const Joi = require('joi');
 const sseHandler = require('../lib/sseHandler');
 const utils = require('../lib/reply');
 
-const entriesQuery = (where) => `SELECT
-DISTINCT ON (u.user_id)
+const entriesQuery = (where) => `
+SELECT DISTINCT ON (u.user_id)
   e.bracket, e.data_id, e.created, e.sport,
   (extract(YEAR from e.created) || '') as year,
   row_to_json(u) as user
-FROM entries e, users u
-WHERE ${where} AND e.user_id = u.user_id
-ORDER BY u.user_id, created DESC;`;
+FROM
+  entries e,
+  users u
+WHERE
+  ${where} AND e.user_id = u.user_id
+ORDER BY
+  u.user_id, created DESC;
+`;
 
 module.exports = {
   all: {

@@ -39,6 +39,15 @@
   "tweetyourbracket": {
     "domain": "tweetyourbracket.com",
     "tags": ["tybrkt"]
+  },
+
+  "scores": {
+    "ncaaw": {
+      "url": "http://espn.go.com/womens-college-basketball/scoreboard/_/group/50/date/{date}"
+    },
+    "ncaam": {
+      "url": "http://scores.espn.go.com/ncb/scoreboard?date={date}&confId=100"
+    }
   }
 }
 
