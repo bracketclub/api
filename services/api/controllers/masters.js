@@ -5,14 +5,19 @@ const Joi = require('joi');
 const sseHandler = require('../lib/sseHandler');
 const utils = require('../lib/reply');
 
-const mastersQuery = (where) => `SELECT
+const mastersQuery = (where) => `
+SELECT
   json_agg((SELECT bracket) ORDER BY created asc) as brackets,
   sport,
   (extract(YEAR from created) || '') as year,
   (sport || '-' || extract(YEAR from created)) as id
-  FROM masters
-  ${where ? `WHERE ${where}` : ''}
-  GROUP BY extract(YEAR from created), sport`;
+FROM
+  masters
+WHERE
+  ${where || ''}
+GROUP BY
+  extract(YEAR from created), sport;
+`;
 
 module.exports = {
   get: {
