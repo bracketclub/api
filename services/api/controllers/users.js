@@ -12,7 +12,7 @@ FROM
   users as u,
   (
     SELECT DISTINCT ON (sport, extract(YEAR from created))
-      bracket, created, sport, data_id,
+      bracket, created, sport, data_id, user_id as user,
       (extract(YEAR from created) || '') as year
     FROM
       entries
