@@ -4,6 +4,7 @@ const Hapi = require('hapi');
 const Hoek = require('hoek');
 const config = require('getconfig');
 
+const argv = process.argv.slice(2);
 const server = new Hapi.Server(config.hapi.options);
 
 const plugins = [
@@ -44,6 +45,12 @@ server.connection({
   host: config.hapi.host,
   port: config.hapi.port
 });
+
+if (argv.indexOf('--slow') > -1) {
+  const slow = 1000;
+  server.ext('onRequest', (req, reply) =>
+    setTimeout(() => reply.continue(), Math.random() * slow));
+}
 
 server.register(plugins, (err) => {
   Hoek.assert(!err, `Failed loading plugins: ${err}`);
