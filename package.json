@@ -60,6 +60,7 @@
   },
   "scripts": {
     "lint": "eslint .",
+    "local": "nodemon index --slow",
     "start": "node index",
     "start:entries": "node watchers/entry",
     "start:scores": "node watchers/score",
