@@ -6,35 +6,35 @@ const utils = require('../lib/reply');
 
 const userWithEntriesQuery = (where) => `
 SELECT
-  u.user_id, u.username, u.profile_pic,
+  u.id, u.username, u.profile_pic,
   json_agg(e.*) as entries
 FROM
   users as u,
   (
     SELECT DISTINCT ON (sport, extract(YEAR from created))
-      bracket, created, sport, data_id, user_id as user,
+      bracket, created, sport, id, "user",
       (extract(YEAR from created) || '') as year
     FROM
       entries
     WHERE
-      user_id = $1 ${where ? `AND ${where}` : ''}
+      "user" = $1 ${where ? `AND ${where}` : ''}
     ORDER BY
       sport, extract(YEAR from created), created DESC
   ) as e
 WHERE
-  u.user_id = $1
+  u.id = $1
 GROUP BY
-  u.user_id;
+  u.id;
 `;
 
 const userQuery = () => `
 SELECT
-  u.user_id, u.username, u.profile_pic,
+  u.id, u.username, u.profile_pic,
   ARRAY[]::integer[] as entries
 FROM
   users as u
 WHERE
-  u.user_id = $1;
+  u.id = $1;
 `;
 
 module.exports = {

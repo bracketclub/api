@@ -32,16 +32,16 @@ const onSave = (data) => pgConnect(logger, (client, done) => {
   async.series([
     (cb) => client.query(
       `INSERT INTO users
-      (user_id, username, name, profile_pic)
+      (id, username, name, profile_pic)
       VALUES ($1, $2, $3, $4)
-      ON CONFLICT (user_id) DO UPDATE SET
+      ON CONFLICT (id) DO UPDATE SET
       ${['username', 'name', 'profile_pic'].map((k) => `${k} = EXCLUDED.${k}`).join(', ')};`,
       [data.user_id, data.username, data.name, data.profile_pic],
       queryCb('user', cb)
     ),
     (cb) => client.query(
       `INSERT INTO entries
-      (data_id, bracket, user_id, created, sport)
+      (id, bracket, id, created, sport)
       VALUES ($1, $2, $3, $4, $5)`,
       [data.data_id, data.bracket, data.user_id, data.created, SPORT],
       queryCb('entry', cb)
