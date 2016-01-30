@@ -14,14 +14,14 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -51,9 +51,9 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE entries (
-    data_id text NOT NULL,
+    id text NOT NULL,
     bracket text NOT NULL,
-    user_id text NOT NULL,
+    "user" text NOT NULL,
     created timestamp with time zone NOT NULL,
     sport text NOT NULL
 );
@@ -101,7 +101,7 @@ ALTER SEQUENCE masters_id_seq OWNED BY masters.id;
 --
 
 CREATE TABLE users (
-    user_id text NOT NULL,
+    id text NOT NULL,
     username text NOT NULL,
     name text,
     profile_pic text
@@ -121,7 +121,7 @@ ALTER TABLE ONLY masters ALTER COLUMN id SET DEFAULT nextval('masters_id_seq'::r
 -- Data for Name: entries; Type: TABLE DATA; Schema: public; Owner: tweetyourbracket
 --
 
-COPY entries (data_id, bracket, user_id, created, sport) FROM stdin;
+COPY entries (id, bracket, "user", created, sport) FROM stdin;
 179968175964831745	S195463721432131W1954113721532131E195463721537131MW19541131021432131FFSEE	26007452	2012-03-14 09:32:11-07	ncaam
 179990659334275072	S19124631021462161W19541131021432433E1954113721532533MW1854113721532133FFSES	266369651	2012-03-14 11:01:31-07	ncaam
 179996310387171328	S1954631021462161W185463721432422E1854113721532131MW19124631021462122FFWEW	524594503	2012-03-14 11:23:59-07	ncaam
@@ -533,7 +533,7 @@ SELECT pg_catalog.setval('masters_id_seq', 531, true);
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: tweetyourbracket
 --
 
-COPY users (user_id, username, name, profile_pic) FROM stdin;
+COPY users (id, username, name, profile_pic) FROM stdin;
 524594503	TheShelbySchool	The Shelby School	http://pbs.twimg.com/profile_images/1897026612/shelbyschool_normal
 31201092	kathykarrys	Kathy Karrys	http://pbs.twimg.com/profile_images/489933946663100418/R1iW3eSC_normal.jpeg
 23566564	joshtatge	Josh Tatge	http://pbs.twimg.com/profile_images/1113642257/Josh_tatge_normal.jpg
@@ -609,7 +609,7 @@ COPY users (user_id, username, name, profile_pic) FROM stdin;
 --
 
 ALTER TABLE ONLY entries
-    ADD CONSTRAINT entries_pkey PRIMARY KEY (data_id);
+    ADD CONSTRAINT entries_pkey PRIMARY KEY (id);
 
 
 --
@@ -625,7 +625,7 @@ ALTER TABLE ONLY masters
 --
 
 ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
 --
@@ -647,7 +647,7 @@ CREATE UNIQUE INDEX masters_bracket_to_yyyy_char_idx ON masters USING btree (bra
 --
 
 ALTER TABLE ONLY entries
-    ADD CONSTRAINT entries_user_fkey FOREIGN KEY (user_id) REFERENCES users(user_id);
+    ADD CONSTRAINT entries_user_fkey FOREIGN KEY ("user") REFERENCES users(id);
 
 
 --
