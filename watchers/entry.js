@@ -48,7 +48,7 @@ const onSave = (data) => pgConnect(logger, (client, done) => {
     )
   ], () => {
     done();
-    rpcClient.call('entries', data, _.noop);
+    rpcClient.call('entries', `${SPORT}-${YEAR}`);
   });
 });
 
