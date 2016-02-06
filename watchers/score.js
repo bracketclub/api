@@ -39,7 +39,7 @@ const onSave = (master, cb) => pgConnect(logger, (client, done) => {
       }
       else {
         logger.error(`Success inserting new bracket: ${master}`);
-        rpcClient.call('masters', master, _.noop);
+        rpcClient.call('masters', `${SPORT}-${YEAR}`);
       }
     }
   );
