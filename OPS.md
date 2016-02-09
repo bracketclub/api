@@ -3,15 +3,19 @@ tweetyourbracket-api OPS
 
 ## Digital Ocean Setup on Ubuntu 14.04
 
-Most of this is culled from this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04) with some Postgres bits thrown in from [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04) and [here](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2).
+Most of this is culled from this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04) with some Postgres bits thrown in from [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04) and [here](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2). Also instructions for getting postgres 9.5 were taken [from here](http://blog.chaps.io/2016/02/08/upgrading-postgresql-from-9-4-to-9-5-on-ubuntu-15-10.html).
 
 **Create two Ubuntu 14.04 droplets with private networking.** If they aren't created originally with private networking then the `curl` command to get the private IP of the API droplet will fail. Even if you turn on private networking later, this command will still fail and you'll need to recreate the droplet from scratch.
 
 ### API Droplet
 
 ```sh
+# Need to install postgres 9.5
+echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/postgres.list
+sudo apt-get install wget ca-certificates
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install git postgresql postgresql-contrib
+sudo apt-get install git postgresql-9.5
 
 # Install node
 cd ~
@@ -68,7 +72,7 @@ exit
 # Setup pm2
 sudo su - tweetyourbracket
 sudo npm install -g pm2
-pm2 statup ubuntu
+pm2 statup ubuntu # only the first time
 NODE_ENV=production pm2 start index.js -i 0 --name "api"
 # NODE_ENV=production TYB_SPORT=ncaam TYB_YEAR=2016 pm2 start watchers/entry.js -i 0 --name "ncaam-entries"
 # NODE_ENV=production TYB_SPORT=ncaam TYB_YEAR=2016 pm2 start watchers/score.js -i 0 --name "ncaam-scores"
