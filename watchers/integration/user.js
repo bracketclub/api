@@ -12,15 +12,14 @@ const bracket = new Generator({
   sport: argv.sport || process.env.TYB_SPORT
 });
 
-const A = 65;
 const numbers = () => Math.random().toString().slice(2);
-const letters = () => numbers().split('').map((n) => String.fromCharCode(parseInt(n, 10) + A)).join('');
 
+// User with multiple entries
 setTimeout(() => setInterval(() => saveEntry({
   data_id: numbers(),
-  user_id: numbers(),
-  username: letters(),
-  name: letters(),
+  user_id: '5',
+  username: 'multi_entry',
+  name: 'multi_entry',
   profile_pic: '',
   bracket: bracket.generate('random'),
   created: new Date().toJSON()

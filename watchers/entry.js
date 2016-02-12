@@ -4,13 +4,14 @@ const EntryWatcher = require('@lukekarrys/entry-watcher');
 const _ = require('lodash');
 const async = require('async');
 const config = require('getconfig');
+const argv = require('yargs').string('year').argv;
 
 const pgConnect = require('./lib/pgConnect');
 const createLogger = require('./lib/logger');
 const rpcClient = require('./lib/rpcClient');
 
-const SPORT = process.env.TYB_SPORT;
-const YEAR = process.env.TYB_YEAR;
+const SPORT = argv.sport || process.env.TYB_SPORT;
+const YEAR = argv.year || process.env.TYB_YEAR;
 
 if (!SPORT || !YEAR) {
   throw new Error(`TYB_SPORT and TYB_YEAR env variables are required`);
