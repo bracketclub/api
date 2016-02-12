@@ -41,16 +41,22 @@ const onSave = (data) => pgConnect(logger, (client, done) => {
     ),
     (cb) => client.query(
       `INSERT INTO entries
-      (id, bracket, id, created, sport)
-      VALUES ($1, $2, $3, $4, $5)`,
+      (id, bracket, "user", created, sport)
+      VALUES ($1, $2, $3, $4, $5);`,
       [data.data_id, data.bracket, data.user_id, data.created, SPORT],
       queryCb('entry', cb)
     )
   ], () => {
     done();
-    rpcClient.call('entries', `${SPORT}-${YEAR}`);
+    rpcClient('entries', `${SPORT}-${YEAR}`, {id: data.user_id});
   });
 });
+
+module.exports = onSave;
+
+if (config.getconfig.env === 'integration') {
+  return;
+}
 
 new EntryWatcher(_.extend({
   logger,

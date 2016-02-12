@@ -24,7 +24,8 @@ exports.register = (plugin, options, done) => {
   const entryChannel = new Channels();
   plugin.route({method: 'GET', path: '/entries/events', config: entries.events(entryChannel)});
   rpcServer.expose('entries', (data, opt, cb) => {
-    entryChannel.write({event: 'entries', data});
+    entryChannel.write({event: `entries-${data.event}`});
+    entryChannel.write({event: 'users', data: {id: data.id}});
     cb(null);
   });
 
@@ -34,7 +35,7 @@ exports.register = (plugin, options, done) => {
   const masterChannel = new Channels();
   plugin.route({method: 'GET', path: '/masters/events', config: masters.events(masterChannel)});
   rpcServer.expose('masters', (data, opt, cb) => {
-    masterChannel.write({event: 'masters', data});
+    masterChannel.write({event: `masters-${data.event}`});
     cb(null);
   });
 

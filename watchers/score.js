@@ -38,12 +38,20 @@ const onSave = (master, cb) => pgConnect(logger, (client, done) => {
         logger.error(`Error inserting new bracket: ${err}`);
       }
       else {
-        logger.error(`Success inserting new bracket: ${master}`);
-        rpcClient.call('masters', `${SPORT}-${YEAR}`);
+        logger.debug(`Success inserting new bracket: ${master}`);
+        rpcClient('masters', `${SPORT}-${YEAR}`);
       }
+
+      cb();
     }
   );
 });
+
+module.exports = onSave;
+
+if (config.getconfig.env === 'integration') {
+  return;
+}
 
 pgConnect(logger, (client, done) => {
   const startWatcher = (master) =>

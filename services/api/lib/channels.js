@@ -21,7 +21,7 @@ Channels.prototype.remove = function _remove(id) {
 Channels.prototype.write = function _write(data) {
   _.each(this.channels, (ch) => {
     ch.write(`event: ${data.event}\n`);
-    ch.write(`data: ${JSON.stringify(data.data)}\n\n`);
+    ch.write(`data: ${JSON.stringify(data.data || {})}\n\n`);
   });
 };
 

@@ -40,7 +40,8 @@ const plugins = [
 
 server.connection({
   routes: {
-    cors: config.hapi.cors
+    cors: config.hapi.cors,
+    timeout: {socket: false}
   },
   host: config.hapi.host,
   port: config.hapi.port
