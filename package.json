@@ -27,7 +27,8 @@
     "json-rpc2": "^1.0.2",
     "lodash": "^4.0.1",
     "pg": "^4.4.4",
-    "pgboom": "^0.1.0"
+    "pgboom": "^0.1.0",
+    "yargs": "^3.32.0"
   },
   "devDependencies": {
     "@lukekarrys/eslint-config": "^1.0.39",
@@ -66,13 +67,14 @@
   "scripts": {
     "integration:entries": "node watchers/integration/entry",
     "integration:scores": "node watchers/integration/score",
+    "integration:user": "node watchers/integration/user",
     "lint": "eslint .",
     "local": "nodemon index --slow",
     "start": "node index",
     "start:entries": "node watchers/entry",
     "start:scores": "node watchers/score",
-    "test:all:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start integration:scores integration:entries",
-    "test:clean:db": "dropdb tweetyourbracket-test --if-exists && createdb tweetyourbracket-test && psql -d tweetyourbracket-test -f sql/empty.sql",
+    "test:all:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start \"integration:scores -- --sport=ncaam --year=2016\" \"integration:scores -- --sport=ncaaw --year=2016\" \"integration:entries -- --sport=ncaam --year=2016\" \"integration:entries -- --sport=ncaaw --year=2016\" \"integration:user -- --sport=ncaam --year=2016\" \"integration:user -- --sport=ncaaw --year=2016\"",
+    "test:clean:db": "dropdb tweetyourbracket-test --if-exists && createdb tweetyourbracket-test && psql -d tweetyourbracket-test -f sql/test.sql",
     "test:entries:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start integration:entries",
     "test:scores:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start integration:scores",
     "validate": "npm ls"
