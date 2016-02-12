@@ -7,4 +7,4 @@ const config = require('getconfig');
 const rpcClient = rpc.Client.$create(config.watchers.rpc_port, config.hapi.host);
 
 // fire and forget rpc
-module.exports = (name, data) => rpcClient.call(name, data, _.noop);
+module.exports = (name, event, data) => rpcClient.call(name, _.assign({event}, data || {}), _.noop);

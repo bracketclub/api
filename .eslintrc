@@ -20,6 +20,7 @@
   "extends": "@lukekarrys/eslint-config",
 
   "rules": {
-    "strict": [2, "global"]
+    "strict": [2, "global"],
+    "camelcase": 0
   }
 }
