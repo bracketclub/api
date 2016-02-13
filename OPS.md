@@ -3,9 +3,9 @@ tweetyourbracket-api OPS
 
 ## Digital Ocean Setup on Ubuntu 14.04
 
-Most of this is culled from this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04) with some Postgres bits thrown in from [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04) and [here](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2). Also instructions for getting postgres 9.5 were taken [from here](http://blog.chaps.io/2016/02/08/upgrading-postgresql-from-9-4-to-9-5-on-ubuntu-15-10.html).
+Most of this is culled from this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04) with some Postgres bits thrown in from [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04) and [here](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2). Also instructions for getting postgres 9.5 were taken [from here](http://blog.chaps.io/2016/02/08/upgrading-postgresql-from-9-4-to-9-5-on-ubuntu-15-10.html). Also getting [automatic security updates](https://help.ubuntu.com/community/AutomaticSecurityUpdates).
 
-**Create two Ubuntu 14.04 droplets with private networking.** If they aren't created originally with private networking then the `curl` command to get the private IP of the API droplet will fail. Even if you turn on private networking later, this command will still fail and you'll need to recreate the droplet from scratch.
+The first tutorial has been modified so it only needs one droplet.
 
 ### API Droplet
 
@@ -15,7 +15,10 @@ echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main"
 sudo apt-get install wget ca-certificates
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install git postgresql-9.5
+sudo apt-get install git nginx unattended-upgrades postgresql-9.5
+
+# Turn on auto security updates
+sudo dpkg-reconfigure --priority=low unattended-upgrades
 
 # Install node
 cd ~
@@ -55,13 +58,10 @@ git clone https://github.com/tweetyourbracket/api.git
 cd api/
 npm install
 
-# Get private IP
-curl -w "\n" http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address
-
 # Create config
 cp config/default.json config/production.json
 nano config/production.json
-# Add values for twitter auth, postgres connection, and private IP/port
+# Add values for twitter auth, postgres connection
 
 # Seed postgres
 exit
@@ -83,14 +83,11 @@ NODE_ENV=production pm2 start index.js -i 0 --name "api"
 pm2 restart api
 pm2 logs api
 pm2 stop api
-```
 
-### Web Droplet
-
-```sh
+# Setup nginx
 sudo apt-get update
 sudo apt-get install nginx
-sudo vi /etc/nginx/sites-available/default
+sudo vi /etc/nginx/sites-available/default # see below for config
 sudo service nginx restart
 ```
 
@@ -99,10 +96,10 @@ sudo service nginx restart
 server {
     listen 80;
 
-    server_name WEB_DROPLET_PUBLIC_IP;
+    server_name DROPLET_PUBLIC_IP;
 
     location / {
-        proxy_pass http://API_DROPLET_PRIVATE_IP:API_DROPLET_PORT;
+        proxy_pass http://localhost:API_PORT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
