@@ -31,13 +31,13 @@
     "yargs": "^3.32.0"
   },
   "devDependencies": {
-    "@lukekarrys/eslint-config": "^1.0.39",
-    "babel-eslint": "^5.0.0-beta6",
+    "@lukekarrys/eslint-config": "^2.0.3",
+    "babel-eslint": "^5.0.0-beta10",
     "bracket-data": "^4.0.3",
     "bracket-generator": "^3.0.0",
     "bracket-updater": "^3.0.0",
     "bracket-validator": "^3.0.1",
-    "eslint": "^1.10.3",
+    "eslint": "^2.0.0",
     "eslint-plugin-classes": "^0.1.1",
     "eslint-plugin-react": "^3.16.1",
     "npm-run-all": "^1.5.1",

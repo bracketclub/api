@@ -1,26 +1,7 @@
 {
-  "parser": "espree",
-
-  "ecmaFeatures": {
-    "arrowFunctions": true,
-    "binaryLiterals": true,
-    "blockBindings": true,
-    "classes": true,
-    "defaultParams": true,
-    "destructuring": true,
-    "objectLiteralComputedProperties": true,
-    "objectLiteralDuplicateProperties": true,
-    "objectLiteralShorthandMethods": true,
-    "objectLiteralShorthandProperties": true,
-    "restParams": true,
-    "spread": true,
-    "templateStrings": true
-  },
-
-  "extends": "@lukekarrys/eslint-config",
+  "extends": "@lukekarrys/eslint-config/no-babel",
 
   "rules": {
-    "strict": [2, "global"],
     "camelcase": 0
   }
 }

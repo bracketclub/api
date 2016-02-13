@@ -14,7 +14,7 @@ const SPORT = argv.sport || process.env.TYB_SPORT;
 const YEAR = argv.year || process.env.TYB_YEAR;
 
 if (!SPORT || !YEAR) {
-  throw new Error(`TYB_SPORT and TYB_YEAR env variables are required`);
+  throw new Error('TYB_SPORT and TYB_YEAR env variables are required');
 }
 
 const tybConfig = config.tweetyourbracket;
@@ -76,7 +76,7 @@ pgConnect(logger, (client, done) => {
       // The empty bracket already exists in the DB for this year, so we should
       // start the watcher with the latest bracket
       if (insertErr && insertErr.message.startsWith('duplicate key value violates unique constraint')) {
-        return client.query(
+        client.query(
           `SELECT bracket FROM masters
           WHERE sport = $1 AND extract(YEAR from created) = $2
           ORDER BY created desc
@@ -84,17 +84,24 @@ pgConnect(logger, (client, done) => {
           [SPORT, YEAR],
           (err, res) => {
             done();
-            if (err) return logger.error(`Error selecting latest master: ${err}`);
+            if (err) {
+              logger.error(`Error selecting latest master: ${err}`);
+              return;
+            }
             startWatcher(res.rows[0]);
           }
         );
+        return;
       }
 
       // Done with pg
       done();
 
       // Some other unknown error occurred
-      if (insertErr) return logger.error(`Error inserting empty master: ${insertErr}`);
+      if (insertErr) {
+        logger.error(`Error inserting empty master: ${insertErr}`);
+        return;
+      }
 
       // If we successfully inserted the base empty bracket, then start the score
       // watcher with that bracket

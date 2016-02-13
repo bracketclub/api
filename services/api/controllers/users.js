@@ -75,7 +75,10 @@ module.exports = {
       );
 
       getUserWithEntries((err, res) => {
-        if (err || res) return reply(err, res);
+        if (err || res) {
+          reply(err, res);
+          return;
+        }
         // Still attempt to return the user if they have no entries for this
         // event. Probably a better (SQL) way to do this but no idea
         getUser(reply);

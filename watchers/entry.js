@@ -14,7 +14,7 @@ const SPORT = argv.sport || process.env.TYB_SPORT;
 const YEAR = argv.year || process.env.TYB_YEAR;
 
 if (!SPORT || !YEAR) {
-  throw new Error(`TYB_SPORT and TYB_YEAR env variables are required`);
+  throw new Error('TYB_SPORT and TYB_YEAR env variables are required');
 }
 
 const logger = createLogger(`entries:${SPORT}-${YEAR}`);
@@ -23,7 +23,8 @@ const onSave = (data) => pgConnect(logger, (client, done) => {
   const queryCb = (type, cb) => (err, res) => {
     if (err) {
       logger.error(`${type} error: ${err}`);
-      return cb(err);
+      cb(err);
+      return;
     }
 
     logger.debug(`${type} success: ${JSON.stringify(_.pick(res, 'command', 'rowCount'))}`);
