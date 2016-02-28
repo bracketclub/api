@@ -9,6 +9,7 @@ const Channels = require('./lib/channels');
 const users = require('./controllers/users');
 const entries = require('./controllers/entries');
 const masters = require('./controllers/masters');
+const twitter = require('./controllers/twitter');
 
 exports.register = (plugin, options, done) => {
   plugin.bind({config: options.config});
@@ -38,6 +39,9 @@ exports.register = (plugin, options, done) => {
     masterChannel.write({event: `masters-${data.event}`});
     cb(null);
   });
+
+  // Twitter
+  plugin.route({method: 'GET', path: '/twitter/friends', config: twitter.friends});
 
   rpcServer.listen(options.watchers.rpc_port, 'localhost');
 
