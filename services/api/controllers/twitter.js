@@ -24,9 +24,9 @@ module.exports = {
     },
     validate: {
       query: {
-        token: Joi.string(),
-        secret: Joi.string(),
-        id: Joi.string()
+        token: Joi.string().required(),
+        secret: Joi.string().required(),
+        id: Joi.string().required().regex(/^\d+$/)
       }
     }
   }
