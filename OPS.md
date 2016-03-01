@@ -3,7 +3,7 @@ tweetyourbracket-api OPS
 
 ## Digital Ocean Setup on Ubuntu 14.04
 
-Most of this is culled from this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04) with some Postgres bits thrown in from [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04) and [here](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2). Also instructions for getting postgres 9.5 were taken [from here](http://blog.chaps.io/2016/02/08/upgrading-postgresql-from-9-4-to-9-5-on-ubuntu-15-10.html). Also getting [automatic security updates](https://help.ubuntu.com/community/AutomaticSecurityUpdates).
+Most of this is culled from this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04) with some Postgres bits thrown in from [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04) and [here](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2). Also instructions for getting postgres 9.5 were taken [from here](http://blog.chaps.io/2016/02/08/upgrading-postgresql-from-9-4-to-9-5-on-ubuntu-15-10.html). Also getting [automatic security updates](https://help.ubuntu.com/community/AutomaticSecurityUpdates). Also [SSL](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04).
 
 The first tutorial has been modified so it only needs one droplet.
 
@@ -15,7 +15,7 @@ echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main"
 sudo apt-get install wget ca-certificates
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install git nginx unattended-upgrades postgresql-9.5
+sudo apt-get install git bc nginx unattended-upgrades postgresql-9.5
 
 # Turn on auto security updates
 sudo dpkg-reconfigure --priority=low unattended-upgrades
@@ -87,24 +87,44 @@ pm2 stop api
 # Setup nginx
 sudo apt-get update
 sudo apt-get install nginx
-sudo vi /etc/nginx/sites-available/default # see below for config
+
+sudo git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
+cd /opt/letsencrypt
+./letsencrypt-auto certonly --standalone
+# api.tweetyourbracket.com
+
+sudo nano /etc/nginx/sites-available/default # see below for config
 sudo service nginx restart
 ```
 
 **/etc/nginx/sites-available/default**
 ```
 server {
-    listen 80;
+    listen 443;
+    ssl on;
 
     server_name DROPLET_PUBLIC_IP;
 
+    ssl_certificate /etc/letsencrypt/live/api.tweetyourbracket.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.tweetyourbracket.com/privkey.pem;
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+
     location / {
-        proxy_pass http://localhost:API_PORT;
+        proxy_pass http://localhost:3001;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
+}
+
+server {
+    listen 80;
+    server_name DROPLET_PUBLIC_IP;
+    return 301 https://$host$request_uri;
 }
 ```
