@@ -1,6 +1,8 @@
 tweetyourbracket-api
 =================
 
+[![Build Status](https://travis-ci.org/tweetyourbracket/api.png?branch=master)](https://travis-ci.org/tweetyourbracket/api)
+
 ### Routes
 
 **Users**
