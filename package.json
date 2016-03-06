@@ -73,6 +73,7 @@
     "start": "node index",
     "start:entries": "node watchers/entry",
     "start:scores": "node watchers/score",
+    "test": "npm run validate && npm run lint",
     "test:all:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start \"integration:scores -- --sport=ncaam --year=2016\" \"integration:scores -- --sport=ncaaw --year=2016\" \"integration:entries -- --sport=ncaam --year=2016\" \"integration:entries -- --sport=ncaaw --year=2016\" \"integration:user -- --sport=ncaam --year=2016\" \"integration:user -- --sport=ncaaw --year=2016\"",
     "test:clean:db": "dropdb tweetyourbracket-test --if-exists && createdb tweetyourbracket-test && psql -d tweetyourbracket-test -f sql/test.sql",
     "test:entries:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start integration:entries",
