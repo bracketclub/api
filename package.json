@@ -28,7 +28,7 @@
     "lodash": "^4.6.1",
     "pg": "^4.5.1",
     "pgboom": "^0.1.0",
-    "twit": "^2.2.2",
+    "twit": "^2.2.3",
     "yargs": "^4.2.0"
   },
   "devDependencies": {
@@ -39,7 +39,7 @@
     "bracket-validator": "^3.0.1",
     "eslint": "^2.3.0",
     "eslint-plugin-classes": "^0.1.1",
-    "eslint-plugin-react": "^4.1.0",
+    "eslint-plugin-react": "^4.2.0",
     "npm-run-all": "^1.5.1",
     "precommit-hook": "^3.0.0"
   },
