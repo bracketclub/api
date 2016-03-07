@@ -30,6 +30,3 @@ node_modules
 config/*.json
 !config/default.json
 !config/test.json
-
-# jshint
-.jshint*
