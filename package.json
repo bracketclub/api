@@ -40,8 +40,8 @@
     "eslint": "^2.3.0",
     "eslint-plugin-classes": "^0.1.1",
     "eslint-plugin-react": "^4.2.0",
-    "npm-run-all": "^1.5.1",
-    "precommit-hook": "^3.0.0"
+    "git-validate": "^2.1.4",
+    "npm-run-all": "^1.5.1"
   },
   "engines": {
     "node": "^5.4.0",
