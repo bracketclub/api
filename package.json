@@ -32,8 +32,8 @@
     "yargs": "^4.2.0"
   },
   "devDependencies": {
-    "@lukekarrys/eslint-config": "^2.0.11",
-    "babel-eslint": "^6.0.0-beta.1",
+    "@lukekarrys/eslint-config": "^2.0.12",
+    "babel-eslint": "^6.0.0-beta.2",
     "bracket-generator": "^3.0.0",
     "bracket-updater": "^3.0.0",
     "bracket-validator": "^3.0.1",
