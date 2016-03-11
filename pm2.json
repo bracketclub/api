@@ -1,0 +1,52 @@
+{
+  "apps": [
+    {
+      "exec_mode": "fork_mode",
+      "script": "./index.js",
+      "name": "api",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    {
+      "exec_mode": "fork_mode",
+      "script": "./watchers/entries.js",
+      "name": "entries:ncaam",
+      "env": {
+        "TYB_YEAR": "2016",
+        "TYB_SPORT": "ncaam",
+        "NODE_ENV": "production"
+      }
+    },
+    {
+      "exec_mode": "fork_mode",
+      "script": "./watchers/entries.js",
+      "name": "entries:ncaaw",
+      "env": {
+        "TYB_YEAR": "2016",
+        "TYB_SPORT": "ncaaw",
+        "NODE_ENV": "production"
+      }
+    },
+    {
+      "exec_mode": "fork_mode",
+      "script": "./watchers/scores.js",
+      "name": "scores:ncaam",
+      "env": {
+        "TYB_YEAR": "2016",
+        "TYB_SPORT": "ncaam",
+        "NODE_ENV": "production"
+      }
+    },
+    {
+      "exec_mode": "fork_mode",
+      "script": "./watchers/scores.js",
+      "name": "scores:ncaaw",
+      "env": {
+        "TYB_YEAR": "2016",
+        "TYB_SPORT": "ncaaw",
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

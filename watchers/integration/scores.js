@@ -4,21 +4,21 @@ const _ = require('lodash');
 const data = require('bracket-data');
 const Updater = require('bracket-updater');
 const Validator = require('bracket-validator');
-const argv = require('yargs').string('year').argv;
 
-const saveMaster = require('../score');
+const createLogger = require('../lib/logger');
+const sportYear = require('../lib/sportYear');
+const sport = sportYear.sport;
+const year = sportYear.year;
 
-const options = {
-  year: argv.year || process.env.TYB_YEAR,
-  sport: argv.sport || process.env.TYB_SPORT
-};
+const logger = createLogger(`scores:${sportYear.id}`);
+const saveMaster = require('../lib/saveMaster')({logger, sport, year});
 
 const INITIAL = 5000;
 const INTERVAL = 5000;
-const empty = data(options).constants.EMPTY;
-const finalId = data(options).constants.FINAL_ID;
-const updater = new Updater(options);
-const validator = new Validator(options);
+const empty = data({sport, year}).constants.EMPTY;
+const finalId = data({sport, year}).constants.FINAL_ID;
+const updater = new Updater({sport, year});
+const validator = new Validator({sport, year});
 
 let previous = empty;
 

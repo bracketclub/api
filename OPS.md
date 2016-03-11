@@ -7,7 +7,7 @@ Most of this is culled from this [tutorial](https://www.digitalocean.com/communi
 
 The first tutorial has been modified so it only needs one droplet.
 
-### API Droplet
+### DO Droplet
 
 ```sh
 # Need to install postgres 9.5
@@ -73,16 +73,19 @@ exit
 sudo su - tweetyourbracket
 sudo npm install -g pm2
 pm2 statup ubuntu # only the first time
-NODE_ENV=production pm2 start index.js -i 0 --name "api"
-# NODE_ENV=production TYB_SPORT=ncaam TYB_YEAR=2016 pm2 start watchers/entry.js -i 0 --name "ncaam-entries"
-# NODE_ENV=production TYB_SPORT=ncaam TYB_YEAR=2016 pm2 start watchers/score.js -i 0 --name "ncaam-scores"
-# NODE_ENV=production TYB_SPORT=ncaaw TYB_YEAR=2016 pm2 start watchers/entry.js -i 0 --name "ncaaw-entries"
-# NODE_ENV=production TYB_SPORT=ncaaw TYB_YEAR=2016 pm2 start watchers/score.js -i 0 --name "ncaaw-scores"
+
+# npm run-scripts to start things using pm2
+npm run pm2:start -- --only api
+# npm run pm2:start -- --only entries:ncaam
+# npm run pm2:start -- --only entries:ncaaw
+# npm run pm2:start -- --only scores:ncaam
+# npm run pm2:start -- --only scores:ncaaw
 
 # Later
-pm2 restart api
-pm2 logs api
-pm2 stop api
+npm run pm2:restart -- --only api # or (entries|scores)-ncaa(m|w)
+npm run pm2:stop -- --only api
+npm run pm2:delete -- --only api
+npm run pm2:logs -- --only api
 
 # Setup nginx
 sudo apt-get update
