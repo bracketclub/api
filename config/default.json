@@ -43,10 +43,20 @@
 
   "scores": {
     "ncaaw": {
-      "url": "http://espn.go.com/womens-college-basketball/scoreboard/_/group/50/date/{date}"
+      "interval": "1m",
+      "url": "http://espn.go.com/womens-college-basketball/scoreboard/_/group/50/date/{date}",
+      "parse": {
+        "finalPeriod": 2,
+        "periodLength": "20m"
+      }
     },
     "ncaam": {
-      "url": "http://scores.espn.go.com/ncb/scoreboard?date={date}&confId=100"
+      "interval": "1m",
+      "url": "http://espn.go.com/mens-college-basketball/scoreboard/_/group/50/date/{date}",
+      "parse": {
+        "finalPeriod": 2,
+        "periodLength": "20m"
+      }
     }
   }
 }

@@ -4,74 +4,39 @@ const ScoreWatcher = require('@lukekarrys/score-watcher');
 const _ = require('lodash');
 const config = require('getconfig');
 const bracketData = require('bracket-data');
-const argv = require('yargs').string('year').argv;
 
+const saveMaster = require('./lib/saveMaster');
 const pgConnect = require('./lib/pgConnect');
 const createLogger = require('./lib/logger');
-const rpcClient = require('./lib/rpcClient');
-
-const SPORT = argv.sport || process.env.TYB_SPORT;
-const YEAR = argv.year || process.env.TYB_YEAR;
-
-if (!SPORT || !YEAR) {
-  throw new Error('TYB_SPORT and TYB_YEAR env variables are required');
-}
+const sportYear = require('./lib/sportYear');
+const sport = sportYear.sport;
+const year = sportYear.year;
 
 const tybConfig = config.tweetyourbracket;
-const scoreConfig = config.scores[SPORT];
-const logger = createLogger(`scores:${SPORT}-${YEAR}`);
+const scoreConfig = config.scores[sport];
+const logger = createLogger(`scores:${sportYear.id}`);
 
-const emptyBracket = bracketData({
-  sport: SPORT,
-  year: YEAR
-}).constants.EMPTY;
-
-const onSave = (master, cb) => pgConnect(logger, (client, done) => {
-  client.query(
-    `INSERT INTO masters
-    (bracket, created, sport)
-    VALUES ($1, $2, $3);`,
-    [master, new Date().toJSON(), SPORT],
-    (err) => {
-      done();
-
-      if (err) {
-        logger.error(`Error inserting new bracket: ${err}`);
-      }
-      else {
-        logger.debug(`Success inserting new bracket: ${master}`);
-        rpcClient('masters', `${SPORT}-${YEAR}`);
-      }
-
-      cb();
-    }
-  );
-});
-
-module.exports = onSave;
-
-if (config.getconfig.env === 'integration') {
-  return;
-}
+const emptyBracket = bracketData({sport, year}).constants.EMPTY;
 
 pgConnect(logger, (client, done) => {
-  const startWatcher = (master) =>
-    new ScoreWatcher(_.extend({
+  const startWatcher = (master) => {
+    const watcher = new ScoreWatcher(_.extend({
       master,
       logger,
-      onSave,
-      scores: _.extend({
-        interval: 1
-      }, scoreConfig),
-      sport: SPORT,
-      year: YEAR
-    }, tybConfig)).start();
+      onSave: saveMaster({logger, sport, year}),
+      scores: scoreConfig,
+      sport,
+      year
+    }, tybConfig));
+
+    watcher.start();
+  };
 
   client.query(
     `INSERT INTO masters
     (bracket, created, sport)
     VALUES ($1, $2, $3);`,
-    [emptyBracket, new Date().toJSON(), SPORT],
+    [emptyBracket, new Date().toJSON(), sport],
     (insertErr) => {
       // The empty bracket already exists in the DB for this year, so we should
       // start the watcher with the latest bracket
@@ -81,7 +46,7 @@ pgConnect(logger, (client, done) => {
           WHERE sport = $1 AND extract(YEAR from created) = $2
           ORDER BY created desc
           LIMIT 1;`,
-          [SPORT, YEAR],
+          [sport, year],
           (err, res) => {
             done();
             if (err) {

@@ -1,16 +1,18 @@
 'use strict';
 
 const Generator = require('bracket-generator');
-const argv = require('yargs').string('year').argv;
 
-const saveEntry = require('../entry');
+const createLogger = require('../lib/logger');
+const sportYear = require('../lib/sportYear');
+const sport = sportYear.sport;
+const year = sportYear.year;
+
+const logger = createLogger(`entries:${sportYear.id}`);
+const saveEntry = require('../lib/saveEntry')({logger, sport, year});
+const bracket = new Generator({sport, year});
 
 const INITIAL = 5000;
 const INTERVAL = 5000;
-const bracket = new Generator({
-  year: argv.year || process.env.TYB_YEAR,
-  sport: argv.sport || process.env.TYB_SPORT
-});
 
 const A = 65;
 const numbers = () => Math.random().toString().slice(2);
