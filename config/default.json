@@ -6,7 +6,8 @@
     "port": 3001,
     "options": {},
     "cors": {
-      "credentials": true
+      "credentials": true,
+      "origin": ["*"]
     },
     "logEvents": {
       "log": "*",
