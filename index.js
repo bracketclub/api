@@ -48,7 +48,8 @@ server.connection({
 });
 
 if (argv.indexOf('--slow') > -1) {
-  const slow = 1000;
+  const slowDefault = 1000;
+  const slow = parseInt(argv.join('').replace(/\D/g, ''), 10) || slowDefault;
   server.ext('onRequest', (req, reply) =>
     setTimeout(() => reply.continue(), Math.random() * slow));
 }
