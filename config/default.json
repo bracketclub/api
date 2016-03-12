@@ -7,7 +7,10 @@
     "options": {},
     "cors": {
       "credentials": true,
-      "origin": ["*"]
+      "origin": [
+        "http://localhost:*",
+        "https://localhost:*"
+      ]
     },
     "logEvents": {
       "log": "*",
