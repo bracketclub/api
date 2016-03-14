@@ -9,7 +9,9 @@
       "credentials": true,
       "origin": [
         "http://localhost:*",
-        "https://localhost:*"
+        "https://localhost:*",
+        "http://lukekarrys.local:*",
+        "https://lukekarrys.local:*"
       ]
     },
     "logEvents": {
