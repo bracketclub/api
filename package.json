@@ -15,12 +15,12 @@
     "@lukekarrys/score-watcher": "^5.0.2",
     "async": "^1.5.2",
     "boom": "^3.1.2",
-    "bracket-data": "^4.0.16",
+    "bracket-data": "^4.0.18",
     "bucker": "^1.1.1",
     "getconfig": "^2.2.0",
     "good": "^6.6.0",
     "good-console": "^5.3.1",
-    "hapi": "^13.1.0",
+    "hapi": "^13.2.1",
     "hapi-node-postgres": "^3.0.1",
     "hoek": "^3.0.4",
     "joi": "^8.0.4",
@@ -30,19 +30,19 @@
     "pgboom": "^0.1.0",
     "scores": "^3.1.1",
     "twit": "^2.2.3",
-    "yargs": "^4.2.0"
+    "yargs": "^4.3.1"
   },
   "devDependencies": {
-    "@lukekarrys/eslint-config": "^2.0.15",
+    "@lukekarrys/eslint-config": "^2.0.16",
     "babel-eslint": "^6.0.0-beta.2",
     "bracket-generator": "^3.0.0",
     "bracket-updater": "^3.1.0",
     "bracket-validator": "^3.0.1",
-    "eslint": "^2.3.0",
+    "eslint": "^2.4.0",
     "eslint-plugin-classes": "^0.1.1",
-    "eslint-plugin-react": "^4.2.1",
+    "eslint-plugin-react": "^4.2.2",
     "git-validate": "^2.1.4",
-    "npm-run-all": "^1.5.2"
+    "npm-run-all": "^1.5.3"
   },
   "engines": {
     "node": "^5.4.0",
