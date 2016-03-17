@@ -8,10 +8,8 @@
     "cors": {
       "credentials": true,
       "origin": [
-        "http://localhost:*",
-        "https://localhost:*",
-        "http://lukekarrys.local:*",
-        "https://lukekarrys.local:*"
+        "*//localhost:*",
+        "*//lukekarrys.local:*"
       ]
     },
     "logEvents": {
