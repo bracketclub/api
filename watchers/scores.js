@@ -53,7 +53,7 @@ pgConnect(logger, (client, done) => {
               logger.error(`Error selecting latest master: ${err}`);
               return;
             }
-            startWatcher(res.rows[0]);
+            startWatcher(res.rows[0].bracket);
           }
         );
         return;
