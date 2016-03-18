@@ -6,13 +6,7 @@
     "port": 3001,
     "options": {},
     "cors": {
-      "origin": [
-        "*//localhost:*",
-        "*//lukekarrys.local:*",
-        "*//tweetyourbracket.com",
-        "*//www.tweetyourbracket.com",
-        "*//beta.tweetyourbracket.com"
-      ]
+      "origin": ["*"]
     },
     "logEvents": {
       "log": "*",
