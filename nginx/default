@@ -28,13 +28,12 @@ server {
         chunked_transfer_encoding off;
         proxy_cache off;
         proxy_buffering off;
-        add_header 'Access-Control-Allow-Origin' '*';
+        proxy_read_timeout 24h;
         error_page 504 =200 @eventsource-close-graceful;
     }
 
     location @eventsource-close-graceful {
         add_header Content-Type text/event-stream;
-        add_header 'Access-Control-Allow-Origin' '*';
         return 200;
     }
 }
