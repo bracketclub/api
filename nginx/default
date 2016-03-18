@@ -2,7 +2,7 @@ server {
     listen 443;
     ssl on;
 
-    server_name DROPLET_PUBLIC_IP;
+    server_name 159.203.193.224;
 
     ssl_certificate /etc/letsencrypt/live/api.tweetyourbracket.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/api.tweetyourbracket.com/privkey.pem;
@@ -28,17 +28,19 @@ server {
         chunked_transfer_encoding off;
         proxy_cache off;
         proxy_buffering off;
+        add_header 'Access-Control-Allow-Origin' '*';
         error_page 504 =200 @eventsource-close-graceful;
     }
 
     location @eventsource-close-graceful {
         add_header Content-Type text/event-stream;
+        add_header 'Access-Control-Allow-Origin' '*';
         return 200;
     }
 }
 
 server {
     listen 80;
-    server_name DROPLET_PUBLIC_IP;
+    server_name 159.203.193.224;
     return 301 https://$host$request_uri;
 }
