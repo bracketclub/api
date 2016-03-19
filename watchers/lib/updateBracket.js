@@ -29,7 +29,7 @@ const matchTeam = (teams, team) => teams.map(normalizeTeamName).indexOf(normaliz
 const findGame = (events) => (team) => {
   const event = events.find((e) => matchTeam(e.home.names, team) || matchTeam(e.away.names, team));
 
-  if (!event || !event.completed) return null;
+  if (!event || !event.status.completed) return null;
 
   return {
     region: event.region,
@@ -47,7 +47,7 @@ const updateGames = (current, date, order, cb) => parse(scoreConfig.url.replace(
   const missing = games.indexOf(null);
 
   if (missing > -1) {
-    const orderMessage = order[missing];
+    const orderMessage = normalizeTeamName(order[missing]);
     const eventsMessage = events.map((e) => {
       const h = e.home.names.map(normalizeTeamName).join('|');
       const a = e.away.names.map(normalizeTeamName).join('|');
