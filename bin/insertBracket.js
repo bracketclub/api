@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint no-console:0 no-process-exit:0 */
+
 'use strict';
 
 const argv = require('yargs')
@@ -11,8 +13,7 @@ const update = require('../watchers/lib/updateBracket');
 
 update(argv.date, argv.teams, (err, brackets) => {
   if (err) throw err;
-  // eslint-disable-next-line no-console
   console.log('Inserted', brackets);
-  // eslint-disable-next-line no-process-exit
+  console.log('===============\nRestart the score worker!\n===============');
   process.exit(0);
 });
