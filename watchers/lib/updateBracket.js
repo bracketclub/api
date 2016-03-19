@@ -29,7 +29,7 @@ const matchTeam = (teams, team) => teams.map(normalizeTeamName).indexOf(normaliz
 const findGame = (events) => (team) => {
   const event = events.find((e) => matchTeam(e.home.names, team) || matchTeam(e.away.names, team));
 
-  if (!event) return null;
+  if (!event || !event.completed) return null;
 
   return {
     region: event.region,
@@ -51,9 +51,9 @@ const updateGames = (current, date, order, cb) => parse(scoreConfig.url.replace(
     const eventsMessage = events.map((e) => {
       const h = e.home.names.map(normalizeTeamName).join('|');
       const a = e.away.names.map(normalizeTeamName).join('|');
-      return `${h}\n${a}`;
+      return `${e.status.completed}\n${h}\n${a}`;
     }).join('\n\n');
-    return cb(new Error(`Could not find game for: ${orderMessage}\n\nPossible values:\n\n${eventsMessage}`));
+    return cb(new Error(`Could not find completed game for: ${orderMessage}\n\nPossible values:\n\n${eventsMessage}`));
   }
 
   let master = current;
