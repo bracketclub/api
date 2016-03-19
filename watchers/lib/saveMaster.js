@@ -19,13 +19,12 @@ const onSave = (options) => {
 
         if (err) {
           logger.error(`Error inserting new bracket: ${err}`);
-        }
-        else {
-          logger.debug(`Success inserting new bracket: ${master}`);
-          rpcClient('masters', `${sport}-${year}`);
+          return cb(err);
         }
 
-        cb();
+        logger.debug(`Success inserting new bracket: ${master}`);
+        rpcClient('masters', `${sport}-${year}`);
+        return cb(null, master);
       }
     );
   });
