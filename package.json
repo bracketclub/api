@@ -66,6 +66,7 @@
     "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
+    "clean:db": "dropdb tweetyourbracket --if-exists && createdb tweetyourbracket && psql -d tweetyourbracket -f sql/tweetyourbracket.sql",
     "integration:entries": "node watchers/integration/entries --year=2016",
     "integration:entries:ncaam": "npm run integration:entries -- --sport=ncaam",
     "integration:entries:ncaaw": "npm run integration:entries -- --sport=ncaaw",
