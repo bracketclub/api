@@ -23,7 +23,6 @@
   },
 
   "watchers": {
-    "rpc_port": 3002,
     "logOptions": {
       "format": ":level :time :data",
       "timestamp": "HH:mm:ss",
