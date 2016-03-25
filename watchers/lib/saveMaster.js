@@ -1,29 +1,31 @@
 'use strict';
 
 const pgConnect = require('./pgConnect');
-const rpcClient = require('./rpcClient');
 
 const onSave = (options) => {
   const logger = options.logger;
   const sport = options.sport;
-  const year = options.year;
 
   return (master, cb) => pgConnect(logger, (client, done) => {
+    const now = new Date();
+    const year = now.getFullYear();
+
     client.query(
       `INSERT INTO masters
       (bracket, created, sport)
       VALUES ($1, $2, $3);`,
-      [master, new Date().toJSON(), sport],
+      [master, now.toJSON(), sport],
       (err) => {
+        client.query(`NOTIFY masters, '${sport}-${year}';`);
+
         done();
 
         if (err) {
-          logger.error(`Error inserting new bracket: ${err}`);
+          logger.error(`masters error: ${err}`);
           return cb(err);
         }
 
-        logger.debug(`Success inserting new bracket: ${master}`);
-        rpcClient('masters', `${sport}-${year}`);
+        logger.debug(`masters success: ${master}`);
         return cb(null, master);
       }
     );

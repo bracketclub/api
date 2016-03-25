@@ -1,8 +1,8 @@
 'use strict';
 
-const rpc = require('json-rpc2');
-const rpcServer = rpc.Server.$create();
+const PGPubsub = require('pg-pubsub');
 
+const config = require('getconfig');
 const packageInfo = require('../../package');
 const Channels = require('./lib/channels');
 
@@ -14,6 +14,10 @@ const twitter = require('./controllers/twitter');
 exports.register = (plugin, options, done) => {
   plugin.bind({config: options.config});
 
+  const sub = new PGPubsub(config.postgres.connectionString);
+  const entryChannel = new Channels();
+  const masterChannel = new Channels();
+
   // Users
   plugin.route({method: 'GET', path: '/users/{id}', config: users.get});
   plugin.route({method: 'GET', path: '/users/{id}/{sport}-{year}', config: users.byEvent});
@@ -22,28 +26,20 @@ exports.register = (plugin, options, done) => {
   plugin.route({method: 'GET', path: '/entries/{sport}-{year}', config: entries.all});
   plugin.route({method: 'GET', path: '/entries/{id}', config: entries.get});
 
-  const entryChannel = new Channels();
+  // Entries events
   plugin.route({method: 'GET', path: '/entries/events', config: entries.events(entryChannel)});
-  rpcServer.expose('entries', (data, opt, cb) => {
-    entryChannel.write({event: `entries-${data.event}`});
-    entryChannel.write({event: 'users', data: {id: data.id}});
-    cb(null);
-  });
+  sub.addChannel('entries', (event) => entryChannel.write({event: `entries-${event}`}));
+  sub.addChannel('users', (id) => entryChannel.write({event: 'users', data: {id}}));
 
   // Masters
   plugin.route({method: 'GET', path: '/masters/{sport}-{year}', config: masters.get});
 
-  const masterChannel = new Channels();
+  // Masters events
   plugin.route({method: 'GET', path: '/masters/events', config: masters.events(masterChannel)});
-  rpcServer.expose('masters', (data, opt, cb) => {
-    masterChannel.write({event: `masters-${data.event}`});
-    cb(null);
-  });
+  sub.addChannel('masters', (event) => masterChannel.write({event: `masters-${event}`}));
 
   // Twitter
   plugin.route({method: 'GET', path: '/twitter/friends', config: twitter.friends});
-
-  rpcServer.listen(options.watchers.rpc_port, 'localhost');
 
   return done();
 };
