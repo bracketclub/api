@@ -66,7 +66,11 @@
     "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
-    "clean:db": "dropdb tweetyourbracket --if-exists && createdb tweetyourbracket && psql -d tweetyourbracket -f sql/tweetyourbracket.sql",
+    "db:clean": "npm run db:drop && npm run db:create && npm run db:seed",
+    "db:create": "createdb tweetyourbracket -O tweetyourbracket",
+    "db:drop": "dropdb --if-exists tweetyourbracket",
+    "db:dump": "pg_dump tweetyourbracket > sql/tweetyourbracket.sql",
+    "db:seed": "psql -d tweetyourbracket -f sql/tweetyourbracket.sql",
     "integration:entries": "node watchers/integration/entries --year=2016",
     "integration:entries:ncaam": "npm run integration:entries -- --sport=ncaam",
     "integration:entries:ncaaw": "npm run integration:entries -- --sport=ncaaw",
@@ -87,11 +91,11 @@
     "start:entries": "node watchers/entries",
     "start:scores": "node watchers/scores",
     "test": "npm run validate && npm run lint",
-    "test:all:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start integration:scores:ncaam integration:scores:ncaaw integration:entries:ncaam integration:entries:ncaaw integration:users:ncaam integration:users:ncaaw",
-    "test:clean:db": "dropdb tweetyourbracket-test --if-exists && createdb tweetyourbracket-test && psql -d tweetyourbracket-test -f sql/test.sql",
-    "test:entries:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start integration:entries:ncaam",
-    "test:scores:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start integration:scores:ncaam",
-    "test:users:integration": "NODE_ENV=integration npm-run-all test:clean:db --parallel start integration:users:ncaam",
+    "test:all:integration": "NODE_ENV=integration npm-run-all test:db --parallel start integration:scores:ncaam integration:scores:ncaaw integration:entries:ncaam integration:entries:ncaaw integration:users:ncaam integration:users:ncaaw",
+    "test:db": "dropdb --if-exists tweetyourbracket-test && createdb tweetyourbracket-test && psql -d tweetyourbracket-test -f sql/test.sql",
+    "test:entries:integration": "NODE_ENV=integration npm-run-all test:db --parallel start integration:entries:ncaam",
+    "test:scores:integration": "NODE_ENV=integration npm-run-all test:db --parallel start integration:scores:ncaam",
+    "test:users:integration": "NODE_ENV=integration npm-run-all test:db --parallel start integration:users:ncaam",
     "validate": "npm ls"
   }
 }
