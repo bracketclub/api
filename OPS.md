@@ -50,8 +50,7 @@ sudo passwd tweetyourbracket
 sudo su - postgres
 createuser tweetyourbracket
 createdb tweetyourbracket
-psql
-ALTER USER tweetyourbracket WITH PASSWORD 'ENTER_THE_PASSWORD';
+psql -c "ALTER USER tweetyourbracket WITH PASSWORD 'ENTER_THE_PASSWORD'";
 exit
 
 # Install api
