@@ -87,6 +87,8 @@
     "pm2:restart": "pm2 restart pm2.json",
     "pm2:start": "pm2 start pm2.json",
     "pm2:stop": "pm2 stop pm2.json",
+    "prod:update:men": "NODE_ENV=production ./bin/insertBracket.js --year=`date +%Y` --sport=ncaam --date `date +%Y%m%d`",
+    "prod:update:women": "NODE_ENV=production ./bin/insertBracket.js --year=`date +%Y` --sport=ncaaw --date `date +%Y%m%d`",
     "start": "node index",
     "start:entries": "node watchers/entries",
     "start:scores": "node watchers/scores",
