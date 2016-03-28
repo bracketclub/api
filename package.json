@@ -8,7 +8,7 @@
     "url": "http://lukekarrys.com"
   },
   "bugs": {
-    "url": "https://github.com/tweetyourbracket/api/issues"
+    "url": "https://bitbucket.org/lukekarrys/api/issues"
   },
   "dependencies": {
     "@lukekarrys/entry-watcher": "^5.0.3",
@@ -48,7 +48,7 @@
     "node": "^5.4.0",
     "npm": "^3.3.12"
   },
-  "homepage": "https://github.com/tweetyourbracket/api",
+  "homepage": "https://bitbucket.org/lukekarrys/api",
   "keywords": [
     "bracket",
     "ncaa",
@@ -63,7 +63,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git://github.com/tweetyourbracket/api.git"
+    "url": "git://bitbucket.org/lukekarrys/api.git"
   },
   "scripts": {
     "db:clean": "npm run db:drop && npm run db:create && npm run db:seed",
