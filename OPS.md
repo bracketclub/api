@@ -55,7 +55,7 @@ exit
 
 # Install api
 sudo su - tweetyourbracket
-git clone https://github.com/tweetyourbracket/api.git
+git clone git@bitbucket.org:lukekarrys/api.git
 cd api/
 npm install
 
