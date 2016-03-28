@@ -67,6 +67,7 @@
   },
   "scripts": {
     "db:clean": "npm run db:drop && npm run db:create && npm run db:seed",
+    "db:commit": "db:dump && git commit sql/tweetyourbracket.sql -m \"update sql `date +%Y-%m-%dT%H:%M:%S%z`\"",
     "db:create": "createdb tweetyourbracket -O tweetyourbracket",
     "db:drop": "dropdb --if-exists tweetyourbracket",
     "db:dump": "pg_dump tweetyourbracket > sql/tweetyourbracket.sql",
