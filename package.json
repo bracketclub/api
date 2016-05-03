@@ -42,7 +42,10 @@
     "eslint-plugin-classes": "^0.1.1",
     "eslint-plugin-react": "^4.2.3",
     "git-validate": "^2.1.4",
-    "npm-run-all": "^1.7.0"
+    "mkdirp": "^0.5.1",
+    "npm-run-all": "^1.7.0",
+    "request": "^2.72.0",
+    "rimraf": "^2.5.2"
   },
   "engines": {
     "node": "^5.4.0",
@@ -72,6 +75,8 @@
     "db:drop": "dropdb --if-exists tweetyourbracket",
     "db:dump": "pg_dump tweetyourbracket > sql/tweetyourbracket.sql",
     "db:seed": "psql -d tweetyourbracket -f sql/tweetyourbracket.sql",
+    "export": "npm-run-all --parallel start export:dir",
+    "export:dir": "rimraf .export/ && node bin/export.js",
     "integration:entries": "node watchers/integration/entries --year=2016",
     "integration:entries:ncaam": "npm run integration:entries -- --sport=ncaam",
     "integration:entries:ncaaw": "npm run integration:entries -- --sport=ncaaw",
