@@ -708,6 +708,12 @@ COPY masters (id, created, bracket, sport) FROM stdin;
 903	2016-04-25 23:00:00-04	C12XPX3XM12XA42XFXXX	nhl
 904	2016-04-27 23:00:00-04	C12XP43XM12XA42XFXXX	nhl
 905	2016-05-08 23:00:00-04	C12XP43XM12XA422FXXX	nhl
+906	2016-05-10 23:00:00-04	C12XP43XM122A422FXXX	nhl
+907	2016-05-11 23:00:00-04	C122P43XM122A422FXXX	nhl
+908	2016-05-12 23:00:00-04	C122P433M122A422FXXX	nhl
+909	2016-05-11 18:30:00-04	W15231XXE14231XXFX	nba
+910	2016-05-12 18:30:00-04	W152313XE14231XXFX	nba
+911	2016-05-15 18:30:00-04	W152313XE142312XFX	nba
 \.
 
 
@@ -715,7 +721,7 @@ COPY masters (id, created, bracket, sport) FROM stdin;
 -- Name: masters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweetyourbracket
 --
 
-SELECT pg_catalog.setval('masters_id_seq', 906, true);
+SELECT pg_catalog.setval('masters_id_seq', 912, true);
 
 
 --
