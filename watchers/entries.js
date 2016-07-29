@@ -7,6 +7,7 @@ const config = require('getconfig');
 const onSave = require('./lib/saveEntry');
 const createLogger = require('./lib/logger');
 const sportYear = require('./lib/sportYear');
+
 const sport = sportYear.sport;
 const year = sportYear.year;
 

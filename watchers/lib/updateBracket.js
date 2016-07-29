@@ -8,8 +8,8 @@ const Updater = require('bracket-updater');
 const onSaveMaster = require('./saveMaster');
 const createLogger = require('./logger');
 const latestBracket = require('./latestBracket');
-
 const sportYear = require('./sportYear');
+
 const sport = sportYear.sport;
 const year = sportYear.year;
 

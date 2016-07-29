@@ -1,7 +1,7 @@
 'use strict';
 
-const bucker = require('bucker');
 const path = require('path');
+const bucker = require('bucker');
 const config = require('getconfig');
 const _ = require('lodash');
 

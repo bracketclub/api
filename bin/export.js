@@ -14,6 +14,7 @@ const mkdirp = require('mkdirp');
 
 const pgConnect = require('../watchers/lib/pgConnect');
 const createLogger = require('../watchers/lib/logger');
+
 const logger = createLogger('export');
 
 const getEvents = (cb) => pgConnect(logger, (client, done) => client.query(

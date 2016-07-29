@@ -7,11 +7,13 @@ const Validator = require('bracket-validator');
 
 const createLogger = require('../lib/logger');
 const sportYear = require('../lib/sportYear');
+const createSaveMaster = require('../lib/saveMaster');
+
 const sport = sportYear.sport;
 const year = sportYear.year;
 
 const logger = createLogger(`scores:${sportYear.id}`);
-const saveMaster = require('../lib/saveMaster')({logger, sport, year});
+const saveMaster = createSaveMaster({logger, sport, year});
 
 const INITIAL = 5000;
 const INTERVAL = 5000;
