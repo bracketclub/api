@@ -11,12 +11,12 @@ const plugins = [
   {
     register: require('good'),
     options: {
-      reporters: [
-        {
-          reporter: require('good-console'),
-          events: config.hapi.logEvents
-        }
-      ]
+      reporters: {
+        console: [{
+          module: 'good-console',
+          args: [config.hapi.logEvents]
+        }, 'stdout']
+      }
     }
   },
   {
