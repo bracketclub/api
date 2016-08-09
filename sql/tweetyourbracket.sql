@@ -727,7 +727,7 @@ COPY masters (id, created, bracket, sport) FROM stdin;
 -- Name: masters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tweetyourbracket
 --
 
-SELECT pg_catalog.setval('masters_id_seq', 912, true);
+SELECT pg_catalog.setval('masters_id_seq', 918, true);
 
 
 --
