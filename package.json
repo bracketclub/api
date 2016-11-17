@@ -22,7 +22,7 @@
     "good": "^7.0.2",
     "good-console": "^6.3.1",
     "hapi": "^15.2.0",
-    "hapi-node-postgres": "^4.0.0",
+    "hapi-node-postgres": "^4.0.1",
     "hoek": "^4.1.0",
     "joi": "^9.2.0",
     "lodash": "^4.17.2",
@@ -31,7 +31,7 @@
     "pgboom": "^0.1.0",
     "scores": "^3.3.0",
     "twit": "^2.2.5",
-    "yargs": "^4.8.1"
+    "yargs": "^6.4.0"
   },
   "devDependencies": {
     "@lukekarrys/eslint-config": "^2.1.11",
@@ -41,7 +41,7 @@
     "eslint-plugin-import": "^2.2.0",
     "git-validate": "^2.2.2",
     "mkdirp": "^0.5.1",
-    "npm-run-all": "^2.3.0",
+    "npm-run-all": "^3.1.1",
     "request": "^2.78.0",
     "rimraf": "^2.5.4"
   },
