@@ -14,8 +14,8 @@ const year = sportYear.year;
 const logger = createLogger(`scores:${sportYear.id}`);
 const saveMaster = createSaveMaster({logger, sport, year});
 
-const INITIAL = 1;
-const INTERVAL = 100;
+const INITIAL = 5000;
+const INTERVAL = 5000;
 
 const {
   BEST_OF_RANGE: bestOf,
