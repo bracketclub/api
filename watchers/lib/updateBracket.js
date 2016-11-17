@@ -33,6 +33,7 @@ const findGame = (events) => (team) => {
 
   return {
     region: event.region,
+    series: event.series,
     winner: transformTeam(event.home.winner ? event.home : event.away),
     loser: transformTeam(event.home.winner ? event.away : event.home)
   };
@@ -61,6 +62,7 @@ const updateGames = (current, date, order, cb) => parse(scoreConfig.url.replace(
   return async.map(games, (game, gameCb) => {
     master = updater.update({
       fromRegion: game.region,
+      playedCompetitions: game.series.playedCompetitions,
       winner: game.winner,
       loser: game.loser,
       currentMaster: master

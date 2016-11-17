@@ -3,7 +3,6 @@
 const _ = require('lodash');
 const data = require('bracket-data');
 const Updater = require('bracket-updater');
-const Validator = require('bracket-validator');
 
 const createLogger = require('../lib/logger');
 const sportYear = require('../lib/sportYear');
@@ -15,48 +14,35 @@ const year = sportYear.year;
 const logger = createLogger(`scores:${sportYear.id}`);
 const saveMaster = createSaveMaster({logger, sport, year});
 
-const INITIAL = 5000;
-const INTERVAL = 5000;
-const empty = data({sport, year}).constants.EMPTY;
-const finalId = data({sport, year}).constants.FINAL_ID;
+const INITIAL = 1;
+const INTERVAL = 100;
+
+const {
+  BEST_OF_RANGE: bestOf,
+  EMPTY: empty,
+  UNPICKED_MATCH: unpickedChar
+} = data({sport, year}).constants;
+
 const updater = new Updater({sport, year});
-const validator = new Validator({sport, year});
+// const roundLength = _.range(1, 7).reduce((a, i) => (a.push(a[i - 1] * 2), a), [1])
 
 let previous = empty;
+let interval = null;
 
-setTimeout(() => setInterval(() => {
-  const rounds = _.flatten(_.transform(validator.validate(previous), (res, val, key) => {
-    res.push(val.rounds);
-  }, []));
+setTimeout(() => (interval = setInterval(() => {
+  const next = updater.next({currentMaster: previous}, {winner: true, order: false});
 
-  let game = null;
-  let fromRegion = null;
+  previous = updater.update({
+    currentMaster: previous,
+    fromRegion: next[0].fromRegion,
+    winner: {seed: next[0].seed, name: next[0].name},
+    loser: {seed: next[1].seed, name: next[1].name},
+    playedCompetitions: bestOf && _.sample(bestOf)
+  });
 
-  for (let i = 0, m = rounds.length; i < m; i++) {
-    const round = rounds[i];
-    const unpicked = round.indexOf(null);
-    if (unpicked > -1) {
-      const previousRound = rounds[i - 1];
-      game = _.shuffle([previousRound[unpicked * 2], previousRound[(unpicked * 2) + 1]]);
-      fromRegion = previousRound[unpicked * 2].fromRegion;
+  saveMaster(previous, _.noop);
 
-      if (i >= 21) { // eslint-disable-line no-magic-numbers
-        fromRegion = finalId;
-      }
-
-      break;
-    }
+  if (previous.indexOf(unpickedChar) === -1) {
+    clearInterval(interval);
   }
-
-  if (game) {
-    const master = updater.update({
-      fromRegion,
-      winner: game[0],
-      loser: game[1],
-      currentMaster: previous
-    });
-    previous = master;
-    game = null;
-    saveMaster(master, () => void 0);
-  }
-}, INTERVAL), INITIAL);
+}, INTERVAL)), INITIAL);
