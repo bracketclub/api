@@ -22,47 +22,6 @@
     }
   },
 
-  "watchers": {
-    "logOptions": {
-      "format": ":level :time :data",
-      "timestamp": "HH:mm:ss",
-      "accessFormat": ":time :level :method :status :url"
-    }
-  },
-
-  "postgres": {
-    "connectionString": "postgres://lukekarrys@localhost/tweetyourbracket"
-  },
-
-  "twitter": {
-    "consumer_key": "",
-    "consumer_secret": "",
-    "access_token": "",
-    "access_token_secret": ""
-  },
-
-  "tweetyourbracket": {
-    "domain": "tweetyourbracket.com",
-    "tags": ["tybrkt"]
-  },
-
-  "scores": {
-    "ncaaw": {
-      "interval": "2m",
-      "url": "http://espn.go.com/womens-college-basketball/scoreboard/_/date/{date}",
-      "parse": {
-        "finalPeriod": 4,
-        "periodLength": "10m"
-      }
-    },
-    "ncaam": {
-      "interval": "2m",
-      "url": "http://espn.go.com/mens-college-basketball/scoreboard/_/date/{date}",
-      "parse": {
-        "finalPeriod": 2,
-        "periodLength": "20m"
-      }
-    }
-  }
+  "postgres": "postgres://lukekarrys@localhost/tweetyourbracket"
 }
 

@@ -3,6 +3,7 @@
 const Hapi = require('hapi');
 const Hoek = require('hoek');
 const config = require('getconfig');
+const postgresOptions = require('./lib/postgres');
 
 const argv = process.argv.slice(2);
 const server = new Hapi.Server(config.hapi.options);
@@ -27,13 +28,12 @@ const plugins = [
   },
   {
     register: require('hapi-node-postgres'),
-    options: config.postgres
+    options: postgresOptions
   },
   {
     register: require('./services/api'),
     options: {
-      config: config.api,
-      watchers: config.watchers
+      config: config.api
     }
   }
 ];
