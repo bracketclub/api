@@ -53,6 +53,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node index",
+    "build": "NODE_ENV=production; echo NODE_ENV",
     "test": "npm run validate && npm run lint",
     "validate": "npm ls"
   }
