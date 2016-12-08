@@ -28,7 +28,8 @@
     "@lukekarrys/eslint-config": "^2.1.11",
     "eslint": "^3.11.1",
     "eslint-plugin-import": "^2.2.0",
-    "git-validate": "^2.2.2"
+    "git-validate": "^2.2.2",
+    "now": "^0.36.0"
   },
   "engines": {
     "node": "^6.0.0"
@@ -51,8 +52,11 @@
     "url": "git://bitbucket.org/lukekarrys/api.git"
   },
   "scripts": {
-    "deploy": "now -e NODE_ENV=production -e POSTGRES_URL=@postgres-url",
     "lint": "eslint .",
+    "now": "now",
+    "now:alias": "now alias `npm run now:latest -s` tybapi",
+    "now:deploy": "now -e NODE_ENV=production -e POSTGRES_URL=@postgres-url",
+    "now:latest": "now ls tweetyourbracket-api | grep '^ ' | awk '{print $1}' | head -n1",
     "start": "node index",
     "test": "npm run validate && npm run lint",
     "validate": "npm ls"
