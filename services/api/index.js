@@ -2,19 +2,18 @@
 
 const PGPubsub = require('pg-pubsub');
 
-const config = require('getconfig');
 const packageInfo = require('../../package');
 const Channels = require('./lib/channels');
+const postgresOptions = require('../../lib/postgres');
 
 const users = require('./controllers/users');
 const entries = require('./controllers/entries');
 const masters = require('./controllers/masters');
-const twitter = require('./controllers/twitter');
 
 exports.register = (plugin, options, done) => {
   plugin.bind({config: options.config});
 
-  const sub = new PGPubsub(config.postgres.connectionString);
+  const sub = new PGPubsub(postgresOptions.connectionString);
   const entryChannel = new Channels();
   const masterChannel = new Channels();
 
@@ -37,9 +36,6 @@ exports.register = (plugin, options, done) => {
   // Masters events
   plugin.route({method: 'GET', path: '/masters/events', config: masters.events(masterChannel)});
   sub.addChannel('masters', (event) => masterChannel.write({event: `masters-${event}`}));
-
-  // Twitter
-  plugin.route({method: 'GET', path: '/twitter/friends', config: twitter.friends});
 
   return done();
 };

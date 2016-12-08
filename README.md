@@ -28,17 +28,3 @@ cp config/default.json config/development.json
 ```sh
 npm start
 ```
-
-**Score watcher**
-```sh
-npm start:scores
-```
-
-**Entry watcher**
-```sh
-npm start:entries
-```
-
-### Deploying on Digital Ocean
-
-See [OPS.md](./OPS.md).

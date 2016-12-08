@@ -11,13 +11,7 @@
     "url": "https://bitbucket.org/lukekarrys/api/issues"
   },
   "dependencies": {
-    "@lukekarrys/entry-watcher": "^5.0.4",
-    "@lukekarrys/score-watcher": "^5.2.0",
-    "async": "^2.1.4",
     "boom": "^4.2.0",
-    "bracket-data": "^4.4.0",
-    "bracket-updater": "^3.4.0",
-    "bucker": "^1.1.1",
     "getconfig": "^3.0.0",
     "good": "^7.0.2",
     "good-console": "^6.3.1",
@@ -28,26 +22,17 @@
     "lodash": "^4.17.2",
     "pg": "^6.1.0",
     "pg-pubsub": "^0.3.0",
-    "pgboom": "^0.1.0",
-    "scores": "^3.3.0",
-    "twit": "^2.2.5",
-    "yargs": "^6.4.0"
+    "pgboom": "^0.1.0"
   },
   "devDependencies": {
     "@lukekarrys/eslint-config": "^2.1.11",
-    "bracket-generator": "^3.1.0",
-    "bracket-validator": "^3.1.0",
     "eslint": "^3.11.1",
     "eslint-plugin-import": "^2.2.0",
     "git-validate": "^2.2.2",
-    "mkdirp": "^0.5.1",
-    "npm-run-all": "^3.1.1",
-    "request": "^2.79.0",
-    "rimraf": "^2.5.4"
+    "now": "^0.36.0"
   },
   "engines": {
-    "node": "^5.4.0",
-    "npm": "^3.3.12"
+    "node": "^6.0.0"
   },
   "homepage": "https://bitbucket.org/lukekarrys/api",
   "keywords": [
@@ -67,47 +52,10 @@
     "url": "git://bitbucket.org/lukekarrys/api.git"
   },
   "scripts": {
-    "db:clean": "npm run db:drop && npm run db:create && npm run db:seed",
-    "db:commit": "npm run db:dump && git commit sql/tweetyourbracket.sql -m \"update sql `date +%Y-%m-%dT%H:%M:%S%z`\"",
-    "db:create": "createdb tweetyourbracket -O tweetyourbracket",
-    "db:drop": "dropdb --if-exists tweetyourbracket",
-    "db:dump": "pg_dump tweetyourbracket > sql/tweetyourbracket.sql",
-    "db:seed": "psql -d tweetyourbracket -f sql/tweetyourbracket.sql",
-    "export": "npm-run-all --parallel start export:dir",
-    "export:dir": "rimraf .export/ && node bin/export.js",
-    "integration:entries": "node watchers/integration/entries --year=2016",
-    "integration:entries:ncaam": "npm run integration:entries -- --sport=ncaam",
-    "integration:entries:ncaaw": "npm run integration:entries -- --sport=ncaaw",
-    "integration:entries:nba": "npm run integration:entries -- --sport=nba",
-    "integration:entries:nhl": "npm run integration:entries -- --sport=nhl",
-    "integration:scores": "node watchers/integration/scores --year=2016",
-    "integration:scores:ncaam": "npm run integration:scores -- --sport=ncaam",
-    "integration:scores:ncaaw": "npm run integration:scores -- --sport=ncaaw",
-    "integration:scores:nba": "npm run integration:scores -- --sport=nba",
-    "integration:scores:nhl": "npm run integration:scores -- --sport=nhl",
-    "integration:users": "node watchers/integration/users --year=2016",
-    "integration:users:ncaam": "npm run integration:users -- --sport=ncaam",
-    "integration:users:ncaaw": "npm run integration:users -- --sport=ncaaw",
-    "integration:users:nba": "npm run integration:users -- --sport=nba",
-    "integration:users:nhl": "npm run integration:users -- --sport=nhl",
     "lint": "eslint .",
-    "local": "nodemon index --slow",
-    "pm2:delete": "pm2 delete pm2.json",
-    "pm2:logs": "pm2 logs pm2.json",
-    "pm2:restart": "pm2 restart pm2.json",
-    "pm2:start": "pm2 start pm2.json",
-    "pm2:stop": "pm2 stop pm2.json",
-    "prod:update:men": "NODE_ENV=production ./bin/insertBracket.js --year=`date +%Y` --sport=ncaam --date `date +%Y%m%d`",
-    "prod:update:women": "NODE_ENV=production ./bin/insertBracket.js --year=`date +%Y` --sport=ncaaw --date `date +%Y%m%d`",
     "start": "node index",
-    "start:entries": "node watchers/entries",
-    "start:scores": "node watchers/scores",
+    "now-start": "NODE_ENV=production node index",
     "test": "npm run validate && npm run lint",
-    "test:all:integration": "NODE_ENV=integration npm-run-all test:db --parallel start integration:scores:ncaam integration:scores:ncaaw integration:scores:nba integration:scores:nhl integration:entries:ncaam integration:entries:ncaaw integration:entries:nba integration:entries:nhl integration:users:ncaam integration:users:ncaaw integration:users:nba integration:users:nhl",
-    "test:db": "dropdb --if-exists tweetyourbracket-test && createdb tweetyourbracket-test && psql -d tweetyourbracket-test -f sql/test.sql",
-    "test:entries:integration": "NODE_ENV=integration npm-run-all test:db --parallel start integration:entries:ncaam",
-    "test:scores:integration": "NODE_ENV=integration npm-run-all test:db --parallel start integration:scores:ncaam",
-    "test:users:integration": "NODE_ENV=integration npm-run-all test:db --parallel start integration:users:ncaam",
     "validate": "npm ls"
   }
 }
