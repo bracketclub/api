@@ -28,8 +28,7 @@
     "@lukekarrys/eslint-config": "^2.1.11",
     "eslint": "^3.11.1",
     "eslint-plugin-import": "^2.2.0",
-    "git-validate": "^2.2.2",
-    "now": "^0.36.0"
+    "git-validate": "^2.2.2"
   },
   "engines": {
     "node": "^6.0.0"

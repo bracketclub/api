@@ -17,14 +17,18 @@ tweetyourbracket-api
 - `/masters/:sport-:year`
 
 
-### Local Dev
+### Starting the API
 
+**Locally**
 ```sh
 npm install
-cp config/default.json config/development.json
+npm start
 ```
 
-**API**
+**Production**
 ```sh
-npm start
+# Make sure the POSTGRES_URL env var is set
+now secret add postgres-url TOTES_SECRET_CONNECTION_STRING
+now -e POSTGRES_URL=@postgres-url
+now
 ```
