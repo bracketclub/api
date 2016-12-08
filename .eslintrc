@@ -1,7 +1,3 @@
 {
-  "extends": "@lukekarrys/eslint-config/no-babel",
-
-  "rules": {
-    "camelcase": 0
-  }
+  "extends": "@lukekarrys/eslint-config/no-babel"
 }
