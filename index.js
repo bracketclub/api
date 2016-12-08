@@ -5,7 +5,6 @@ const Hoek = require('hoek');
 const config = require('getconfig');
 const postgresOptions = require('./lib/postgres');
 
-const argv = process.argv.slice(2);
 const server = new Hapi.Server(config.hapi.options);
 
 const plugins = [
@@ -47,13 +46,6 @@ server.connection({
   port: config.hapi.port
 });
 
-if (argv.indexOf('--slow') > -1) {
-  const slowDefault = 1000;
-  const slow = parseInt(argv.join('').replace(/\D/g, ''), 10) || slowDefault;
-  server.ext('onRequest', (req, reply) =>
-    setTimeout(() => reply.continue(), Math.random() * slow));
-}
-
 server.register(plugins, (err) => {
   Hoek.assert(!err, `Failed loading plugins: ${err}`);
 
@@ -64,5 +56,3 @@ server.register(plugins, (err) => {
 });
 
 server.on('stop', () => server.log(['info', 'shutdown'], 'Service has stopped'));
-
-exports.getServer = () => server;
