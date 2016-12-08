@@ -3,6 +3,8 @@ tweetyourbracket-api
 
 [![Build Status](https://travis-ci.org/tweetyourbracket/api.png?branch=master)](https://travis-ci.org/tweetyourbracket/api)
 
+https://tyb-api.now.sh
+
 ### Routes
 
 **Users**
@@ -32,5 +34,5 @@ npm run now -- secret add postgres-url TOTES_SECRET_CONNECTION_STRING
 npm run now:deploy
 # If you're happy with the deploy
 now run now:alias
-# API is now accessible from https://tybapi.now.sh
+# API is now accessible from https://tyb-api.now.sh
 ```
