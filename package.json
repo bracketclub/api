@@ -1,6 +1,6 @@
 {
-  "name": "tweetyourbracket-api",
-  "description": "The master and entries API for tweetyourbracket.com.",
+  "name": "tyb-api",
+  "description": "The API for Tweet Your Bracket.",
   "version": "1.0.0",
   "author": {
     "name": "Luke Karrys",
@@ -8,7 +8,7 @@
     "url": "http://lukekarrys.com"
   },
   "bugs": {
-    "url": "https://bitbucket.org/lukekarrys/api/issues"
+    "url": "https://github.com/tweetyourbracket/api/issues"
   },
   "dependencies": {
     "boom": "^4.2.0",
@@ -34,7 +34,7 @@
   "engines": {
     "node": "^6.0.0"
   },
-  "homepage": "https://bitbucket.org/lukekarrys/api",
+  "homepage": "https://github.com/tweetyourbracket/api",
   "keywords": [
     "bracket",
     "ncaa",
@@ -49,14 +49,14 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git://bitbucket.org/lukekarrys/api.git"
+    "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
     "lint": "eslint .",
     "now": "now",
-    "now:alias": "now alias `npm run now:latest -s` tybapi",
+    "now:alias": "now alias `npm run now:latest -s` tyb-api",
     "now:deploy": "now -e NODE_ENV=production -e POSTGRES_URL=@postgres-url",
-    "now:latest": "now ls tweetyourbracket-api | grep '^ ' | awk '{print $1}' | head -n1",
+    "now:latest": "now ls tyb-api | grep '^ ' | awk '{print $1}' | head -n1",
     "start": "node index",
     "test": "npm run validate && npm run lint",
     "validate": "npm ls"
