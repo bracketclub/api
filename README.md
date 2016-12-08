@@ -27,8 +27,8 @@ npm start
 
 **Production**
 ```sh
-# Make sure the POSTGRES_URL env var is set
+npm install now -g
+# Make sure the POSTGRES_URL secret is created (should only need to be done once)
 now secret add postgres-url TOTES_SECRET_CONNECTION_STRING
-now -e POSTGRES_URL=@postgres-url
-now
+npm run deploy
 ```
