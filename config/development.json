@@ -1,5 +1,5 @@
 {
-  "isDev": false,
+  "isDev": true,
 
   "hapi": {
     "logEvents": {
@@ -12,7 +12,7 @@
   },
 
   "postgres": {
-    "connectionString": "$POSTGRES_URL"
+    "connectionString": "postgres://lukekarrys@localhost/tweetyourbracket"
   }
 }
 

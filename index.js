@@ -3,7 +3,6 @@
 const Hapi = require('hapi');
 const Hoek = require('hoek');
 const config = require('getconfig');
-const postgresOptions = require('./lib/postgres');
 
 const server = new Hapi.Server(config.hapi.options);
 
@@ -13,8 +12,11 @@ const plugins = [
     options: {
       reporters: {
         console: [{
-          module: 'good-console',
+          module: 'good-squeeze',
+          name: 'Squeeze',
           args: [config.hapi.logEvents]
+        }, {
+          module: 'good-console'
         }, 'stdout']
       }
     }
@@ -30,7 +32,7 @@ const plugins = [
   },
   {
     register: require('hapi-node-postgres'),
-    options: postgresOptions
+    options: config.postgres
   },
   {
     register: require('./services/routes')

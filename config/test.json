@@ -2,18 +2,13 @@
   "isDev": false,
 
   "hapi": {
-    "host": "0.0.0.0",
-    "port": 3001,
     "logEvents": {
-      "log": "no",
-      "request": "no",
-      "response": "no",
-      "error": "no",
-      "ops": "no",
-      "request-error": "*"
+      "log": ["sse"]
     }
   },
 
-  "postgres": "postgres://lukekarrys@localhost/tweetyourbracket-test"
+  "postgres": {
+    "connectionString": "postgres://lukekarrys@localhost/tweetyourbracket-test"
+  }
 }
 
