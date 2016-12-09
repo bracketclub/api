@@ -20,11 +20,10 @@
     "hapi-node-postgres": "^4.0.1",
     "hoek": "^4.1.0",
     "joi": "^10.0.1",
-    "lodash": "^4.17.2",
+    "ms": "^0.7.2",
     "pg": "^6.1.0",
     "pg-pubsub": "^0.3.0",
-    "pgboom": "^0.1.0",
-    "susie": "^2.0.0"
+    "pgboom": "^0.1.0"
   },
   "devDependencies": {
     "@lukekarrys/eslint-config": "^2.1.11",
