@@ -22,7 +22,8 @@
     "lodash": "^4.17.2",
     "pg": "^6.1.0",
     "pg-pubsub": "^0.3.0",
-    "pgboom": "^0.1.0"
+    "pgboom": "^0.1.0",
+    "susie": "^2.0.0"
   },
   "devDependencies": {
     "@lukekarrys/eslint-config": "^2.1.11",

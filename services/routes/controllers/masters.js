@@ -2,7 +2,6 @@
 
 const Joi = require('joi');
 
-const sseHandler = require('../lib/sseHandler');
 const utils = require('../lib/reply');
 
 const mastersQuery = (where) => `
@@ -39,12 +38,5 @@ module.exports = {
         sport: Joi.string().regex(/^\w+$/)
       }
     }
-  },
-  events(channel) {
-    return {
-      description: 'Subscribe to SSE channel for masters',
-      tags: ['api', 'sse', 'masters'],
-      handler: sseHandler(channel)
-    };
   }
 };

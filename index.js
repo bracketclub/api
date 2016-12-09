@@ -20,6 +20,9 @@ const plugins = [
     }
   },
   {
+    register: require('susie')
+  },
+  {
     register: require('pgboom'),
     options: {
       getNull404: true
@@ -30,17 +33,16 @@ const plugins = [
     options: postgresOptions
   },
   {
-    register: require('./services/api'),
-    options: {
-      config: config.api
-    }
+    register: require('./services/routes')
+  },
+  {
+    register: require('./services/sse')
   }
 ];
 
 server.connection({
   routes: {
-    cors: config.hapi.cors,
-    timeout: {socket: false}
+    cors: config.hapi.cors
   },
   host: config.hapi.host,
   port: config.hapi.port
