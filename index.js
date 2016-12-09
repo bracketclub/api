@@ -22,7 +22,7 @@ const plugins = [
     }
   },
   {
-    register: require('susie')
+    register: require('./services/event')
   },
   {
     register: require('pgboom'),
