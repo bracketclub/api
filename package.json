@@ -54,11 +54,10 @@
     "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
+    "alias": "now alias `now ls tyb-api | grep '^ ' | awk '{print $1}' | head -n1` tyb-api",
+    "deploy": "now -e NODE_ENV=production -e POSTGRES_URL=@postgres-url",
     "lint": "eslint .",
     "now": "now",
-    "now:alias": "now alias `npm run now:latest -s` tyb-api",
-    "now:deploy": "now -e NODE_ENV=production -e POSTGRES_URL=@postgres-url",
-    "now:latest": "now ls tyb-api | grep '^ ' | awk '{print $1}' | head -n1",
     "start": "node index",
     "test": "npm run validate && npm run lint",
     "validate": "npm ls"
