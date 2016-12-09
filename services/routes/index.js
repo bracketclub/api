@@ -6,19 +6,17 @@ const users = require('./controllers/users');
 const entries = require('./controllers/entries');
 const masters = require('./controllers/masters');
 
-exports.register = (plugin, options, done) => {
-  plugin.bind({config: options.config});
-
+exports.register = (server, options, done) => {
   // Users
-  plugin.route({method: 'GET', path: '/users/{id}', config: users.get});
-  plugin.route({method: 'GET', path: '/users/{id}/{sport}-{year}', config: users.byEvent});
+  server.route({method: 'GET', path: '/users/{id}', config: users.get});
+  server.route({method: 'GET', path: '/users/{id}/{sport}-{year}', config: users.byEvent});
 
   // Entries
-  plugin.route({method: 'GET', path: '/entries/{sport}-{year}', config: entries.all});
-  plugin.route({method: 'GET', path: '/entries/{id}', config: entries.get});
+  server.route({method: 'GET', path: '/entries/{sport}-{year}', config: entries.all});
+  server.route({method: 'GET', path: '/entries/{id}', config: entries.get});
 
   // Masters
-  plugin.route({method: 'GET', path: '/masters/{sport}-{year}', config: masters.get});
+  server.route({method: 'GET', path: '/masters/{sport}-{year}', config: masters.get});
 
   return done();
 };

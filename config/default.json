@@ -14,14 +14,11 @@
         "*//beta.tweetyourbracket.com"
       ]
     },
-    "logEvents": {
-      "log": "*",
-      "response": "*",
-      "error": "*",
-      "request": "*"
-    }
+    "logEvents": {}
   },
 
-  "postgres": "postgres://lukekarrys@localhost/tweetyourbracket"
+  "postgres": {
+    "connectionString": "postgres://lukekarrys@localhost/tweetyourbracket"
+  }
 }
 
