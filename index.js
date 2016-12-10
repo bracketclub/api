@@ -22,7 +22,7 @@ const plugins = [
     }
   },
   {
-    register: require('./services/event')
+    register: require('./plugins/event')
   },
   {
     register: require('pgboom'),

@@ -5,10 +5,19 @@ const PassThrough = require('stream').PassThrough;
 const PGPubsub = require('pg-pubsub');
 const config = require('getconfig');
 const ms = require('ms');
-
+const _ = require('lodash');
 const packageInfo = require('../../package');
 
+const WRITE_WAIT = 250;
 const LOG_TAG = 'sse';
+
+// Returns a debounced function. The whole thing is memoized so that the
+// debounced function gets reused properly. The first argument is the function
+// and the rest of the arguments get passed to it and used as the memoized resolver
+const debounceBy = _.memoize(
+  (...args) => _.debounce(_.partial(_.first(args), ..._.tail(args)), WRITE_WAIT),
+  (...args) => _.initial(args).join(' ')
+);
 
 exports.register = (server, options, done) => {
   // Listen for PG NOTIFY queries
@@ -16,20 +25,39 @@ exports.register = (server, options, done) => {
     log: (...args) => server.log([LOG_TAG, 'pgpubsub'], util.format(...args))
   });
 
-  const createSSERoute = (name, write) => {
+  const createSSERoute = (route, write) => {
+    // Create a stream which will be the reply and be written to by pg pubsub
     const stream = new PassThrough({objectMode: true});
 
-    sub.addChannel(name, (id) => {
-      server.log([LOG_TAG, name], id);
-      stream.write(write(id));
+    // Log and write to the stream
+    const writeToStream = (id, name) => {
+      const data = write(id);
+      server.log([LOG_TAG, name], data);
+      stream.write(data);
+    };
+
+    // Add a pubsub channel for the namespace. This will listen for all NOTIFY
+    // queries on that table
+    sub.addChannel(route, (id) => {
+      // Don't debounce stream writes for users since individual users wont
+      // ever update that frequently.
+      if (route === 'users') {
+        return writeToStream(id);
+      }
+
+      // Creates a debounced version of write to stream
+      // This whole parent callback could just be debounced except that the same channel
+      // will write events for different ids and we only want to debounce each
+      // combination of channel name + id
+      return debounceBy(writeToStream, id, route)();
     });
 
     server.route({
       method: 'GET',
-      path: `/${name}/events`,
+      path: `/${route}/events`,
       config: {
-        description: `Get ${name} events stream`,
-        tags: [LOG_TAG, name],
+        description: `Get ${route} events stream`,
+        tags: [LOG_TAG, route],
         handler: (request, reply) => reply.event(stream)
       }
     });
