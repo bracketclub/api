@@ -20,6 +20,7 @@
     "hapi-node-postgres": "^4.0.1",
     "hoek": "^4.1.0",
     "joi": "^10.0.1",
+    "lodash": "^4.17.2",
     "ms": "^0.7.2",
     "pg": "^6.1.0",
     "pg-pubsub": "^0.3.0",
@@ -58,7 +59,7 @@
     "lint": "eslint .",
     "now": "now",
     "start": "node index",
-    "test": "npm run validate && npm run lint",
+    "test": "NODE_ENV=test npm start",
     "validate": "npm ls"
   }
 }
