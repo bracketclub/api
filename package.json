@@ -56,10 +56,11 @@
   "scripts": {
     "alias": "now alias `now ls tyb-api | grep '^ ' | awk '{print $1}' | head -n1` tyb-api",
     "deploy": "now -e NODE_ENV=production -e POSTGRES_URL=@postgres-url",
+    "integration": "NODE_ENV=test npm start",
     "lint": "eslint .",
     "now": "now",
     "start": "node index",
-    "test": "NODE_ENV=test npm start",
+    "test": "npm run lint && npm run validate",
     "validate": "npm ls"
   }
 }
