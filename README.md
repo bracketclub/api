@@ -1,6 +1,8 @@
 tweetyourbracket-api
 =================
 
+The API for Tweet Your Bracket.
+
 [![Build Status](https://travis-ci.org/tweetyourbracket/api.svg?branch=master)](https://travis-ci.org/tweetyourbracket/api)
 
 https://tyb-api.now.sh
