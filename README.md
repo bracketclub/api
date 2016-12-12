@@ -31,10 +31,11 @@ npm start
 
 **Production**
 ```sh
-# Make sure the POSTGRES_URL secret is created (first time only)
+# Make sure the POSTGRES_URL secret exists
 npm run now -- secret add postgres-url TOTES_SECRET_CONNECTION_STRING
-npm run now:deploy
+# Make sure connection string ends with `?ssl=true`
+npm run deploy
 # If you're happy with the deploy
-now run now:alias
+now run alias
 # API is now accessible from https://tyb-api.now.sh
 ```
