@@ -7,8 +7,6 @@
     }
   },
 
-  "postgres": {
-    "connectionString": "postgres://lukekarrys@localhost/tweetyourbracket-test"
-  }
+  "postgres": "postgres://lukekarrys@localhost/tweetyourbracket-test"
 }
 

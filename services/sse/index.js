@@ -3,10 +3,10 @@
 const util = require('util');
 const PassThrough = require('stream').PassThrough;
 const PGPubsub = require('pg-pubsub');
-const config = require('getconfig');
 const ms = require('ms');
 const _ = require('lodash');
 const packageInfo = require('../../package');
+const postgres = require('../../lib/postgres-config');
 
 const WRITE_WAIT = 250;
 const LOG_TAG = 'sse';
@@ -21,7 +21,7 @@ const debounceBy = _.memoize(
 
 exports.register = (server, options, done) => {
   // Listen for PG NOTIFY queries
-  const sub = new PGPubsub(config.postgres.connectionString, {
+  const sub = new PGPubsub(postgres, {
     log: (...args) => server.log([LOG_TAG, 'pgpubsub'], util.format(...args))
   });
 

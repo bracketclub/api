@@ -11,8 +11,6 @@
     }
   },
 
-  "postgres": {
-    "connectionString": "$POSTGRES_URL"
-  }
+  "postgres": "$POSTGRES_URL"
 }
 
