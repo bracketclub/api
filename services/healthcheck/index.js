@@ -13,7 +13,7 @@ GROUP BY
 exports.register = (server, options, done) => {
   server.route({
     method: 'GET',
-    path: '/healthcheck',
+    path: '/hc',
     config: {
       description: 'Healthcheck',
       tags: ['api', 'healthcheck'],
