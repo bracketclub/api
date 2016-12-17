@@ -40,6 +40,9 @@ const plugins = [
   },
   {
     register: require('./services/sse')
+  },
+  {
+    register: require('./services/healthcheck')
   }
 ];
 
