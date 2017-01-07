@@ -39,3 +39,17 @@ npm run deploy
 now run alias
 # API is now accessible from https://tyb-api.now.sh
 ```
+
+### Exporting Data
+
+By default this will use variables from `getconfig` and write data to the `tweetyourbracket.com` client repo (which should be located as a sibling of this repo).
+
+```
+npm run export
+```
+
+If you wanted to export stuff from production:
+
+```
+NODE_ENV=production npm run export
+```
