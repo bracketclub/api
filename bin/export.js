@@ -6,18 +6,28 @@ const req = require('request');
 const mkdirp = require('mkdirp');
 const yargs = require('yargs');
 const pg = require('pg');
+const config = require('getconfig');
 
 const {
   url: URL,
   dir: DIR,
   dry: DRY,
   db: DB,
-  concurrency: CON = 1
+  concurrency: CON
 } = yargs
   .string('url')
+  .default('url', config.baseUrl)
+
   .string('dir')
+  .default('dir', '../tweetyourbracket.com/public/json')
+
   .string('db')
+  .default('db', config.postgres)
+
   .boolean('dry')
+
+  .default('concurrency', 1)
+
   .argv;
 
 // eslint-disable-next-line no-console
@@ -29,9 +39,7 @@ const request = (url) => new Promise((resolve, reject) => req(url, (err, resp, b
 }));
 
 const query = (q) => new Promise((resolve, reject) => pg.connect(DB, (connErr, client, done) => {
-  if (connErr) {
-    return reject(connErr);
-  }
+  if (connErr) return reject(connErr);
 
   return client.query(q, (err, res) => {
     done();
@@ -66,7 +74,7 @@ const dataToEvents = ({users, events}) => {
 const saveUrl = (url) => request(`${URL}${url}`).then((data) => {
   const dirname = path.dirname(url);
   const basename = path.basename(url);
-  const dir = path.resolve(process.cwd(), DIR, dirname);
+  const dir = path.resolve(process.cwd(), DIR, dirname.slice(1));
   const file = path.join(dir, `${basename}.json`);
 
   if (DRY) {

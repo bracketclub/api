@@ -1,6 +1,8 @@
 {
   "isDev": false,
 
+  "baseUrl": "https://tyb-api.now.sh",
+
   "hapi": {
     "logEvents": {
       "log": "*",
