@@ -1,7 +1,7 @@
 {
   "isDev": false,
 
-  "baseUrl": "https://tyb-api.now.sh",
+  "baseUrl": "https://bc-api.now.sh",
 
   "hapi": {
     "logEvents": {
