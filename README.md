@@ -5,7 +5,7 @@ The API for Tweet Your Bracket.
 
 [![Build Status](https://travis-ci.org/tweetyourbracket/api.svg?branch=master)](https://travis-ci.org/tweetyourbracket/api)
 
-https://tyb-api.now.sh
+https://bc-api.now.sh
 
 ### Routes
 
@@ -33,11 +33,11 @@ npm start
 ```sh
 # Make sure the POSTGRES_URL secret exists
 npm run now -- secret add postgres-url TOTES_SECRET_CONNECTION_STRING
-# Make sure connection string ends with `?ssl=true`
+# Deploy to bc-api
 npm run deploy
 # If you're happy with the deploy
 now run alias
-# API is now accessible from https://tyb-api.now.sh
+# API is now accessible from https://bc-api.now.sh
 ```
 
 ### Exporting Data

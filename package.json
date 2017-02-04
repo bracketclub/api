@@ -1,5 +1,5 @@
 {
-  "name": "tyb-api",
+  "name": "bc-api",
   "description": "The API for Tweet Your Bracket.",
   "version": "1.0.0",
   "author": {
@@ -57,7 +57,8 @@
     "url": "git://github.com/tweetyourbracket/api.git"
   },
   "scripts": {
-    "alias": "now alias `now ls tyb-api | grep '^ ' | awk '{print $1}' | head -n1` tyb-api",
+    "alias": "now alias `now ls bc-api | grep '^ ' | awk '{print $1}' | head -n1` bc-api",
+    "clean": "now rm --yes `now ls bc-api | grep '^ ' | awk '{print $1}'  | tail -n +2 | tr '\\n' ' '`",
     "deploy": "now -e NODE_ENV=production -e POSTGRES_URL=@postgres-url",
     "export": "node bin/export",
     "integration": "NODE_ENV=test npm start",
