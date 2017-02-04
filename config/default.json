@@ -13,7 +13,10 @@
         "*//lukekarrys.local:*",
         "*//tweetyourbracket.com",
         "*//www.tweetyourbracket.com",
-        "*//beta.tweetyourbracket.com"
+        "*//beta.tweetyourbracket.com",
+        "*//bracket.club",
+        "*//www.bracket.club",
+        "*//beta.bracket.club"
       ]
     },
     "logEvents": {}
