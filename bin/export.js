@@ -19,7 +19,7 @@ const {
   .default('url', config.baseUrl)
 
   .string('dir')
-  .default('dir', '../tweetyourbracket.com/public/json')
+  .default('dir', '../bracket.club/public/json')
 
   .string('db')
   .default('db', config.postgres)

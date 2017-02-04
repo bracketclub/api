@@ -1,6 +1,6 @@
 {
   "name": "bc-api",
-  "description": "The API for Tweet Your Bracket.",
+  "description": "The API for bracket.club.",
   "version": "1.0.0",
   "author": {
     "name": "Luke Karrys",
@@ -8,7 +8,7 @@
     "url": "http://lukekarrys.com"
   },
   "bugs": {
-    "url": "https://github.com/tweetyourbracket/api/issues"
+    "url": "https://github.com/bracketclub/api/issues"
   },
   "dependencies": {
     "boom": "^4.2.0",
@@ -39,11 +39,12 @@
   "engines": {
     "node": "^6.0.0"
   },
-  "homepage": "https://github.com/tweetyourbracket/api",
+  "homepage": "https://github.com/bracketclub/api",
   "keywords": [
     "bracket",
     "ncaa",
-    "tweetyourbracket"
+    "tweetyourbracket",
+    "bracketclub"
   ],
   "license": "UNLICENSED",
   "main": "index.js",
@@ -54,7 +55,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git://github.com/tweetyourbracket/api.git"
+    "url": "https://github.com/bracketclub/api.git"
   },
   "scripts": {
     "alias": "now alias `now ls bc-api | grep '^ ' | awk '{print $1}' | head -n1` bc-api",

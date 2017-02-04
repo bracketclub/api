@@ -1,9 +1,9 @@
-tweetyourbracket-api
+bc-api
 =================
 
-The API for Tweet Your Bracket.
+The API for [bracket.club](https://bracket.club).
 
-[![Build Status](https://travis-ci.org/tweetyourbracket/api.svg?branch=master)](https://travis-ci.org/tweetyourbracket/api)
+[![Build Status](https://travis-ci.org/bracketclub/api.svg?branch=master)](https://travis-ci.org/bracketclub/api)
 
 https://bc-api.now.sh
 
@@ -42,7 +42,7 @@ now run alias
 
 ### Exporting Data
 
-By default this will use variables from `getconfig` and write data to the `tweetyourbracket.com` client repo (which should be located as a sibling of this repo).
+By default this will use variables from `getconfig` and write data to the `bracket.club` client repo (which should be located as a sibling of this repo).
 
 ```
 npm run export
