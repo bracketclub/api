@@ -11,9 +11,6 @@
       "origin": [
         "*//localhost:*",
         "*//lukekarrys.local:*",
-        "*//tweetyourbracket.com",
-        "*//www.tweetyourbracket.com",
-        "*//beta.tweetyourbracket.com",
         "*//bracket.club",
         "*//www.bracket.club",
         "*//beta.bracket.club"
@@ -22,6 +19,6 @@
     "logEvents": {}
   },
 
-  "postgres": "postgres://lukekarrys@localhost/tweetyourbracket"
+  "postgres": "postgres://lukekarrys@localhost/bracketclub"
 }
 
