@@ -19,20 +19,18 @@ exports.register = (server, options, done) => {
 
   const createSSERoute = (route, write, {debounce = true} = {}) => {
     // Create a stream which will be the reply and be written to by pg pubsub
-    const stream = new PassThrough({objectMode: true});
+    const eventStream = new PassThrough({objectMode: true});
 
     // Log and write to the stream
-    let writeToStream = (id, name) => {
+    const writeEvent = _[debounce ? 'debounce' : 'identity']((id, name) => {
       const data = write(id);
       server.log([LOG_TAG, name], data);
-      stream.write(data);
-    };
-
-    if (debounce) writeToStream = _.debounce(writeToStream, WRITE_WAIT);
+      eventStream.write(data);
+    }, WRITE_WAIT);
 
     // Add a pubsub channel for the namespace. This will listen for all NOTIFY
     // queries on that table
-    sub.addChannel(route, (id) => writeToStream(id, route));
+    sub.addChannel(route, (id) => writeEvent(id, route));
 
     server.route({
       method: 'GET',
@@ -40,14 +38,21 @@ exports.register = (server, options, done) => {
       config: {
         description: `Get ${route} events stream`,
         tags: [LOG_TAG, route],
-        handler: (request, reply) => reply.event(stream)
+        handler: (request, reply) => {
+          // Reply immediately with one heartbeat so that the stream
+          // does not show up as an error if it gets closed before the first interval
+          const handlerStream = new PassThrough({objectMode: true});
+          handlerStream.pipe(eventStream);
+          reply.event(handlerStream);
+          handlerStream.write(':heartbeat');
+        }
       }
     });
 
     // https://github.com/zeit/now-cli/issues/20
     // When deployed to now.sh it seems to close streams after 1 or 2 minutes
     // so this will keep those alive
-    setInterval(() => stream.write(':heartbeat'), ms('30s'));
+    setInterval(() => eventStream.write(':heartbeat'), ms('45s'));
   };
 
   // Don't debounce stream writes for users since individual users wont
