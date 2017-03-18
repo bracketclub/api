@@ -5,6 +5,7 @@ const PassThrough = require('stream').PassThrough;
 const PGPubsub = require('pg-pubsub');
 const ms = require('ms');
 const _ = require('lodash');
+const pipe = require('multipipe');
 const packageInfo = require('../../package');
 const postgres = require('../../lib/postgres-config');
 
@@ -42,8 +43,7 @@ exports.register = (server, options, done) => {
           // Reply immediately with one heartbeat so that the stream
           // does not show up as an error if it gets closed before the first interval
           const handlerStream = new PassThrough({objectMode: true});
-          handlerStream.pipe(eventStream);
-          reply.event(handlerStream);
+          reply.event(pipe(eventStream, handlerStream, {objectMode: true}));
           handlerStream.write(':heartbeat');
         }
       }
@@ -52,7 +52,7 @@ exports.register = (server, options, done) => {
     // https://github.com/zeit/now-cli/issues/20
     // When deployed to now.sh it seems to close streams after 1 or 2 minutes
     // so this will keep those alive
-    setInterval(() => eventStream.write(':heartbeat'), ms('45s'));
+    setInterval(() => eventStream.write(':heartbeat'), ms('30s'));
   };
 
   // Don't debounce stream writes for users since individual users wont
