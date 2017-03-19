@@ -28,7 +28,7 @@
     "pgboom": "^0.1.0"
   },
   "devDependencies": {
-    "@lukekarrys/eslint-config": "^2.1.11",
+    "@lukekarrys/eslint-config": "^3.0.0",
     "eslint": "^3.12.2",
     "eslint-plugin-import": "^2.2.0",
     "git-validate": "^2.2.2",
