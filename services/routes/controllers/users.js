@@ -58,9 +58,7 @@ module.exports = {
     description: 'Entries by user by event',
     tags: ['api', 'entries'],
     handler: (request, reply) => {
-      const year = request.params.year;
-      const sport = request.params.sport;
-      const id = request.params.id;
+      const {sport, year, id} = request.params;
 
       const getUserWithEntries = (cb) => request.pg.client.query(
         userWithEntriesQuery('sport = $2 AND extract(YEAR from created) = $3'),

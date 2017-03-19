@@ -106,4 +106,6 @@ Promise.all([qUsers, qEvents].map(query), CON)
   .then(() => logger.log('Success!'))
   .catch((err) => logger.error('get urls error', err))
   // eslint-disable-next-line no-process-exit
-  .then(() => process.exit(0));
+  .then(() => process.exit(0))
+  // eslint-disable-next-line no-process-exit
+  .catch(() => process.exit(0));

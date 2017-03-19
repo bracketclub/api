@@ -4,7 +4,7 @@
 
 'use strict';
 
-const PassThrough = require('stream').PassThrough;
+const {PassThrough} = require('stream').PassThrough;
 const Transformer = require('./transformer');
 const packageInfo = require('../../package');
 

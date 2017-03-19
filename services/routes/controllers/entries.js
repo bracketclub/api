@@ -23,8 +23,7 @@ module.exports = {
     description: 'All entries',
     tags: ['api', 'entries'],
     handler: (request, reply) => {
-      const year = request.params.year;
-      const sport = request.params.sport;
+      const {sport, year} = request.params;
 
       request.pg.client.query(
         entriesQuery('extract(YEAR from created) = $1 AND sport = $2'),
