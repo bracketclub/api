@@ -1,7 +1,7 @@
 'use strict';
 
 const util = require('util');
-const {PassThrough} = require('stream').PassThrough;
+const {PassThrough} = require('stream');
 const PGPubsub = require('pg-pubsub');
 const ms = require('ms');
 const _ = require('lodash');
