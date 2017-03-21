@@ -14,7 +14,7 @@ const LOG_TAG = 'sse';
 
 exports.register = (server, options, done) => {
   // Listen for PG NOTIFY queries
-  const sub = new PGPubsub(postgres, {
+  const sub = new PGPubsub(postgres.connectionString, {
     log: (...args) => server.log([LOG_TAG, 'pgpubsub'], util.format(...args))
   });
 
