@@ -21,7 +21,7 @@ ORDER BY
 module.exports = {
   all: {
     description: 'All entries',
-    tags: ['api', 'entries'],
+    tags: ['api', 'entries', 'pg'],
     handler: (request, reply) => {
       const {sport, year} = request.params;
 
@@ -40,7 +40,7 @@ module.exports = {
   },
   get: {
     description: 'Get entry by id',
-    tags: ['api', 'entries'],
+    tags: ['api', 'entries', 'pg'],
     handler: (request, reply) => {
       request.pg.client.query(
         entriesQuery('id = $1'),

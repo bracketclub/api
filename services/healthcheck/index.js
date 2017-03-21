@@ -16,7 +16,7 @@ exports.register = (server, options, done) => {
     path: '/hc',
     config: {
       description: 'Healthcheck',
-      tags: ['api', 'healthcheck'],
+      tags: ['api', 'healthcheck', 'pg'],
       handler: (request, reply) => request.pg.client.query(
         query,
         (err, res) => reply(err, err ? null : {statusCode: 200})

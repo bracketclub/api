@@ -21,7 +21,7 @@ GROUP BY
 module.exports = {
   get: {
     description: 'Get masters by year',
-    tags: ['api', 'masters'],
+    tags: ['api', 'masters', 'pg'],
     handler: (request, reply) => {
       const {sport, year} = request.params;
 

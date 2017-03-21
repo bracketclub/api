@@ -38,7 +38,7 @@ exports.register = (server, options, done) => {
       path: `/${route}/events`,
       config: {
         description: `Get ${route} events stream`,
-        tags: [LOG_TAG, route],
+        tags: ['api', LOG_TAG, route],
         handler: (request, reply) => {
           // Reply immediately with one heartbeat so that the stream
           // does not show up as an error if it gets closed before the first interval

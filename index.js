@@ -32,8 +32,8 @@ const plugins = [
     }
   },
   {
-    register: require('hapi-node-postgres'),
-    options: {connectionString: postgres}
+    register: require('./plugins/postgres'),
+    options: {config: postgres}
   },
   {
     register: require('./services/routes')

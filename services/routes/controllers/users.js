@@ -40,7 +40,7 @@ WHERE
 module.exports = {
   get: {
     description: 'Get user by id',
-    tags: ['api', 'users'],
+    tags: ['api', 'users', 'pg'],
     handler: (request, reply) => {
       request.pg.client.query(
         userWithEntriesQuery(),
@@ -56,7 +56,7 @@ module.exports = {
   },
   byEvent: {
     description: 'Entries by user by event',
-    tags: ['api', 'entries'],
+    tags: ['api', 'users', 'pg'],
     handler: (request, reply) => {
       const {sport, year, id} = request.params;
 
