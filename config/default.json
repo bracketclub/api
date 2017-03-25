@@ -19,6 +19,11 @@
     "logEvents": {}
   },
 
+  "loggly": {
+    "subdomain": "lukekarrys",
+    "tags": ["bc-api"]
+  },
+
   "postgres": "postgres://lukekarrys@localhost/bracketclub"
 }
 

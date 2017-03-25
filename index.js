@@ -6,22 +6,51 @@ const Hapi = require('hapi');
 const Hoek = require('hoek');
 const config = require('getconfig');
 const postgres = require('./lib/postgres-config');
+const packageInfo = require('./package');
 
 const server = new Hapi.Server(config.hapi.options);
+
+const goodReporters = {
+  console: [
+    {
+      module: 'good-squeeze',
+      name: 'Squeeze',
+      args: [config.hapi.logEvents]
+    },
+    {
+      module: 'good-console'
+    },
+    'stdout'
+  ]
+};
+
+if (config.loggly.token) {
+  goodReporters.loggly = [
+    {
+      module: 'good-squeeze',
+      name: 'Squeeze',
+      args: [config.hapi.logEvents]
+    },
+    {
+      module: 'good-loggly',
+      args: [{
+        token: config.loggly.token,
+        subdomain: config.loggly.subdomain,
+        tags: config.loggly.tags,
+        name: packageInfo.name,
+        hostname: config.baseUrl,
+        threshold: 20,
+        maxDelay: 15000
+      }]
+    }
+  ];
+}
 
 const plugins = [
   {
     register: require('good'),
     options: {
-      reporters: {
-        console: [{
-          module: 'good-squeeze',
-          name: 'Squeeze',
-          args: [config.hapi.logEvents]
-        }, {
-          module: 'good-console'
-        }, 'stdout']
-      }
+      reporters: goodReporters
     }
   },
   {
