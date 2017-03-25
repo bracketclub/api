@@ -46,8 +46,9 @@ exports.register = (server, options, next) => {
 
   server.on(config.detach, (request, err) => {
     if (request.pg) {
-      const kill = request.pg.kill || !!request.response._error;
-      request.pg.done(kill);
+      const kill = !!Hoek.reach(request, 'pg.kill');
+      const error = !!Hoek.reach(request, 'response._error');
+      request.pg.done(kill || error);
     }
   });
 
