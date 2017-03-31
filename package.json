@@ -11,16 +11,16 @@
     "url": "https://github.com/bracketclub/api/issues"
   },
   "dependencies": {
-    "boom": "^4.2.0",
+    "boom": "^4.3.1",
     "dotenv": "^4.0.0",
     "getconfig": "^3.0.0",
     "good": "^7.1.0",
     "good-console": "^6.4.0",
     "good-loggly": "^3.1.0",
-    "good-squeeze": "^5.0.1",
-    "hapi": "^16.1.0",
-    "hoek": "^4.1.0",
-    "joi": "^10.2.2",
+    "good-squeeze": "^5.0.2",
+    "hapi": "^16.1.1",
+    "hoek": "^4.1.1",
+    "joi": "^10.3.3",
     "lodash": "^4.17.4",
     "ms": "^1.0.0",
     "multipipe": "^1.0.2",
@@ -30,13 +30,13 @@
   },
   "devDependencies": {
     "@lukekarrys/eslint-config": "^3.0.0",
-    "eslint": "^3.18.0",
+    "eslint": "^3.19.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-promise": "^3.5.0",
     "git-validate": "^2.2.2",
     "mkdirp": "^0.5.1",
-    "now": "^4.10.0",
-    "request": "^2.0.0",
+    "now": "^4.10.3",
+    "request": "^2.75.0",
     "yargs": "^7.0.2"
   },
   "engines": {
