@@ -36,6 +36,8 @@
     "git-validate": "^2.2.2",
     "mkdirp": "^0.5.1",
     "now": "^5.0.0",
+    "now-purge": "0.0.13",
+    "now-realias": "^1.1.2",
     "request": "^2.81.0",
     "yargs": "^7.0.2"
   },
@@ -45,9 +47,9 @@
   "homepage": "https://github.com/bracketclub/api",
   "keywords": [
     "bracket",
+    "bracketclub",
     "ncaa",
-    "tweetyourbracket",
-    "bracketclub"
+    "tweetyourbracket"
   ],
   "license": "UNLICENSED",
   "main": "index.js",
@@ -61,9 +63,10 @@
     "url": "https://github.com/bracketclub/api.git"
   },
   "scripts": {
-    "alias": "now alias `now ls bc-api | grep '^ ' | awk '{print $1}' | head -n1` bc-api",
-    "clean": "now rm --yes `now ls bc-api | grep '^ ' | awk '{print $1}'  | tail -n +2 | tr '\\n' ' '`",
     "deploy": "now -e NODE_ENV=production -E .env",
+    "deploy:alias": "now-realias",
+    "deploy:purge": "now-purge",
+    "deploy:list": "now ls",
     "export": "node bin/export",
     "integration": "NODE_ENV=test npm start",
     "lint": "eslint .",

@@ -35,11 +35,17 @@ npm start
 # Make sure the POSTGRES_URL secret exists in the .env file
 touch .env
 echo "POSTGRES_URL=<TOTES_SECRET_CONN_STRING>" >> .env
+
 # Deploy to bc-api
 npm run deploy
+
 # If you're happy with the deploy
-now run alias
-# API is now accessible from https://bc-api.now.sh
+# API will now be accessible from https://bc-api.now.sh
+now run deploy:alias
+
+# If you want to cleanup old deployments
+npm run deploy:purge
+npm run deploy:list # to confirm
 ```
 
 ### Exporting Data
