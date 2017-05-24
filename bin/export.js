@@ -19,7 +19,7 @@ const {
   .default('url', config.baseUrl)
 
   .string('dir')
-  .default('dir', '../bracket.club/public/json')
+  .default('dir', '.export')
 
   .string('db')
   .default('db', config.postgres)
