@@ -22,7 +22,7 @@
     "hoek": "^4.1.1",
     "joi": "^10.4.1",
     "lodash": "^4.17.4",
-    "ms": "^1.0.0",
+    "ms": "^2.0.0",
     "multipipe": "^1.0.2",
     "pg": "^6.1.5",
     "pg-pubsub": "^0.3.0",
@@ -35,11 +35,11 @@
     "eslint-plugin-promise": "^3.5.0",
     "git-validate": "^2.2.2",
     "mkdirp": "^0.5.1",
-    "now": "^5.0.0",
+    "now": "^6.0.0",
     "now-purge": "0.0.13",
     "now-realias": "^1.1.2",
     "request": "^2.81.0",
-    "yargs": "^7.0.2"
+    "yargs": "^8.0.1"
   },
   "engines": {
     "node": "^6.0.0"
