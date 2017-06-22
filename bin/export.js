@@ -31,14 +31,11 @@ const {
 
   .argv;
 
-const agent = new http.Agent({maxSockets: CON});
-const pool = new pg.Pool({connectionString: DB});
-
-// eslint-disable-next-line no-process-exit
-const shutdown = () => pool.end(() => process.exit(0));
-
 // eslint-disable-next-line no-console
 const logger = console;
+const agent = new http.Agent({maxSockets: CON});
+const pool = new pg.Pool({connectionString: DB});
+const shutdown = () => pool.end();
 
 const request = (url) => new Promise((resolve, reject) => req(url, (err, resp, body) => {
   if (err) return reject(err);
