@@ -50,14 +50,16 @@ npm run deploy:list # to confirm
 
 ### Exporting Data
 
-By default this will use variables from `getconfig` and write data to the `bracket.club` client repo (which should be located as a sibling of this repo).
+By default this will use variables from `getconfig` and write data to the `.export` dir in this repo. This only ones a request for each database object and saves it to a directory with a standard naming structure. *The API server will need to be running for the requests to be successful.*
 
-```
+**Development**
+```sh
+npm start # From a separate window
 npm run export
 ```
 
-If you wanted to export stuff from production:
-
-```
+**Production**
+```sh
+# Assuming to server is running at `config.baseUrl`
 NODE_ENV=production npm run export
 ```

@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const http = require('http');
 const fs = require('fs');
 const req = require('request');
 const mkdirp = require('mkdirp');
@@ -30,6 +31,12 @@ const {
 
   .argv;
 
+const agent = new http.Agent({maxSockets: CON});
+const pool = new pg.Pool({connectionString: DB});
+
+// eslint-disable-next-line no-process-exit
+const shutdown = () => pool.end(() => process.exit(0));
+
 // eslint-disable-next-line no-console
 const logger = console;
 
@@ -38,7 +45,7 @@ const request = (url) => new Promise((resolve, reject) => req(url, (err, resp, b
   return resolve(JSON.parse(body));
 }));
 
-const query = (q) => new Promise((resolve, reject) => pg.connect(DB, (connErr, client, done) => {
+const query = (q) => new Promise((resolve, reject) => pool.connect((connErr, client, done) => {
   if (connErr) return reject(connErr);
 
   return client.query(q, (err, res) => {
@@ -71,7 +78,7 @@ const dataToEvents = ({users, events}) => {
   return urls;
 };
 
-const saveUrl = (url) => request(`${URL}${url}`).then((data) => {
+const saveUrl = (url) => request({url: `${URL}${url}`, agent}).then((data) => {
   const dirname = path.dirname(url);
   const basename = path.basename(url);
   const dir = path.resolve(process.cwd(), DIR, dirname.slice(1));
@@ -100,12 +107,10 @@ FROM
 GROUP BY
   extract(YEAR from created), sport`;
 
-Promise.all([qUsers, qEvents].map(query), CON)
+Promise.all([qUsers, qEvents].map(query))
   .then(([users, events]) => dataToEvents({users, events}))
-  .then((urls) => Promise.all(urls.map(saveUrl), CON))
+  .then((urls) => Promise.all(urls.map(saveUrl)))
   .then(() => logger.log('Success!'))
   .catch((err) => logger.error('get urls error', err))
-  // eslint-disable-next-line no-process-exit
-  .then(() => process.exit(0))
-  // eslint-disable-next-line no-process-exit
-  .catch(() => process.exit(0));
+  .then(() => shutdown())
+  .catch(() => shutdown());
