@@ -33,15 +33,17 @@ if (config.loggly.token) {
     },
     {
       module: 'good-loggly',
-      args: [{
-        token: config.loggly.token,
-        subdomain: config.loggly.subdomain,
-        tags: config.loggly.tags,
-        name: packageInfo.name,
-        hostname: config.baseUrl,
-        threshold: 20,
-        maxDelay: 15000
-      }]
+      args: [
+        {
+          token: config.loggly.token,
+          subdomain: config.loggly.subdomain,
+          tags: config.loggly.tags,
+          name: packageInfo.name,
+          hostname: config.baseUrl,
+          threshold: 20,
+          maxDelay: 15000
+        }
+      ]
     }
   ];
 }
