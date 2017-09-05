@@ -37,7 +37,7 @@
     "eslint-plugin-promise": "^3.5.0",
     "git-validate": "^2.2.2",
     "mkdirp": "^0.5.1",
-    "now": "^7.3.0",
+    "now": "^8.0.2",
     "now-no-alias": "^1.0.4",
     "now-purge": "0.0.15",
     "now-realias": "^1.1.2",
