@@ -29,7 +29,7 @@
     "pgboom": "^0.1.0"
   },
   "devDependencies": {
-    "@lukekarrys/eslint-config": "^6.0.0",
+    "@lukekarrys/eslint-config": "^6.0.4",
     "eslint": "^4.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-mysticatea": "^4.2.4",
