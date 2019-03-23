@@ -69,7 +69,7 @@
     "deploy": "now -e NODE_ENV=production -E .env --public",
     "deploy:alias": "now-realias",
     "deploy:noalias": "now-no-alias",
-    "deploy:purge": "now-purge",
+    "deploy:purge": "now-purge -n bc-api",
     "deploy:list": "now ls bc-api",
     "export": "node bin/export",
     "integration": "NODE_ENV=test npm start",
