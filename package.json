@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@lukekarrys/eslint-config": "^6.0.4",
-    "eslint": "^4.9.0",
+    "eslint": "^4.18.2",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-mysticatea": "^4.2.4",
     "eslint-plugin-prefer-object-spread": "^1.2.1",
