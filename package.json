@@ -37,10 +37,6 @@
     "eslint-plugin-promise": "^3.6.0",
     "git-validate": "^2.2.2",
     "mkdirp": "^0.5.1",
-    "now": "^14.2.3",
-    "now-no-alias": "^1.0.4",
-    "now-purge": "0.0.15",
-    "now-realias": "^1.1.2",
     "request": "^2.83.0",
     "yargs": "^10.0.3"
   },
@@ -66,15 +62,9 @@
     "url": "https://github.com/bracketclub/api.git"
   },
   "scripts": {
-    "deploy": "now -e NODE_ENV=production -E .env --public",
-    "deploy:alias": "now-realias",
-    "deploy:noalias": "now-no-alias",
-    "deploy:purge": "now-purge -n bc-api",
-    "deploy:list": "now ls bc-api",
     "export": "node bin/export",
     "integration": "NODE_ENV=test npm start",
     "lint": "eslint .",
-    "now": "now",
     "start": "node index",
     "test": "npm run lint && npm run validate",
     "validate": "npm ls"
