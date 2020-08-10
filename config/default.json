@@ -10,11 +10,9 @@
     "cors": {
       "origin": [
         "*//localhost:*",
-        "*//lukekarrys.local:*",
         "*//bracket.club",
         "*//www.bracket.club",
-        "*//beta.bracket.club",
-        " *//bracketclub.netlify.app"
+        "*//bracketclub.netlify.app"
       ]
     },
     "logEvents": {}
