@@ -1,9 +1,10 @@
 {
   "isDev": false,
 
-  "baseUrl": "https://bc-api.now.sh",
+  "baseUrl": "https://bracketclub.herokuapp.com",
 
   "hapi": {
+    "port": "$PORT",
     "logEvents": {
       "log": "*",
       "response": "*",
@@ -17,6 +18,6 @@
     "token": "$LOGGLY_TOKEN"
   },
 
-  "postgres": "$POSTGRES_URL"
+  "postgres": "$DATABASE_URL"
 }
 
