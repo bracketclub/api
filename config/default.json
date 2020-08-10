@@ -13,7 +13,8 @@
         "*//lukekarrys.local:*",
         "*//bracket.club",
         "*//www.bracket.club",
-        "*//beta.bracket.club"
+        "*//beta.bracket.club",
+        " *//bracketclub.netlify.app"
       ]
     },
     "logEvents": {}
