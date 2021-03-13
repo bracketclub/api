@@ -69,6 +69,9 @@ const plugins = [
     options: {config: postgres}
   },
   {
+    register: require('./plugins/cors')
+  },
+  {
     register: require('./services/routes')
   },
   {
@@ -96,4 +99,6 @@ server.register(plugins, (err) => {
   });
 });
 
-server.on('stop', () => server.log(['info', 'shutdown'], 'Service has stopped'));
+server.on('stop', () =>
+  server.log(['info', 'shutdown'], 'Service has stopped')
+);
