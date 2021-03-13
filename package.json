@@ -24,8 +24,8 @@
     "lodash": "^4.17.4",
     "ms": "^2.0.0",
     "multipipe": "^2.0.0",
-    "pg": "^7.3.0",
-    "pg-pubsub": "^0.3.0",
+    "pg": "^8.5.1",
+    "pg-pubsub": "^0.6.1",
     "pgboom": "^0.1.0"
   },
   "devDependencies": {
@@ -41,7 +41,8 @@
     "yargs": "^10.0.3"
   },
   "engines": {
-    "node": "^6.0.0"
+    "node": "^14.15.5",
+    "npm": "^6.14.11"
   },
   "homepage": "https://github.com/bracketclub/api",
   "keywords": [

@@ -52,7 +52,7 @@ exports.register = (server, options, done) => {
     // https://github.com/zeit/now-cli/issues/20
     // When deployed to now.sh it seems to close streams after 1 or 2 minutes
     // so this will keep those alive
-    setInterval(() => eventStream.write(':heartbeat'), ms('30s'));
+    setInterval(() => eventStream.write(':heartbeat'), ms('25s'));
   };
 
   // Don't debounce stream writes for users since individual users wont
