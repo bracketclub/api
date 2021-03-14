@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const packageInfo = require('../../package');
+const packageInfo = require("../../package");
 
 const query = `SELECT
   (sport || '-' || extract(YEAR from created)) as id
@@ -12,16 +12,16 @@ GROUP BY
 
 exports.register = (server, options, done) => {
   server.route({
-    method: 'GET',
-    path: '/hc',
+    method: "GET",
+    path: "/hc",
     config: {
-      description: 'Healthcheck',
-      tags: ['api', 'healthcheck', 'pg'],
-      handler: (request, reply) => request.pg.client.query(
-        query,
-        (err, res) => reply(err, err ? null : {statusCode: 200})
-      )
-    }
+      description: "Healthcheck",
+      tags: ["api", "healthcheck", "pg"],
+      handler: (request, reply) =>
+        request.pg.client.query(query, (err) =>
+          reply(err, err ? null : { statusCode: 200 })
+        ),
+    },
   });
 
   return done();
@@ -29,5 +29,5 @@ exports.register = (server, options, done) => {
 
 exports.register.attributes = {
   name: `x-${packageInfo.name}-healthcheck`,
-  version: packageInfo.version
+  version: packageInfo.version,
 };

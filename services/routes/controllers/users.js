@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const Joi = require('joi');
+const Joi = require("joi");
 
-const utils = require('../lib/reply');
+const utils = require("../lib/reply");
 
 const userWithEntriesQuery = (where) => `
 SELECT
@@ -17,7 +17,7 @@ FROM
     FROM
       entries
     WHERE
-      "user" = $1 ${where ? `AND ${where}` : ''}
+      "user" = $1 ${where ? `AND ${where}` : ""}
     ORDER BY
       sport, extract(YEAR from created), created DESC
   ) as e
@@ -39,8 +39,8 @@ WHERE
 
 module.exports = {
   get: {
-    description: 'Get user by id',
-    tags: ['api', 'users', 'pg'],
+    description: "Get user by id",
+    tags: ["api", "users", "pg"],
     handler: (request, reply) => {
       request.pg.client.query(
         userWithEntriesQuery(),
@@ -50,27 +50,29 @@ module.exports = {
     },
     validate: {
       params: {
-        id: Joi.string().regex(/^\d+$/)
-      }
-    }
+        id: Joi.string().regex(/^\d+$/),
+      },
+    },
   },
   byEvent: {
-    description: 'Entries by user by event',
-    tags: ['api', 'users', 'pg'],
+    description: "Entries by user by event",
+    tags: ["api", "users", "pg"],
     handler: (request, reply) => {
-      const {sport, year, id} = request.params;
+      const { sport, year, id } = request.params;
 
-      const getUserWithEntries = (cb) => request.pg.client.query(
-        userWithEntriesQuery('sport = $2 AND extract(YEAR from created) = $3'),
-        [id, sport, year],
-        (err, res) => cb(err, utils.get(res))
-      );
+      const getUserWithEntries = (cb) =>
+        request.pg.client.query(
+          userWithEntriesQuery(
+            "sport = $2 AND extract(YEAR from created) = $3"
+          ),
+          [id, sport, year],
+          (err, res) => cb(err, utils.get(res))
+        );
 
-      const getUser = (cb) => request.pg.client.query(
-        userQuery(),
-        [id],
-        (err, res) => cb(err, utils.get(res))
-      );
+      const getUser = (cb) =>
+        request.pg.client.query(userQuery(), [id], (err, res) =>
+          cb(err, utils.get(res))
+        );
 
       getUserWithEntries((err, res) => {
         if (err || res) {
@@ -86,8 +88,8 @@ module.exports = {
       params: {
         year: Joi.string().regex(/^20\d\d$/),
         sport: Joi.string().regex(/^\w+$/),
-        id: Joi.string().regex(/^\d+$/)
-      }
-    }
-  }
+        id: Joi.string().regex(/^\d+$/),
+      },
+    },
+  },
 };

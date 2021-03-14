@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const Joi = require('joi');
+const Joi = require("joi");
 
-const utils = require('../lib/reply');
+const utils = require("../lib/reply");
 
 const mastersQuery = (where) => `
 SELECT
@@ -13,20 +13,20 @@ SELECT
 FROM
   masters
 WHERE
-  ${where || ''}
+  ${where || ""}
 GROUP BY
   extract(YEAR from created), sport;
 `;
 
 module.exports = {
   get: {
-    description: 'Get masters by year',
-    tags: ['api', 'masters', 'pg'],
+    description: "Get masters by year",
+    tags: ["api", "masters", "pg"],
     handler: (request, reply) => {
-      const {sport, year} = request.params;
+      const { sport, year } = request.params;
 
       request.pg.client.query(
-        mastersQuery('extract(YEAR from created) = $1 AND sport = $2'),
+        mastersQuery("extract(YEAR from created) = $1 AND sport = $2"),
         [year, sport],
         (err, res) => reply(err, utils.get(res))
       );
@@ -34,8 +34,8 @@ module.exports = {
     validate: {
       params: {
         year: Joi.string().regex(/^20\d\d$/),
-        sport: Joi.string().regex(/^\w+$/)
-      }
-    }
-  }
+        sport: Joi.string().regex(/^\w+$/),
+      },
+    },
+  },
 };

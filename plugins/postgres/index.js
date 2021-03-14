@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
-const _ = require('lodash');
-const Hoek = require('hoek');
-const Pg = require('pg');
+const _ = require("lodash");
+const Hoek = require("hoek");
+const Pg = require("pg");
 
-const packageInfo = require('../../package');
+const packageInfo = require("../../package");
 
 const DEFAULTS = {
-  config: {connectionString: null},
-  attach: 'onPreHandler',
-  detach: 'tail'
+  config: { connectionString: null },
+  attach: "onPreHandler",
+  detach: "tail",
 };
 
 exports.register = (server, options, next) => {
@@ -17,7 +17,7 @@ exports.register = (server, options, next) => {
   const pool = new Pg.Pool(config.config);
 
   server.ext(config.attach, (request, reply) => {
-    const connect = _.get(request, 'route.settings.tags', []).includes('pg');
+    const connect = _.get(request, "route.settings.tags", []).includes("pg");
 
     if (connect) {
       pool.connect((err, client, done) => {
@@ -29,21 +29,20 @@ exports.register = (server, options, next) => {
         request.pg = {
           client,
           done,
-          kill: false
+          kill: false,
         };
 
         reply.continue();
       });
-    }
-    else {
+    } else {
       reply.continue();
     }
   });
 
-  server.on(config.detach, (request, err) => {
+  server.on(config.detach, (request) => {
     if (request.pg) {
-      const kill = !!Hoek.reach(request, 'pg.kill');
-      const error = !!Hoek.reach(request, 'response._error');
+      const kill = !!Hoek.reach(request, "pg.kill");
+      const error = !!Hoek.reach(request, "response._error");
       request.pg.done(kill || error);
     }
   });
@@ -53,5 +52,5 @@ exports.register = (server, options, next) => {
 
 exports.register.attributes = {
   name: `x-${packageInfo.name}-postgres`,
-  version: packageInfo.version
+  version: packageInfo.version,
 };

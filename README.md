@@ -1,5 +1,4 @@
-bc-api
-=================
+# bc-api
 
 The API for [bracket.club](https://bracket.club).
 
@@ -10,16 +9,18 @@ https://bracketclub.herokuapp.com
 ### Routes
 
 **Users**
+
 - `/users/:id`
 - `/users/:id/:sport-:year`
 
 **Entries**
+
 - `/entries/:sport-:year`
 - `/entries/:id`
 
 **Masters**
-- `/masters/:sport-:year`
 
+- `/masters/:sport-:year`
 
 ### Starting the API
 
@@ -32,7 +33,7 @@ npm start
 
 **Production**
 
-```sh
+````sh
 # Make sure the DATABASE_URL secret exists in the .env file
 touch .env
 echo "DATABASE_URL=<TOTES_SECRET_CONN_STRING>" >> .env
@@ -50,7 +51,7 @@ By default this will use variables from `getconfig` and write data to the `.expo
 ```sh
 npm start # From a separate window
 npm run export
-```
+````
 
 **Production**
 

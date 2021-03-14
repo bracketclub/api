@@ -20,4 +20,3 @@
 
   "postgres": "$DATABASE_URL"
 }
-
