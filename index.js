@@ -87,28 +87,19 @@ server.connection({
   port: config.hapi.port,
 });
 
-server.ext("onPreResponse", (request, reply) => {
-  const response = request.response.isBoom
-    ? request.response.output
-    : request.response;
+// server.ext("onPreResponse", (request, reply) => {
+//   const response = request.response.isBoom
+//     ? request.response.output
+//     : request.response;
 
-  response.headers["access-control-max-age"] = 60 * 10;
-  response.headers["access-control-allow-origin"] = "*";
-  response.headers["access-control-expose-headers"] = "*";
-  response.headers["access-control-allow-headers"] = "*";
-  response.headers["access-control-allow-methods"] = "*";
+//   response.headers["access-control-max-age"] = 60 * 10;
+//   response.headers["access-control-allow-origin"] = "*";
+//   response.headers["access-control-expose-headers"] = "*";
+//   response.headers["access-control-allow-headers"] = "*";
+//   response.headers["access-control-allow-methods"] = "*";
 
-  if (request.url.pathname === "/entries/events") {
-    console.log(
-      "on pre response",
-      request.method,
-      request.url.pathname,
-      response.headers
-    );
-  }
-
-  return reply.continue();
-});
+//   return reply.continue();
+// });
 
 server.register(plugins, (err) => {
   Hoek.assert(!err, `Failed loading plugins: ${err}`);
