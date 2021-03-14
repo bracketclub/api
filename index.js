@@ -83,7 +83,7 @@ server.connection({
   routes: {
     cors: {
       origin: ['*'],
-      additionalHeaders: ['Cache-Control', 'Connection']
+      additionalHeaders: ['Cache-Control']
     }
   },
   host: config.hapi.host,

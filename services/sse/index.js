@@ -49,6 +49,21 @@ exports.register = (server, options, done) => {
       }
     });
 
+    server.route({
+      method: 'OPTIONS',
+      path: `/${route}/events`,
+      config: {
+        description: `Get ${route} events stream`,
+        tags: ['api', LOG_TAG, route],
+        handler: (request, reply) => {
+          const response = reply()
+            .header('access-control-allow-origin', '*')
+            .header('access-control-allow-headers', 'Cache-Control');
+          return response;
+        }
+      }
+    });
+
     // https://github.com/zeit/now-cli/issues/20
     // When deployed to now.sh it seems to close streams after 1 or 2 minutes
     // so this will keep those alive
