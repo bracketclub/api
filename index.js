@@ -68,9 +68,9 @@ const plugins = [
     register: require('./plugins/postgres'),
     options: {config: postgres}
   },
-  {
-    register: require('./plugins/cors')
-  },
+  // {
+  //   register: require('./plugins/cors')
+  // },
   {
     register: require('./services/routes')
   },
