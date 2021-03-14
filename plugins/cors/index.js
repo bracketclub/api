@@ -14,7 +14,9 @@ const addCorsHeaders = (request, reply) => {
     : request.response;
 
   response.headers['access-control-allow-origin'] = request.headers.origin;
+
   response.headers['access-control-allow-credentials'] = 'true';
+
   if (request.method !== 'options') {
     return reply.continue();
   }
@@ -31,6 +33,7 @@ const addCorsHeaders = (request, reply) => {
     response.headers['access-control-allow-headers'] =
       request.headers['access-control-request-headers'];
   }
+
   if (request.headers['access-control-request-method']) {
     response.headers['access-control-allow-methods'] =
       request.headers['access-control-request-method'];
