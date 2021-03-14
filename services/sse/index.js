@@ -50,6 +50,8 @@ exports.register = (server, options, done) => {
           // does not show up as an error if it gets closed before the first interval
           handlerStream.write(":heartbeat");
 
+          console.log(route, "events", response.headers);
+
           return response;
         },
       },
