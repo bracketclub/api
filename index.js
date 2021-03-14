@@ -79,6 +79,17 @@ const plugins = [
   }
 ];
 
+server.connection({
+  routes: {
+    cors: {
+      origin: ['*'],
+      additionalHeaders: ['Cache-Control']
+    }
+  },
+  host: config.hapi.host,
+  port: config.hapi.port
+});
+
 server.ext('onPreResponse', (request, reply) => {
   if (!request.headers.origin) {
     return reply.continue();
@@ -108,17 +119,6 @@ server.ext('onPreResponse', (request, reply) => {
   }
 
   return reply.continue();
-});
-
-server.connection({
-  routes: {
-    cors: {
-      origin: ['*'],
-      additionalHeaders: ['Cache-Control']
-    }
-  },
-  host: config.hapi.host,
-  port: config.hapi.port
 });
 
 server.register(plugins, (err) => {
