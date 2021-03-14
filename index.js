@@ -87,6 +87,30 @@ server.connection({
   port: config.hapi.port,
 });
 
+server.ext("onPreResponse", (request, reply) => {
+  // depending on whether we have a boom or not,
+  // headers need to be set differently.
+  const response = request.response.isBoom
+    ? request.response.output
+    : request.response;
+
+  response.headers["access-control-allow-origin"] = "*";
+
+  if (request.method !== "options") {
+    return reply.continue();
+  }
+
+  response.statusCode = 200;
+  response.headers["access-control-expose-headers"] = "*";
+  response.headers["access-control-allow-headers"] = "*";
+  response.headers["access-control-allow-methods"] = "*";
+
+  // eslint-disable-next-line no-magic-numbers
+  response.headers["access-control-max-age"] = 60 * 10; // 10 minutes
+
+  return reply.continue();
+});
+
 server.register(plugins, (err) => {
   Hoek.assert(!err, `Failed loading plugins: ${err}`);
 
