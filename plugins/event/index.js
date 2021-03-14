@@ -23,13 +23,12 @@ const handleEvent = function (event, options, streamOptions) {
   }
 
   // eslint-disable-next-line no-invalid-this
-  this(stream)
+  return this(stream)
     .header('content-type', 'text/event-stream')
     .header('content-encoding', 'identity')
     .header('x-accel-buffering', 'no')
     .header('cache-control', 'no-cache')
     .header('connection', 'keep-alive')
-    .header('access-control-allow-origin', '*')
     .header('transfer-encoding', '');
 };
 

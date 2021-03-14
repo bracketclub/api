@@ -40,11 +40,19 @@ exports.register = (server, options, done) => {
         description: `Get ${route} events stream`,
         tags: ['api', LOG_TAG, route],
         handler: (request, reply) => {
+          const handlerStream = new PassThrough({objectMode: true});
+
+          const response = reply.event(pipe(eventStream, handlerStream, {objectMode: true}));
+
+          response.header('access-control-allow-origin', '*');
+          response.header('access-control-allow-credentials', true);
+          response.header('access-control-expose-headers', 'content-type, content-length, etag');
+
           // Reply immediately with one heartbeat so that the stream
           // does not show up as an error if it gets closed before the first interval
-          const handlerStream = new PassThrough({objectMode: true});
-          reply.event(pipe(eventStream, handlerStream, {objectMode: true}));
           handlerStream.write(':heartbeat');
+
+          return response;
         }
       }
     });
@@ -56,9 +64,20 @@ exports.register = (server, options, done) => {
         description: `Get ${route} events stream`,
         tags: ['api', LOG_TAG, route],
         handler: (request, reply) => {
-          const response = reply()
-            .header('access-control-allow-origin', '*')
-            .header('access-control-allow-headers', 'Cache-Control');
+          const response = reply();
+
+          response.header('access-control-allow-origin', '*');
+          response.header('access-control-allow-credentials', true);
+          response.header('access-control-expose-headers', 'content-type, content-length, etag');
+
+          if (request.headers['access-control-request-headers']) {
+            response.header('access-control-allow-headers', request.headers['access-control-request-headers']);
+          }
+
+          if (request.headers['access-control-request-method']) {
+            response.header('access-control-allow-methods', request.headers['access-control-request-method']);
+          }
+
           return response;
         }
       }
