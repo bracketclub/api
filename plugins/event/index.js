@@ -29,6 +29,7 @@ const handleEvent = function (event, options, streamOptions) {
     .header('x-accel-buffering', 'no')
     .header('cache-control', 'no-cache')
     .header('connection', 'keep-alive')
+    .header('access-control-allow-origin', '*')
     .header('transfer-encoding', '');
 };
 
