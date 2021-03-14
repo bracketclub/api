@@ -68,9 +68,6 @@ const plugins = [
     register: require('./plugins/postgres'),
     options: {config: postgres}
   },
-  // {
-  //   register: require('./plugins/cors')
-  // },
   {
     register: require('./services/routes')
   },
@@ -83,7 +80,12 @@ const plugins = [
 ];
 
 server.connection({
-  routes: {cors: true},
+  routes: {
+    cors: {
+      origin: ['*'],
+      additionalHeaders: ['Cache-Control']
+    }
+  },
   host: config.hapi.host,
   port: config.hapi.port
 });
