@@ -42,13 +42,14 @@ exports.register = (server, options, done) => {
         handler: (request, reply) => {
           const handlerStream = new PassThrough({ objectMode: true });
 
+          handlerStream.write(":heartbeat");
+
           const response = reply.event(
             pipe(eventStream, handlerStream, { objectMode: true })
           );
 
           // Reply immediately with one heartbeat so that the stream
           // does not show up as an error if it gets closed before the first interval
-          handlerStream.write(":heartbeat");
 
           console.log(route, "events", response.headers);
 
