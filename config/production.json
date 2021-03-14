@@ -15,7 +15,7 @@
   },
 
   "loggly": {
-    "token": "$LOGGLY_TOKEN"
+    "token": "$$LOGGLY_TOKEN"
   },
 
   "postgres": "$DATABASE_URL"
