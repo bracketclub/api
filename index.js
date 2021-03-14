@@ -83,9 +83,7 @@ const plugins = [
 ];
 
 server.connection({
-  routes: {
-    cors: config.hapi.cors
-  },
+  routes: {cors: true},
   host: config.hapi.host,
   port: config.hapi.port
 });
