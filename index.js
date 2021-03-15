@@ -87,20 +87,6 @@ server.connection({
   port: config.hapi.port,
 });
 
-// server.ext("onPreResponse", (request, reply) => {
-//   const response = request.response.isBoom
-//     ? request.response.output
-//     : request.response;
-
-//   response.headers["access-control-max-age"] = 60 * 10;
-//   response.headers["access-control-allow-origin"] = "*";
-//   response.headers["access-control-expose-headers"] = "*";
-//   response.headers["access-control-allow-headers"] = "*";
-//   response.headers["access-control-allow-methods"] = "*";
-
-//   return reply.continue();
-// });
-
 server.register(plugins, (err) => {
   Hoek.assert(!err, `Failed loading plugins: ${err}`);
 
