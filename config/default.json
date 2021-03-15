@@ -10,10 +10,7 @@
     "logEvents": {}
   },
 
-  "loggly": {
-    "subdomain": "lukekarrys",
-    "tags": ["bc-api"]
-  },
+  "sse": true,
 
   "postgres": "postgres://lukekarrys@localhost/bracketclub"
 }

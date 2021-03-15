@@ -14,9 +14,7 @@
     }
   },
 
-  "loggly": {
-    "token": "$$LOGGLY_TOKEN"
-  },
+  "sse": "$$USE_SSE",
 
   "postgres": "$DATABASE_URL"
 }

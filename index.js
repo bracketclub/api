@@ -6,9 +6,12 @@ const Hapi = require("hapi");
 const Hoek = require("hoek");
 const config = require("getconfig");
 const postgres = require("./lib/postgres-config");
-const packageInfo = require("./package");
 
 const server = new Hapi.Server(config.hapi.options);
+
+const useSSE = config.sse === true || config.sse === "true";
+
+console.log({ useSSE });
 
 const goodReporters = {
   console: [
@@ -24,30 +27,6 @@ const goodReporters = {
   ],
 };
 
-if (config.loggly.token) {
-  goodReporters.loggly = [
-    {
-      module: "good-squeeze",
-      name: "Squeeze",
-      args: [config.hapi.logEvents],
-    },
-    {
-      module: "good-loggly",
-      args: [
-        {
-          token: config.loggly.token,
-          subdomain: config.loggly.subdomain,
-          tags: config.loggly.tags,
-          name: packageInfo.name,
-          hostname: config.baseUrl,
-          threshold: 20,
-          maxDelay: 15000,
-        },
-      ],
-    },
-  ];
-}
-
 const plugins = [
   {
     register: require("good"),
@@ -55,7 +34,7 @@ const plugins = [
       reporters: goodReporters,
     },
   },
-  {
+  useSSE && {
     register: require("./plugins/event"),
   },
   {
@@ -71,13 +50,13 @@ const plugins = [
   {
     register: require("./services/routes"),
   },
-  {
+  useSSE && {
     register: require("./services/sse"),
   },
   {
     register: require("./services/healthcheck"),
   },
-];
+].filter(Boolean);
 
 server.connection({
   routes: {

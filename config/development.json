@@ -10,5 +10,7 @@
     }
   },
 
+  "sse": "$$USE_SSE",
+
   "postgres": "postgres://lukekarrys@localhost/bracketclub"
 }
