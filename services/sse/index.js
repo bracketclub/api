@@ -5,7 +5,6 @@ const { PassThrough } = require("stream");
 const PGPubsub = require("pg-pubsub");
 const ms = require("ms");
 const _ = require("lodash");
-const pipe = require("multipipe");
 const packageInfo = require("../../package");
 const postgres = require("../../lib/postgres-config");
 
@@ -40,23 +39,16 @@ exports.register = (server, options, done) => {
         description: `Get ${route} events stream`,
         tags: ["api", LOG_TAG, route],
         handler: (request, reply) => {
-          const handlerStream = new PassThrough({ objectMode: true });
-
-          // Reply immediately with one heartbeat so that the stream
-          // does not show up as an error if it gets closed before the first interval
-          handlerStream.write(":heartbeat");
-
-          return reply.event(
-            pipe(eventStream, handlerStream, { objectMode: true })
-          );
+          return reply.event(eventStream);
         },
       },
     });
 
-    // https://github.com/zeit/now-cli/issues/20
-    // When deployed to now.sh it seems to close streams after 1 or 2 minutes
-    // so this will keep those alive
-    setInterval(() => eventStream.write(":heartbeat"), ms("25s"));
+    // https://devcenter.heroku.com/articles/error-codes#h15-idle-connection
+    // Heroku has a 55s idle connection timeout
+    setInterval(() => {
+      eventStream.write({ event: "keepalive", time: Date.now() });
+    }, ms("50s"));
   };
 
   // Don't debounce stream writes for users since individual users wont

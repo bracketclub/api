@@ -8,18 +8,12 @@ const { PassThrough } = require("stream");
 const Transformer = require("./transformer");
 const packageInfo = require("../../package");
 
-const handleEvent = function (event, options, streamOptions) {
-  let stream;
+const handleEvent = function (event) {
+  const stream = new PassThrough();
+  const through = new Transformer();
 
-  if (event._readableState.objectMode) {
-    const through = new Transformer(streamOptions, true);
-    stream = new PassThrough();
-    through.pipe(stream);
-    event.pipe(through);
-  } else {
-    stream = new Transformer(streamOptions, false);
-    event.pipe(stream);
-  }
+  through.pipe(stream);
+  event.pipe(through);
 
   // eslint-disable-next-line no-invalid-this
   return this(stream)

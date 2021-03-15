@@ -5,32 +5,21 @@ const Stream = require("stream");
 const END_LINE = "\r\n";
 
 class Transform extends Stream.Transform {
-  constructor(options = {}, objectMode) {
-    super({ objectMode });
-
-    this.event = options.event || null;
+  constructor() {
+    super({ objectMode: true });
 
     let counter = 1;
-    this.generateId = options.generateId || (() => counter++);
+    this.generateId = () => counter++;
   }
 
   _transform(chunk, encoding, callback) {
-    if (typeof chunk === "string" && chunk[0] === ":") {
-      this.push(chunk + END_LINE + END_LINE);
-      return callback();
-    }
-
-    const chunkEvent =
-      (typeof chunk === "object" ? chunk.event : null) || this.event;
-
-    const event = {
-      id: this.generateId(chunk),
-      data: chunk,
-    };
-
-    if (chunkEvent) event.event = chunkEvent;
-
-    this.push(this.stringify(event));
+    this.push(
+      this.stringify({
+        id: this.generateId(),
+        data: chunk,
+        event: chunk.event,
+      })
+    );
     return callback();
   }
 
