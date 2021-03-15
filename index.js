@@ -11,8 +11,6 @@ const server = new Hapi.Server(config.hapi.options);
 
 const useSSE = config.sse === true || config.sse === "true";
 
-console.log({ useSSE });
-
 const goodReporters = {
   console: [
     {
