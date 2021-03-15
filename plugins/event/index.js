@@ -26,8 +26,8 @@ const handleEvent = function (event, options, streamOptions) {
     .header("content-type", "text/event-stream")
     .header("content-encoding", "identity")
     .header("cache-control", "no-cache")
-    .header("connection", "keep-alive")
-    .header("transfer-encoding", "");
+    .header("connection", "keep-alive");
+  //.header("transfer-encoding", "");
 };
 
 exports.register = (server, options, next) => {
