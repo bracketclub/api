@@ -24,10 +24,10 @@ const handleEvent = function (event, options, streamOptions) {
   // eslint-disable-next-line no-invalid-this
   return this(stream)
     .header("content-type", "text/event-stream")
-    .header("content-encoding", "identity");
-  // .header("cache-control", "no-cache")
-  // .header("connection", "keep-alive")
-  // .header("transfer-encoding", "");
+    .header("content-encoding", "identity")
+    .header("cache-control", "no-cache")
+    .header("connection", "keep-alive")
+    .header("transfer-encoding", "");
 };
 
 exports.register = (server, options, next) => {
