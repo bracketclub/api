@@ -19,7 +19,10 @@ exports.register = (server, options, done) => {
       tags: ["api", "healthcheck", "pg"],
       handler: (request, reply) =>
         request.pg.client.query(query, (err) =>
-          reply(err, err ? null : { statusCode: 200 })
+          reply(
+            err,
+            err ? null : { statusCode: 200, version: packageInfo.version }
+          )
         ),
     },
   });
