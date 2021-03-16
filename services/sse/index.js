@@ -44,7 +44,7 @@ exports.register = (server, options, done) => {
           // https://devcenter.heroku.com/articles/error-codes#h15-idle-connection
           // Heroku has a 55s idle connection timeout. But in practice it is 30s
           const keepAliveInterval = setInterval(keepalive, ms("20s"));
-          const initialTimeout = setTimeout(keepalive, 2000);
+          const initialTimeout = setTimeout(keepalive, ms("2s"));
 
           request.once("disconnect", () => {
             clearInterval(keepAliveInterval);
