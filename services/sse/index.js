@@ -28,27 +28,27 @@ exports.register = (server, options, done) => {
           // Create a stream which will be the reply and be written to by pg pubsub
           const eventStream = new PassThrough({ objectMode: true });
 
-          // Log and write to the stream
-          const writeEvent = _.debounce((id, name) => {
-            const data = write(id);
-            server.log([LOG_TAG, name], data);
-            eventStream.write(data);
-          }, WRITE_WAIT);
+          const keepalive = () =>
+            eventStream.write({ event: "keepalive", time: Date.now() });
 
           // Add a pubsub channel for the namespace. This will listen for all NOTIFY
           // queries on that table
-          const handler = (id) => writeEvent(id, route);
+          const handler = _.debounce((id) => {
+            const data = write(id);
+            server.log([LOG_TAG, route], data);
+            eventStream.write(data);
+          }, WRITE_WAIT);
+
           sub.addChannel(route, handler);
 
           // https://devcenter.heroku.com/articles/error-codes#h15-idle-connection
-          // Heroku has a 55s idle connection timeout
-          const interval = setInterval(
-            () => eventStream.write({ event: "keepalive", time: Date.now() }),
-            ms("50s")
-          );
+          // Heroku has a 55s idle connection timeout. But in practice it is 30s
+          const keepAliveInterval = setInterval(keepalive, ms("20s"));
+          const initialTimeout = setTimeout(keepalive, 2000);
 
           request.once("disconnect", () => {
-            clearInterval(interval);
+            clearInterval(keepAliveInterval);
+            clearTimeout(initialTimeout);
             sub.removeChannel(route, handler);
           });
 
