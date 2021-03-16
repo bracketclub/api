@@ -1,6 +1,7 @@
 "use strict";
 
 const packageInfo = require("../../package");
+const db = require("../../lib/db");
 
 const query = `SELECT
   (sport || '-' || extract(YEAR from created)) as id
@@ -16,9 +17,9 @@ exports.register = (server, options, done) => {
     path: "/hc",
     config: {
       description: "Healthcheck",
-      tags: ["api", "healthcheck", "pg"],
+      tags: ["api", "healthcheck"],
       handler: (request, reply) =>
-        request.pg.client.query(query, (err) =>
+        db.query(request, query, (err) =>
           reply(
             err,
             err ? null : { statusCode: 200, version: packageInfo.version }

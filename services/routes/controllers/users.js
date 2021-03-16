@@ -3,6 +3,7 @@
 const Joi = require("joi");
 
 const utils = require("../lib/reply");
+const db = require("../../../lib/db");
 
 const userWithEntriesQuery = (where) => `
 SELECT
@@ -40,9 +41,10 @@ WHERE
 module.exports = {
   get: {
     description: "Get user by id",
-    tags: ["api", "users", "pg"],
+    tags: ["api", "users"],
     handler: (request, reply) => {
-      request.pg.client.query(
+      db.query(
+        request,
         userWithEntriesQuery(),
         [request.params.id],
         (err, res) => reply(err, utils.get(res))
@@ -56,12 +58,13 @@ module.exports = {
   },
   byEvent: {
     description: "Entries by user by event",
-    tags: ["api", "users", "pg"],
+    tags: ["api", "users"],
     handler: (request, reply) => {
       const { sport, year, id } = request.params;
 
       const getUserWithEntries = (cb) =>
-        request.pg.client.query(
+        db.query(
+          request,
           userWithEntriesQuery(
             "sport = $2 AND extract(YEAR from created) = $3"
           ),
@@ -70,7 +73,7 @@ module.exports = {
         );
 
       const getUser = (cb) =>
-        request.pg.client.query(userQuery(), [id], (err, res) =>
+        db.query(request, userQuery(), [id], (err, res) =>
           cb(err, utils.get(res))
         );
 

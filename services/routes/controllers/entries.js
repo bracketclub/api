@@ -3,6 +3,7 @@
 const Joi = require("joi");
 
 const utils = require("../lib/reply");
+const db = require("../../../lib/db");
 
 const entriesQuery = (where) => `
 SELECT DISTINCT ON (u.id)
@@ -21,11 +22,12 @@ ORDER BY
 module.exports = {
   all: {
     description: "All entries",
-    tags: ["api", "entries", "pg"],
+    tags: ["api", "entries"],
     handler: (request, reply) => {
       const { sport, year } = request.params;
 
-      request.pg.client.query(
+      db.query(
+        request,
         entriesQuery("extract(YEAR from created) = $1 AND sport = $2"),
         [year, sport],
         (err, res) => reply(err, utils.all(res))
@@ -40,9 +42,10 @@ module.exports = {
   },
   get: {
     description: "Get entry by id",
-    tags: ["api", "entries", "pg"],
+    tags: ["api", "entries"],
     handler: (request, reply) => {
-      request.pg.client.query(
+      db.query(
+        request,
         entriesQuery("id = $1"),
         [request.params.id],
         (err, res) => reply(err, utils.get(res))

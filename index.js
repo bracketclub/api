@@ -5,7 +5,6 @@ require("dotenv").config();
 const Hapi = require("hapi");
 const Hoek = require("hoek");
 const config = require("getconfig");
-const postgres = require("./lib/postgres-config");
 
 const server = new Hapi.Server(config.hapi.options);
 
@@ -40,10 +39,6 @@ const plugins = [
     options: {
       getNull404: true,
     },
-  },
-  {
-    register: require("./plugins/postgres"),
-    options: { config: postgres },
   },
   {
     register: require("./services/routes"),

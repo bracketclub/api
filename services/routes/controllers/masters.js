@@ -3,6 +3,7 @@
 const Joi = require("joi");
 
 const utils = require("../lib/reply");
+const db = require("../../../lib/db");
 
 const mastersQuery = (where) => `
 SELECT
@@ -21,11 +22,12 @@ GROUP BY
 module.exports = {
   get: {
     description: "Get masters by year",
-    tags: ["api", "masters", "pg"],
+    tags: ["api", "masters"],
     handler: (request, reply) => {
       const { sport, year } = request.params;
 
-      request.pg.client.query(
+      db.query(
+        request,
         mastersQuery("extract(YEAR from created) = $1 AND sport = $2"),
         [year, sport],
         (err, res) => reply(err, utils.get(res))

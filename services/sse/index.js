@@ -6,14 +6,14 @@ const PGPubsub = require("pg-pubsub");
 const ms = require("ms");
 const _ = require("lodash");
 const packageInfo = require("../../package");
-const postgres = require("../../lib/postgres-config");
+const { connectionString } = require("../../lib/db");
 
 const WRITE_WAIT = 1000;
 const LOG_TAG = "sse";
 
 exports.register = (server, options, done) => {
   // Listen for PG NOTIFY queries
-  const sub = new PGPubsub(postgres.connectionString, {
+  const sub = new PGPubsub(connectionString, {
     log: (...args) => server.log([LOG_TAG, "pgpubsub"], util.format(...args)),
   });
 
@@ -29,7 +29,10 @@ exports.register = (server, options, done) => {
           const eventStream = new PassThrough({ objectMode: true });
 
           const keepalive = () =>
-            eventStream.write({ event: "keepalive", time: Date.now() });
+            eventStream.write({
+              event: "keepalive",
+              time: new Date().toJSON(),
+            });
 
           // Add a pubsub channel for the namespace. This will listen for all NOTIFY
           // queries on that table
