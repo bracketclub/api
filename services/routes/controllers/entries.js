@@ -22,7 +22,7 @@ ORDER BY
 module.exports = {
   all: {
     description: "All entries",
-    tags: ["api", "entries"],
+    tags: ["entries"],
     handler: (request, reply) => {
       const { sport, year } = request.params;
 
@@ -42,7 +42,7 @@ module.exports = {
   },
   get: {
     description: "Get entry by id",
-    tags: ["api", "entries"],
+    tags: ["entries"],
     handler: (request, reply) => {
       db.query(
         request,

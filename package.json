@@ -1,7 +1,7 @@
 {
   "name": "bc-api",
   "description": "The API for bracket.club.",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": {
     "name": "Luke Karrys",
     "email": "luke@lukekarrys.com",

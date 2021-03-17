@@ -17,7 +17,7 @@ exports.register = (server, options, done) => {
     path: "/hc",
     config: {
       description: "Healthcheck",
-      tags: ["api", "healthcheck"],
+      tags: ["healthcheck"],
       handler: (request, reply) =>
         db.query(request, query, (err) =>
           reply(

@@ -23,7 +23,7 @@ exports.register = (server, options, done) => {
       path: `/${route}/events`,
       config: {
         description: `Get ${route} events stream`,
-        tags: ["api", LOG_TAG, route],
+        tags: [LOG_TAG, route],
         handler: (request, reply) => {
           // Create a stream which will be the reply and be written to by pg pubsub
           const eventStream = new PassThrough({ objectMode: true });

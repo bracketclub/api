@@ -41,7 +41,7 @@ WHERE
 module.exports = {
   get: {
     description: "Get user by id",
-    tags: ["api", "users"],
+    tags: ["users"],
     handler: (request, reply) => {
       db.query(
         request,
@@ -58,7 +58,7 @@ module.exports = {
   },
   byEvent: {
     description: "Entries by user by event",
-    tags: ["api", "users"],
+    tags: ["users"],
     handler: (request, reply) => {
       const { sport, year, id } = request.params;
 
