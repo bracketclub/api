@@ -26,40 +26,25 @@ exports.register = (server, options, done) => {
       handler: (request, reply) => {
         // Create a stream which will be the reply and be written to by pg pubsub
         const eventStream = new PassThrough({ objectMode: true });
+        const writeToStream = (event, data) =>
+          eventStream.write({ event, data });
 
         // Add a pubsub channel for the namespace. This will listen for all NOTIFY
         // queries on that table
-        const createHandler = (fn) =>
-          _.debounce((id) => {
-            const data = fn(id);
-            request.log([LOG_TAG, data.event], data);
-            eventStream.write(data);
+        const createHandler = (event) =>
+          _.debounce((data) => {
+            request.log([LOG_TAG, event], data);
+            writeToStream(event, data);
           }, WRITE_WAIT);
 
-        const mastersHandler = createHandler((sportYear) => ({
-          event: "masters",
-          id: sportYear,
-        }));
-
-        const entriesHandler = createHandler((sportYear) => ({
-          event: "entries",
-          id: sportYear,
-        }));
-
-        const usersHandler = createHandler((userId) => ({
-          event: "users",
-          id: userId,
-        }));
-
-        sub.addChannel("masters", mastersHandler);
-        sub.addChannel("entries", entriesHandler);
-        sub.addChannel("users", usersHandler);
+        const handlers = ["masters", "entries", "users"].map((channel) => {
+          const handler = createHandler(channel);
+          sub.addChannel(channel, handler);
+          return [channel, handler];
+        });
 
         const keepalive = () =>
-          eventStream.write({
-            event: "keepalive",
-            time: new Date().toJSON(),
-          });
+          writeToStream("keepalive", { time: new Date().toJSON() });
 
         // https://devcenter.heroku.com/articles/error-codes#h15-idle-connection
         // Heroku has a 55s idle connection timeout. But in practice it is 30s
@@ -69,9 +54,7 @@ exports.register = (server, options, done) => {
         request.once("disconnect", () => {
           clearInterval(keepAliveInterval);
           clearTimeout(initialTimeout);
-          sub.removeChannel("masters", mastersHandler);
-          sub.removeChannel("entries", entriesHandler);
-          sub.removeChannel("users", usersHandler);
+          handlers.forEach((handler) => sub.removeChannel(...handler));
         });
 
         return reply.event(eventStream);

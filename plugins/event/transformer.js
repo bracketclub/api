@@ -12,12 +12,12 @@ class Transform extends Stream.Transform {
     this.generateId = () => counter++;
   }
 
-  _transform(chunk, encoding, callback) {
+  _transform({ data, event }, encoding, callback) {
     this.push(
       this.stringify({
         id: this.generateId(),
-        data: chunk,
-        event: chunk.event,
+        data,
+        event,
       })
     );
     return callback();
